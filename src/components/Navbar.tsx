@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import { portfolioData } from '../data/portfolioData';
-import { Menu, X, FileDown, Sparkles } from 'lucide-react';
+import { Menu, X, FileDown, Radio, Activity } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [time, setTime] = useState<string>('');
 
-  // Detect scroll to add slight shadow and backdrop enhancement
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -33,147 +33,142 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTime(
+        now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+        })
+      );
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const navItems = [
-    { label: 'About', href: '#hero', id: 'hero' },
-    { label: 'Projects', href: '#projects', id: 'projects' },
-    { label: 'Experience', href: '#experience', id: 'experience' },
-    { label: 'Skills', href: '#skills', id: 'skills' },
-    { label: 'Contact', href: '#contact', id: 'contact' },
+    { label: '01 // WORK', href: '#projects', id: 'projects' },
+    { label: '02 // LABS', href: '#projects', id: 'projects' },
+    { label: '03 // ARCHIVE', href: '#experience', id: 'experience' },
+    { label: '04 // SKILLS', href: '#skills', id: 'skills' },
+    { label: '05 // CONTACT', href: '#contact', id: 'contact' },
   ];
 
-  // Mobile menu spring animation
   const mobileMenuSpring = useSpring({
-    transform: mobileMenuOpen ? 'translateY(0%) scale(1)' : 'translateY(-120%) scale(0.95)',
+    transform: mobileMenuOpen ? 'translateY(0%)' : 'translateY(-120%)',
     opacity: mobileMenuOpen ? 1 : 0,
-    config: { tension: 280, friction: 24 },
+    config: { tension: 300, friction: 26 },
   });
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 flex justify-center px-4 sm:px-6 pt-4 sm:pt-6 pointer-events-none">
-        <nav
-          className={`pointer-events-auto flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full transition-all duration-300 max-w-4xl w-full ${
-            isScrolled
-              ? 'glass-pill shadow-2xl shadow-sky-950/40 bg-slate-950/85 border-sky-500/20'
-              : 'glass-panel bg-slate-950/65 border-sky-500/10'
-          }`}
-        >
-          {/* Logo / Name */}
-          <a
-            href="#hero"
-            className="flex items-center gap-2.5 group text-slate-100 font-bold tracking-tight text-sm sm:text-base focus:outline-none"
-          >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-400 to-cyan-300 p-[1.5px] shadow-sm shadow-sky-500/30">
-              <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-xs font-mono font-bold text-sky-200 group-hover:bg-gradient-to-tr group-hover:from-sky-400 group-hover:to-cyan-300 group-hover:text-slate-950 transition-all duration-200">
-                GR
-              </div>
-            </div>
-            <span className="hidden xs:inline font-semibold text-slate-200 group-hover:text-sky-300 transition-colors">
-              {portfolioData.personal.preferredName}
-            </span>
-          </a>
+      <header className="fixed top-0 left-0 right-0 z-40 w-full bg-[#030712]/90 backdrop-blur-xl border-b border-sky-500/20 transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4 font-mono text-xs">
+          {/* Left: Seasats / Klausen Index & Brand */}
+          <div className="flex items-center gap-3">
+            <a href="#hero" className="flex items-center gap-2.5 text-white font-bold tracking-wider hover:text-sky-300 transition-colors">
+              <span className="w-2 h-2 rounded-full bg-sky-400 animate-ping inline-block" />
+              <span className="text-sky-400 font-bold">[GR // 26]</span>
+              <span className="font-display font-extrabold tracking-tight text-sm hidden sm:inline">
+                GAURAV RATHOD
+              </span>
+            </a>
 
-          {/* Desktop Nav Items */}
-          <div className="hidden md:flex items-center gap-1 bg-slate-900/70 p-1 rounded-full border border-sky-500/15">
-            {navItems.map((item) => {
-              const isActive = activeSection === item.id;
-              return (
+            <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded border border-sky-500/20 bg-sky-500/5 text-[10px] text-sky-300">
+              <Radio className="w-3 h-3 text-sky-400 animate-pulse" />
+              <span>SYS: NOMINAL</span>
+            </div>
+          </div>
+
+          {/* Center: Live Telemetry Coordinates (Seasats style) */}
+          <div className="hidden md:flex items-center gap-3 text-slate-400 text-[11px] border-x border-slate-800/80 px-6 h-10">
+            <span>IIT MANDI 31.77°N, 76.98°E</span>
+            <span className="text-slate-600">•</span>
+            <span className="text-sky-300 font-bold">{time} IST</span>
+          </div>
+
+          {/* Right: Navigation Items & Dossier Link */}
+          <div className="flex items-center gap-3 sm:gap-6">
+            <nav className="hidden md:flex items-center gap-4">
+              {navItems.map((item) => (
                 <a
-                  key={item.id}
+                  key={item.label}
                   href={item.href}
-                  className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
-                    isActive
-                      ? 'text-sky-200 bg-sky-950/80 border border-sky-500/30 shadow-sm shadow-sky-500/20'
-                      : 'text-slate-400 hover:text-sky-300 hover:bg-slate-800/40'
-                  }`}
+                  className="text-slate-400 hover:text-sky-300 transition-colors tracking-wider"
                 >
                   {item.label}
                 </a>
-              );
-            })}
-          </div>
+              ))}
+            </nav>
 
-          {/* Right Action: Status Beacon & Resume */}
-          <div className="flex items-center gap-2.5">
-            {/* Pulsing Availability Beacon */}
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/25 text-[11px] font-mono text-sky-300">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400"></span>
-              </span>
-              <span>Available</span>
-            </div>
-
-            {/* Resume Button */}
+            {/* Resume / Dossier Button */}
             <a
               href={portfolioData.personal.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold text-xs transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] shadow-md shadow-sky-500/25"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold text-xs transition-colors shadow-sm shadow-sky-500/25 tracking-wider"
             >
               <FileDown className="w-3.5 h-3.5" />
-              <span>Resume</span>
+              <span>RESUME.PDF</span>
             </a>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 rounded-full bg-slate-900 border border-sky-500/20 text-slate-300 hover:text-white focus:outline-none"
-              aria-label="Toggle navigation menu"
+              className="md:hidden p-1.5 rounded border border-sky-500/30 text-slate-300 hover:text-white"
+              aria-label="Toggle Navigation"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
-        </nav>
+        </div>
       </header>
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-30 bg-slate-950/80 backdrop-blur-lg md:hidden pt-24 px-6"
+          className="fixed inset-0 z-30 bg-slate-950/95 backdrop-blur-2xl md:hidden pt-20 px-6 font-mono"
           onClick={() => setMobileMenuOpen(false)}
         >
           <animated.div
             style={mobileMenuSpring}
-            className="w-full bg-slate-950 border border-sky-500/20 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 text-center"
+            className="w-full bg-slate-900/90 border border-sky-500/30 rounded-2xl p-6 shadow-2xl flex flex-col gap-4 text-center mt-4"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Status Beacon on Mobile */}
-            <div className="flex items-center justify-center gap-2 py-1.5 px-3 rounded-full bg-sky-500/10 border border-sky-500/20 text-xs font-mono text-sky-300 mx-auto">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400"></span>
-              </span>
-              <span>Available for software & AI/ML roles</span>
+            <div className="flex items-center justify-center gap-2 py-1.5 px-3 rounded bg-sky-500/10 border border-sky-500/20 text-xs text-sky-300 mx-auto">
+              <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
+              <span>TELEMETRY: ONLINE • IIT MANDI</span>
             </div>
 
-            <div className="flex flex-col gap-2 mt-2">
+            <div className="flex flex-col gap-3 mt-3">
               {navItems.map((item) => (
                 <a
-                  key={item.id}
+                  key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`py-3 px-4 rounded-xl text-base font-medium transition-colors ${
-                    activeSection === item.id
-                      ? 'bg-sky-950/60 border border-sky-500/30 text-sky-300'
-                      : 'text-slate-300 hover:bg-slate-900/60'
-                  }`}
+                  className="py-3 px-4 rounded-xl text-sm font-semibold tracking-wider text-slate-200 hover:bg-slate-800 hover:text-sky-300 transition-colors border border-transparent hover:border-sky-500/20"
                 >
                   {item.label}
                 </a>
               ))}
             </div>
 
-            <div className="pt-3 border-t border-slate-900 flex flex-col gap-2">
+            <div className="pt-4 border-t border-slate-800">
               <a
                 href={portfolioData.personal.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 rounded-xl bg-sky-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-sky-500/25"
+                className="w-full py-3 rounded-xl bg-sky-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 tracking-wider shadow-lg shadow-sky-500/25"
               >
                 <FileDown className="w-4 h-4" />
-                <span>View Full Resume</span>
+                <span>DOWNLOAD VERIFIED RESUME</span>
               </a>
             </div>
           </animated.div>

@@ -87,7 +87,7 @@ export const portfolioData: PortfolioData = {
       codeforces: "https://codeforces.com/profile/gvrathodd",
     },
     quickStats: [
-      { label: "CGPA at IIT Mandi", value: "8.34" },
+      { label: "Primary Institute", value: "IIT Mandi" },
       { label: "Algorithmic Problems Solved", value: "500+" },
       { label: "Fundraising Lead (Xpecto)", value: "INR 20L+" },
       { label: "Hackathon Finishes", value: "Top 3" },
@@ -248,7 +248,7 @@ export const portfolioData: PortfolioData = {
       period: "August 2024 – Present",
       location: "Himachal Pradesh, India",
       category: "Education",
-      badge: "CGPA: 8.34 / 10",
+      badge: "Engineering Scholar",
       description: "Pursuing engineering with intensive coursework in computer science, machine learning, systems architecture, and mathematical foundations.",
       highlights: [
         "Relevant Coursework: Programming & Data Structures, Machine Learning, Deep Learning, Operating Systems, Database Management Systems (DBMS), Computer Networks, Design of Algorithms, Linear Algebra.",

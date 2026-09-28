@@ -57,7 +57,7 @@ export const Contact: React.FC = () => {
 
   return (
     <section id="contact" className="py-24 px-4 sm:px-6 max-w-5xl mx-auto">
-      <div className="relative p-8 sm:p-12 rounded-3xl glass-panel border-sky-500/20 overflow-hidden shadow-2xl shadow-sky-950/20">
+      <div className="relative p-8 sm:p-12 rounded-2xl glass-panel border border-sky-500/30 overflow-hidden shadow-2xl shadow-sky-950/20">
         {/* Ambient background sky glow */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-sky-500/15 via-cyan-500/10 to-transparent blur-3xl pointer-events-none" />
 
@@ -66,14 +66,22 @@ export const Contact: React.FC = () => {
           <div className="lg:col-span-2 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 text-xs font-mono font-medium text-sky-400 uppercase tracking-widest mb-2">
-                <Sparkles className="w-4 h-4" />
-                Get In Touch
+                <span className="text-sky-300 font-bold">// 04</span>
+                <span>TRANSMISSION RELAY</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-                Let's Build Something Exceptional
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold tracking-tight text-white uppercase mb-4">
+                Initiate Direct Dispatch
               </h2>
-              <p className="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
-                Whether you have an exciting software or AI/ML opportunity, want to collaborate on open-source, or simply want to chat, my inbox is always open.
+              <div className="flex flex-wrap items-center gap-2 font-mono text-[11px] text-slate-400 mb-6">
+                <span className="text-sky-400">[COMM // DIRECT LINK]</span>
+                <span>•</span>
+                <span className="text-emerald-400 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  INBOX ACTIVE
+                </span>
+              </div>
+              <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                Seeking high-impact Software Engineering or AI/ML roles. Reach out directly via encrypted channels or dispatch a prompt message.
               </p>
 
               {/* One-click Copy Email Pill */}

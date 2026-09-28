@@ -27,34 +27,41 @@ export const Projects: React.FC = () => {
 
   return (
     <section id="projects" className="py-24 px-4 sm:px-6 max-w-6xl mx-auto">
-      {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      {/* Section Header with Seasats / Klausen Architectural Telemetry */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-sky-500/20">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono font-medium text-sky-400 uppercase tracking-widest mb-2">
-            <Flame className="w-4 h-4" />
-            Special Showcase & Engineering
+            <span className="text-sky-300 font-bold">// 01</span>
+            <span>ARCHITECTURE & SYSTEMS</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-            Projects & Architecture
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white uppercase">
+            Engineered Systems & Research
           </h2>
-          <p className="text-slate-400 text-xs sm:text-sm mt-2 max-w-xl">
-            Interactive 3D cards with front/back architecture flip, live neural pipeline simulation, and real-time pathfinding engine.
-          </p>
+          <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs text-slate-400 mt-3">
+            <span className="text-sky-400 font-semibold">[INDEX // 08 ARTIFACTS]</span>
+            <span className="text-slate-600">•</span>
+            <span>OPTIMIZED WITH REACT SPRING PHYSICS</span>
+            <span className="text-slate-600">•</span>
+            <span className="text-emerald-400 flex items-center gap-1.5 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              VERIFIED AT 60 FPS
+            </span>
+          </div>
         </div>
 
-        {/* Category Filter Pills (Mobbin / Curated style) */}
-        <div className="flex flex-wrap gap-1.5 bg-slate-950/90 p-1.5 rounded-2xl border border-sky-500/20 backdrop-blur-md">
+        {/* Category Filter Tabs with Architectural Brackets */}
+        <div className="flex flex-wrap gap-1.5 bg-slate-950/90 p-1.5 rounded-xl border border-sky-500/20 backdrop-blur-md">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-200 ${
                 activeCategory === cat
                   ? 'bg-sky-500 text-slate-950 font-bold shadow-md shadow-sky-500/25'
                   : 'text-slate-400 hover:text-sky-300 hover:bg-slate-900'
               }`}
             >
-              {cat}
+              [{cat.toUpperCase()}]
             </button>
           ))}
         </div>
@@ -64,13 +71,13 @@ export const Projects: React.FC = () => {
       <DeepfakeSimulator />
 
       {/* SPECIAL COMPONENT #2: 3D Flip Project Cards (React Spring 3D Physics) */}
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-mono text-sky-300 uppercase tracking-wider flex items-center gap-2 font-semibold">
+      <div className="flex items-center justify-between mb-5 pb-3 border-b border-sky-500/15">
+        <h3 className="text-xs sm:text-sm font-mono text-sky-300 uppercase tracking-widest flex items-center gap-2 font-bold">
           <Layers className="w-4 h-4 text-sky-400" />
-          Ranked Technical Systems (Click 'Blueprint' to 3D Flip)
+          <span>// 01.1 ARTIFACT DOSSIERS — RANKED SYSTEMS</span>
         </h3>
-        <span className="text-xs text-slate-500 font-mono hidden sm:inline">
-          Showing {filteredProjects.length} systems
+        <span className="text-[11px] text-slate-400 font-mono">
+          [COUNT: {filteredProjects.length} DOSSIERS]
         </span>
       </div>
 

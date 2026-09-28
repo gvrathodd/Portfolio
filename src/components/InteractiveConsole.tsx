@@ -114,7 +114,7 @@ export const InteractiveConsole: React.FC = () => {
       case 'whoami':
         output = (
           <div className="text-xs text-slate-300 leading-relaxed">
-            <span className="text-white font-bold">{portfolioData.personal.name}</span> — B.Tech undergraduate at <span className="text-sky-300">IIT Mandi</span> (CGPA: 8.34). Specializing in systems programming, machine learning architectures, and modern application development.
+            <span className="text-white font-bold">{portfolioData.personal.name}</span> — B.Tech undergraduate at <span className="text-sky-300">IIT Mandi</span>. Specializing in systems programming, machine learning architectures, and high-performance engineering.
           </div>
         );
         break;

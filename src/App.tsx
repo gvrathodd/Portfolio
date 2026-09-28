@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { KineticMarquee } from './components/KineticMarquee';
 import { Projects } from './components/Projects';
 import { Experience } from './components/Experience';
 import { Skills } from './components/Skills';
@@ -60,6 +61,7 @@ export const App: React.FC = () => {
         <Navbar />
         <main>
           <Hero />
+          <KineticMarquee />
           <Projects />
           <Experience />
           <Skills />

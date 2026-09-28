@@ -73,7 +73,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         </div>
 
         {/* Title & Tagline */}
-        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
+        <h3 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white mb-2">
           {project.title}
         </h3>
         <p className="text-slate-400 text-base mb-6 leading-relaxed">

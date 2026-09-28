@@ -40,37 +40,51 @@ export const Skills: React.FC = () => {
 
   return (
     <section id="skills" className="py-24 px-4 sm:px-6 max-w-6xl mx-auto">
-      {/* Section Header */}
-      <div className="mb-12">
+      {/* Section Header with Seasats / Klausen Architectural Telemetry */}
+      <div className="mb-14 pb-6 border-b border-sky-500/20">
         <div className="flex items-center gap-2 text-xs font-mono font-medium text-sky-400 uppercase tracking-widest mb-2">
-          <Layers className="w-4 h-4" />
-          Technical Proficiency
+          <span className="text-sky-300 font-bold">// 03</span>
+          <span>CAPABILITY MATRIX</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
-          Skills & Tech Stack
+        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white uppercase mb-3">
+          Technical Specifications
         </h2>
-        <p className="text-slate-400 text-base max-w-2xl">
-          Core toolkits, systems, and frameworks I use to engineer scalable backend services, intelligent AI pipelines, and responsive mobile/web applications.
-        </p>
+        <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs text-slate-400">
+          <span className="text-sky-400 font-semibold">[SPEC // 04 DOMAIN MATRICES]</span>
+          <span className="text-slate-600">•</span>
+          <span>SYSTEMS, DEEP LEARNING, FULL-STACK & EMBEDDED</span>
+          <span className="text-slate-600">•</span>
+          <span className="text-emerald-400 font-medium">PRODUCTION DEPLOYED</span>
+        </div>
       </div>
 
-      {/* Bento Grid */}
+      {/* Bento Grid Spec Sheets */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {skillCategories.map((category, catIdx) => (
           <div
             key={category.title}
-            className="p-6 sm:p-8 rounded-3xl glass-panel hover:border-sky-500/40 transition-all duration-300 flex flex-col justify-between group"
+            className="p-6 sm:p-8 rounded-2xl glass-panel hover:border-sky-500/40 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
           >
+            {/* Spec Sheet Index Tag Watermark */}
+            <div className="absolute right-4 top-2 pointer-events-none select-none font-mono text-3xl font-black text-sky-400/10 group-hover:text-sky-400/20 transition-colors">
+              SPEC // 0{catIdx + 1}
+            </div>
+
             <div>
-              {/* Category Header */}
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2.5 rounded-xl bg-slate-900 border border-sky-500/20 shadow-sm">
-                  {getCategoryIcon(catIdx)}
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-sky-300 transition-colors">
-                    {category.title}
-                  </h3>
+              {/* Category Spec Header */}
+              <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-sky-500/15">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-2 rounded-lg bg-slate-900 border border-sky-500/20 text-sky-400 shadow-sm">
+                    {getCategoryIcon(catIdx)}
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono text-sky-400 font-bold uppercase tracking-wider block">
+                      SPEC_SHEET // 0{catIdx + 1}
+                    </span>
+                    <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-sky-300 transition-colors">
+                      {category.title}
+                    </h3>
+                  </div>
                 </div>
               </div>
 
@@ -83,10 +97,10 @@ export const Skills: React.FC = () => {
                 {category.skills.map((skill) => (
                   <div
                     key={skill.name}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-sky-500/15 hover:border-sky-400/40 transition-all duration-200 text-xs sm:text-sm shadow-sm"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-sky-500/15 hover:border-sky-400/40 transition-all duration-200 text-xs font-mono shadow-sm"
                   >
-                    <span className="font-medium text-slate-200">{skill.name}</span>
-                    <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md border ${getLevelColor(skill.level)}`}>
+                    <span className="font-semibold text-slate-200">{skill.name}</span>
+                    <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ${getLevelColor(skill.level)}`}>
                       {skill.level}
                     </span>
                   </div>
@@ -96,9 +110,9 @@ export const Skills: React.FC = () => {
 
             {/* Bottom accent badge */}
             <div className="pt-6 mt-6 border-t border-slate-900 flex items-center justify-between text-xs text-slate-500 font-mono">
-              <span>{category.skills.length} core technologies</span>
-              <span className="text-sky-400 flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" /> Production Ready
+              <span className="text-slate-400">[{category.skills.length} VERIFIED MODULES]</span>
+              <span className="text-sky-400 flex items-center gap-1 font-medium">
+                <ShieldCheck className="w-3.5 h-3.5" /> Benchmarked
               </span>
             </div>
           </div>

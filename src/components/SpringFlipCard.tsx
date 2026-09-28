@@ -33,9 +33,10 @@ export const SpringFlipCard: React.FC<SpringFlipCardProps> = ({ project, onSelec
   });
 
   const isTopRanked = index < 4;
+  const formattedIndex = String(index + 1).padStart(2, '0');
 
   return (
-    <div className="relative min-h-[360px] sm:min-h-[380px] w-full [perspective:1000px]">
+    <div className="relative min-h-[360px] sm:min-h-[380px] w-full [perspective:1000px] group/card">
       <animated.div
         ref={elementRef}
         onMouseMove={handleMouseMove}
@@ -52,12 +53,17 @@ export const SpringFlipCard: React.FC<SpringFlipCardProps> = ({ project, onSelec
             opacity: opacity.to((o) => 1 - o),
             transform: flipTransform,
           }}
-          className={`absolute inset-0 flex flex-col justify-between p-6 sm:p-7 rounded-3xl glass-panel transition-colors duration-300 overflow-hidden shadow-xl shadow-black/40 [backface-visibility:hidden] z-10 ${
+          className={`absolute inset-0 flex flex-col justify-between p-6 sm:p-7 rounded-2xl glass-panel transition-colors duration-300 overflow-hidden shadow-xl shadow-black/40 [backface-visibility:hidden] z-10 ${
             isTopRanked
               ? 'border-sky-500/30 hover:border-sky-400/60 hover:shadow-sky-950/30'
               : 'hover:border-sky-500/40'
           }`}
         >
+          {/* Architectural Klausen-style Index Watermark */}
+          <div className="absolute right-4 top-2 pointer-events-none select-none font-mono text-4xl sm:text-5xl font-black text-sky-400/10 group-hover/card:text-sky-400/20 transition-colors">
+            {formattedIndex} //
+          </div>
+
           {/* Dynamic Light Sheen */}
           <div 
             className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
@@ -74,21 +80,20 @@ export const SpringFlipCard: React.FC<SpringFlipCardProps> = ({ project, onSelec
           )}
 
           <div className="relative z-10">
-            {/* Badges */}
-            <div className="flex items-center justify-between gap-2 mb-4">
+            {/* Top Telemetry Header */}
+            <div className="flex items-center justify-between gap-2 mb-4 pb-2.5 border-b border-sky-500/15">
               <div className="flex items-center gap-2">
-                <span className="px-3 py-1 text-xs font-mono font-medium rounded-full bg-slate-900/90 border border-sky-500/20 text-slate-300">
+                <span className="text-[10px] font-mono tracking-widest text-sky-400 font-bold uppercase">
+                  SYS // {formattedIndex}
+                </span>
+                <span className="text-slate-600 font-mono text-[10px]">•</span>
+                <span className="px-2 py-0.5 text-[11px] font-mono font-medium rounded-md bg-slate-900 border border-sky-500/20 text-slate-300">
                   {project.category}
                 </span>
-                {isTopRanked && (
-                  <span className="px-2 py-0.5 text-[10px] font-mono font-bold rounded-md bg-sky-500/20 text-sky-300 border border-sky-400/30">
-                    Rank #{index + 1}
-                  </span>
-                )}
               </div>
 
               {project.badge && (
-                <span className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono font-medium rounded-full bg-sky-500/10 text-sky-300 border border-sky-500/25">
+                <span className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono font-medium rounded-md bg-sky-500/10 text-sky-300 border border-sky-500/25">
                   <Sparkles className="w-3 h-3 text-sky-400" />
                   {project.badge}
                 </span>
