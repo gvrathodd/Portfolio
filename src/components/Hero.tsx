@@ -1,115 +1,98 @@
-import React from 'react';
-import { animated, useSpring } from '@react-spring/web';
+import React, { useEffect, useState } from 'react';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
-import { WordFlipper } from './WordFlipper';
-import { 
-  ArrowDown, 
-  FileDown, 
-  Sparkles,
-  ArrowUpRight
-} from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './Icons';
+import { Stats } from './Stats';
+
+const rise = (i: number) => ({ '--i': i }) as React.CSSProperties;
+
+const istFormat = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Kolkata',
+  hour: '2-digit',
+  minute: '2-digit',
+});
+
+const LocalTime: React.FC = () => {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 15_000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <span className="text-sm text-[var(--sky-muted)]">
+      {portfolioData.personal.location} <span className="mx-1.5 opacity-50">/</span>
+      <span className="font-mono text-[var(--sky-ink)] tabular-nums">{istFormat.format(now)}</span> IST
+    </span>
+  );
+};
 
 export const Hero: React.FC = () => {
   const { personal } = portfolioData;
 
-  // Silky smooth entrance spring
-  const entranceSpring = useSpring({
-    from: { opacity: 0, transform: 'translate3d(0, 24px, 0)' },
-    to: { opacity: 1, transform: 'translate3d(0, 0px, 0)' },
-    config: { mass: 1, tension: 180, friction: 24 },
-    delay: 80,
-  });
-
   return (
-    <section id="hero" className="relative min-h-[92vh] pt-36 sm:pt-44 pb-20 flex flex-col justify-center items-center text-center px-4 sm:px-6 max-w-5xl mx-auto">
-      <animated.div style={entranceSpring} className="relative z-10 w-full flex flex-col items-center">
-        {/* Availability Pill */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-pill border border-sky-400/25 text-xs font-medium text-sky-200 mb-8 shadow-lg shadow-sky-950/20">
-          <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-          <span>Available for Software Engineering & AI/ML Roles</span>
+    <section id="top" className="pt-3 sm:pt-5">
+      <div className="sky-panel flex min-h-[min(86dvh,800px)] flex-col rounded-[1.75rem] px-5 py-6 sm:px-10 sm:py-8 md:rounded-[2.5rem] md:px-14 md:py-12">
+        <div aria-hidden className="cloud top-[14%] left-[-10%] h-40 w-[55%]" />
+        <div aria-hidden className="cloud top-[4%] right-[-12%] h-32 w-[45%] [animation-duration:52s]" />
+        <div aria-hidden className="cloud bottom-[-8%] left-[25%] h-56 w-[70%] [animation-duration:64s]" />
+
+        <div className="rise flex items-center justify-between gap-4" style={rise(0)}>
+          <span className="sky-glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm">
+            <span className="relative flex size-2">
+              <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-50 motion-reduce:hidden" />
+              <span className="relative size-2 rounded-full bg-emerald-500" />
+            </span>
+            {personal.availability}
+          </span>
+          <span className="hidden sm:block">
+            <LocalTime />
+          </span>
         </div>
 
-        {/* Name Header */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-4">
-          Hi, I'm <span className="sky-gradient-text">{personal.name}</span>
-        </h1>
-
-        {/* Dynamic Rotating Role Tagline */}
-        <div className="mb-6 flex justify-center">
-          <WordFlipper />
-        </div>
-
-        {/* Clean, Readable Bio */}
-        <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mb-10 font-normal">
-          {personal.aboutMe}
-        </p>
-
-        {/* Primary Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-3.5 mb-14">
-          <a
-            href="#projects"
-            className="flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-sky-400 via-sky-500 to-blue-600 hover:from-sky-300 hover:to-sky-400 text-slate-950 font-bold text-sm transition-all duration-200 shadow-xl shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-[1.03] active:scale-[0.98]"
+        <div className="mt-auto grid gap-10 pt-24 md:grid-cols-12 md:items-end md:gap-8">
+          <h1
+            className="rise text-[clamp(3.25rem,9.5vw,7.75rem)] leading-[0.88] font-medium tracking-[-0.05em] md:col-span-7"
+            style={rise(1)}
           >
-            <span>Explore Projects</span>
-            <ArrowDown className="w-4 h-4" />
-          </a>
+            {personal.name.split(' ').map((word, i, words) => (
+              <span key={word} className={`block ${i > 0 && i < words.length - 1 ? 'text-[var(--sky-muted)]' : ''}`}>
+                {word}
+              </span>
+            ))}
+          </h1>
 
-          <a
-            href={personal.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-3 rounded-full glass-card hover:bg-white/10 text-sky-200 border border-sky-400/25 text-sm font-semibold transition-all hover:scale-[1.03] active:scale-[0.98]"
-          >
-            <FileDown className="w-4 h-4 text-sky-400" />
-            <span>Resume</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
-          </a>
-
-          <a
-            href={personal.socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            title="LinkedIn Profile"
-            className="p-3 rounded-full glass-card hover:bg-white/10 text-slate-300 hover:text-sky-300 border border-sky-400/25 transition-all hover:scale-105"
-          >
-            <LinkedinIcon className="w-4 h-4" />
-          </a>
-
-          <a
-            href={personal.socials.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            title="GitHub Profile"
-            className="p-3 rounded-full glass-card hover:bg-white/10 text-slate-300 hover:text-sky-300 border border-sky-400/25 transition-all hover:scale-105"
-          >
-            <GithubIcon className="w-4 h-4" />
-          </a>
-        </div>
-
-        {/* Clean Highlight Stats Card */}
-        <div className="w-full max-w-4xl p-5 sm:p-6 rounded-3xl glass-card border border-sky-400/20 shadow-2xl shadow-sky-950/20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
-          <div className="space-y-1">
-            <span className="text-xl sm:text-2xl font-bold text-white block">IIT Mandi</span>
-            <span className="text-xs text-sky-300/90 font-medium">B.Tech Engineering</span>
-          </div>
-
-          <div className="space-y-1">
-            <span className="text-xl sm:text-2xl font-bold text-sky-300 block">0.884 AUC</span>
-            <span className="text-xs text-slate-400 font-medium">Deepfake Detection SOTA</span>
-          </div>
-
-          <div className="space-y-1">
-            <span className="text-xl sm:text-2xl font-bold text-white block">60 FPS</span>
-            <span className="text-xs text-sky-300/90 font-medium">Graph Engine Visualizer</span>
-          </div>
-
-          <div className="space-y-1">
-            <span className="text-xl sm:text-2xl font-bold text-sky-300 block">C++ & Python</span>
-            <span className="text-xs text-slate-400 font-medium">Core Systems & AI Stack</span>
+          <div className="md:col-span-5 md:pb-2">
+            <p className="rise text-lg leading-snug tracking-tight text-pretty md:text-xl" style={rise(2)}>
+              {personal.intro} <span className="text-[var(--sky-muted)]">{personal.introAside}</span>
+            </p>
+            <div className="rise mt-8 flex flex-wrap items-center gap-3" style={rise(3)}>
+              <a
+                href="#work"
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--sky-ink)] px-5 py-3 text-sm font-medium text-[var(--sky-btn-text)] transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
+              >
+                See my work
+                <ArrowDown className="size-4" strokeWidth={1.75} />
+              </a>
+              <a
+                href={`mailto:${personal.email}`}
+                className="sky-glass inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
+              >
+                Get in touch
+                <ArrowUpRight className="size-4" strokeWidth={1.75} />
+              </a>
+            </div>
+            <p className="rise mt-6 flex flex-wrap gap-x-5 gap-y-1 text-sm text-[var(--sky-muted)]" style={rise(4)}>
+              <span className="text-[var(--sky-ink)]">{personal.education}</span>
+              {personal.socials.slice(0, 2).map((s) => (
+                <a key={s.label} href={s.url} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[var(--sky-ink)]">
+                  {s.label} ↗
+                </a>
+              ))}
+            </p>
           </div>
         </div>
-      </animated.div>
+      </div>
+
+      <Stats className="rise mt-3 sm:mt-4" style={rise(5)} />
     </section>
   );
 };

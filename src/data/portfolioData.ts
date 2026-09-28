@@ -1,10 +1,5 @@
 /**
- * ==============================================================================
- * PORTFOLIO DATA CONFIGURATION
- * ==============================================================================
- * Welcome to your portfolio configuration!
- * Even if you have ZERO web development experience, you can customize everything
- * on your website right here. Simply change the text inside quotes ("...")!
+ * All site content lives here. Edit the strings; the components pick them up.
  */
 
 export interface Project {
@@ -12,14 +7,20 @@ export interface Project {
   title: string;
   tagline: string;
   description: string;
-  category: 'AI & ML' | 'Software Dev' | 'Android & Mobile' | 'Systems & Robotics';
+  category: string;
   tags: string[];
   githubUrl?: string;
   liveUrl?: string;
   featured: boolean;
   highlights: string[];
   metrics?: { label: string; value: string };
-  badge?: string;
+  year?: string;
+  gallery?: { src: string; alt: string; caption: string }[];
+  /** Before/after bars shown in the expanded project. `max` is the scale (100 for %, 1 for scores). */
+  comparison?: {
+    baselineLabel: string;
+    rows: { label: string; before: number; after: number; max: number; unit?: string }[];
+  };
 }
 
 export interface ExperienceItem {
@@ -29,364 +30,298 @@ export interface ExperienceItem {
   period: string;
   location: string;
   description: string;
-  category: 'Education' | 'Leadership' | 'Activities';
   highlights: string[];
-  badge?: string;
 }
 
-export interface SkillCategory {
+export interface Stat {
+  value: number;
+  decimals?: number;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+  context: string;
+}
+
+export interface SkillGroup {
   title: string;
-  description: string;
-  skills: { name: string; level: 'Proficient' | 'Advanced' | 'Familiar'; icon?: string }[];
+  skills: string[];
 }
 
 export interface PortfolioData {
   personal: {
     name: string;
-    preferredName: string;
-    role: string;
-    statusBadge: string;
+    availability: string;
     location: string;
-    tagline: string;
-    aboutMe: string;
+    education: string;
+    focus: string;
+    intro: string;
+    introAside: string;
     resumeUrl: string;
     email: string;
-    phone: string;
-    socials: {
-      github: string;
-      linkedin: string;
-      leetcode: string;
-      codeforces: string;
-    };
-    quickStats: { label: string; value: string }[];
+    socials: { label: string; url: string }[];
   };
+  about: {
+    title: string;
+    paragraphs: string[];
+    photo: string;
+    photoAlt: string;
+    photoCaption: string;
+  };
+  stats: Stat[];
   projects: Project[];
   experience: ExperienceItem[];
-  skillCategories: SkillCategory[];
+  skills: SkillGroup[];
 }
 
 export const portfolioData: PortfolioData = {
-  // ----------------------------------------------------------------------------
-  // HERO & PERSONAL INFORMATION
-  // ----------------------------------------------------------------------------
   personal: {
     name: "Gaurav Girish Rathod",
-    preferredName: "Gaurav",
-    role: "Software Engineer & AI/ML Developer",
-    statusBadge: "Available for Software & AI/ML Roles",
-    location: "IIT Mandi & Mumbai, India",
-    tagline: "Engineering intelligent machine learning pipelines, high-performance systems, and fluid digital applications.",
-    aboutMe: "I am an engineering undergraduate at IIT Mandi with a passion for systems programming, machine learning, and generative AI. From architecting dual-branch deepfake detectors and autonomous computer vision vehicles to building modern Android and web applications, I love solving complex technical challenges with clean, robust code.",
+    availability: "Open to software & ML roles",
+    location: "Mandi & Mumbai, India",
+    education: "B.Tech Civil Engineering, IIT Mandi",
+    focus: "Computer vision, ML systems, C++",
+    intro: "Civil Engineering at IIT Mandi by degree. Machine learning and systems software by choice.",
+    introAside: "Lately: a deepfake detector that holds up on data it wasn't trained on, and a pipeline that finds the busywork hiding in 183k office logs.",
     resumeUrl: "/Gaurav_Rathod_Resume.pdf",
     email: "gauravrathod140706@gmail.com",
-    phone: "+91 9324892309",
-    socials: {
-      github: "https://github.com/gvrathodd",
-      linkedin: "https://www.linkedin.com/in/gauravgirishrathod/",
-      leetcode: "https://leetcode.com/gvrathodd",
-      codeforces: "https://codeforces.com/profile/gvrathodd",
-    },
-    quickStats: [
-      { label: "Primary Institute", value: "IIT Mandi" },
-      { label: "Algorithmic Problems Solved", value: "500+" },
-      { label: "Fundraising Lead (Xpecto)", value: "INR 20L+" },
-      { label: "Hackathon Finishes", value: "Top 3" },
-    ]
+    socials: [
+      { label: "GitHub", url: "https://github.com/gvrathodd" },
+      { label: "LinkedIn", url: "https://www.linkedin.com/in/gauravgirishrathod/" },
+      { label: "LeetCode", url: "https://leetcode.com/gvrathodd" },
+      { label: "Codeforces", url: "https://codeforces.com/profile/gvrathodd" },
+    ],
   },
 
-  // ----------------------------------------------------------------------------
-  // FEATURED PROJECTS
-  // ----------------------------------------------------------------------------
+  about: {
+    title: "From load paths to loss curves",
+    paragraphs: [
+      "I came to IIT Mandi to study Civil Engineering, and for the first semester that was the whole plan. Then Programming and Data Structures happened. I'd spend an afternoon working out by hand how a single beam carries its load, then spend the evening writing code that could check a thousand beams before I'd finished one. That was the hook.",
+      "Civil never really left, though. It taught me to think about systems in terms of constraints, margins and failure modes, and that is still how I approach ML. A deepfake detector is only worth something if it holds up on faces it has never seen, the same way a bridge is only worth something if it holds up on the day nobody tested for.",
+      "So I do both. I took every CS elective I could fit, still show up for civil case studies (we placed third across the IITs in sustainable city planning), and spend most of my evenings on models, C++ and whatever I'm building next. Mandi turns out to be a good place to stare at a loss curve. There's a mountain outside every window.",
+    ],
+    photo: "/me.jpg",
+    photoAlt: "Gaurav smiling on a terrace, with pine-covered hills and a blue sky behind him",
+    photoCaption: "Mandi, Himachal Pradesh",
+  },
+
+  stats: [
+    { value: 0.884, decimals: 3, label: "Cross-domain AUC", context: "Deepfake detector on WildDeepfake, up from a 0.831 baseline" },
+    { value: 20, prefix: "₹", suffix: "L+", label: "Sponsorship raised", context: "Xpecto '26, leading a 25-person team" },
+    { value: 8000, prefix: "₹", label: "Neonatal warmer prototype", context: "Against roughly ₹1 lakh for a commercial unit" },
+    { value: 500, suffix: "+", label: "Problems solved", context: "LeetCode and Codeforces, rated 1200+" },
+  ],
+
   projects: [
     {
       id: "deepfake-detection",
-      title: "Robust Deepfake Detection Under Domain Shift",
-      tagline: "State-of-the-art multimodal vision pipeline utilizing DINOv2 and Optimal Transport",
-      description: "Coupled a 307M-parameter DINOv2 ViT-L/14 with a 30-kernel SRM frequency stream to isolate high-frequency noise artifacts. Implemented Fused Gromov-Wasserstein (FGW) module with a 20-iteration Sinkhorn solver to match patch graphs against 32 real-face prototypes.",
-      category: "AI & ML",
-      tags: ["PyTorch", "DINOv2 ViT", "Optimal Transport (FGW)", "SRM", "Computer Vision", "Python"],
+      title: "Deepfake detection under domain shift",
+      tagline: "A two-stream detector that generalises to fakes from unseen sources.",
+      description: "Most deepfake detectors memorise one generator's fingerprints and fall apart on anything new. This one pairs a frozen 307M-parameter DINOv2 ViT-L/14 with a 30-kernel SRM noise stream, fused into a 1153-d head. A Fused Gromov-Wasserstein module (20-iteration Sinkhorn) then matches each face's patch graph against a bank of 32 real-face prototypes, so the model learns what real looks like instead.",
+      category: "Research · ML",
+      tags: ["PyTorch", "DINOv2", "Optimal transport", "SRM", "OpenCV"],
       githubUrl: "https://github.com/gvrathodd",
       featured: true,
-      badge: "Top Priority • Research AI",
-      metrics: { label: "WildDeepfake AUC", value: "0.884 (+5.3%)" },
+      metrics: { label: "AUC on WildDeepfake", value: "0.884" },
+      year: "2026",
       highlights: [
-        "Surpassed XceptionNet baseline across all metrics: Recall lifted from 48.0% to 74.0% (+26%).",
-        "Attained 0.946 validation AUC (88.7% accuracy) across 140k+ compressed test samples.",
-        "Built graph matching mechanism yielding 224x224 interpretable anomaly heatmaps."
-      ]
+        "0.946 validation AUC (88.7% accuracy) over 140k+ heavily compressed test samples.",
+        "Graph matching produces 224×224 heatmaps showing which regions look manipulated.",
+      ],
+      gallery: [
+        { src: "/projects/deepfake/heatmap-1.webp", alt: "Fake face with anomaly heatmap concentrated on the cheeks and jaw", caption: "Fake, flagged at p = 0.987. Anomalies cluster along the blended cheek and jaw." },
+        { src: "/projects/deepfake/heatmap-2.webp", alt: "Fake face with two sharp anomaly hotspots on the right side", caption: "Fake, p = 0.940. Two tight hotspots where the face swap meets the hair." },
+        { src: "/projects/deepfake/heatmap-3.webp", alt: "Real face with diffuse, low-intensity heatmap", caption: "Real, p = 0.000. Only scattered, low-energy responses." },
+        { src: "/projects/deepfake/heatmap-4.webp", alt: "Real face with heatmap spread across the background", caption: "Real, p = 0.009. Activation spreads into the background, not the face." },
+      ],
+      comparison: {
+        baselineLabel: "XceptionNet (published)",
+        rows: [
+          { label: "Recall", before: 48.0, after: 74.0, max: 100, unit: "%" },
+          { label: "Accuracy", before: 72.3, after: 76.5, max: 100, unit: "%" },
+          { label: "F1", before: 0.59, after: 0.76, max: 1 },
+          { label: "Cross-domain AUC", before: 0.831, after: 0.884, max: 1 },
+        ],
+      },
     },
     {
       id: "process-discovery-engine",
-      title: "Process Discovery & HITL Automation Engine",
-      tagline: "Multimodal workflow boundary detection and human-in-the-loop web automation",
-      description: "Temporal boundary-detection pipeline on 183k+ operation logs combined with isolated PaddleOCR extraction over 1.1k+ UI captures to identify and automate repetitive back-office workflows.",
-      category: "AI & ML",
-      tags: ["Python", "Playwright", "Scikit-Learn", "PaddleOCR", "Process Mining", "HistGradientBoosting"],
+      title: "Process discovery & HITL automation",
+      tagline: "Finding the repetitive work in back-office logs, then automating it with a human in the loop.",
+      description: "Back-office staff repeat the same workflows all day, but nobody logs where one task ends and the next begins. A HistGradientBoosting boundary detector over 183k+ operation logs recovers those work units, PaddleOCR (>0.97 confidence) reads 1.1k+ UI screenshots to label them, and a Playwright suite automates the worst offenders, with a human approving every step.",
+      category: "ML · Automation",
+      tags: ["Python", "Playwright", "scikit-learn", "PaddleOCR", "Process mining"],
       githubUrl: "https://github.com/gvrathodd/automation-proposal",
       featured: true,
-      badge: "Top Priority • Automation AI",
-      metrics: { label: "Boundary F1 Score", value: "0.905" },
+      metrics: { label: "Boundary F1", value: "0.905" },
       highlights: [
-        "Consolidated 540 unlabelled work units across 15 production sessions with 1.10s mean error.",
-        "Categorized 5 operational families and isolated 209 target workflow units consuming 35.8% of runtime.",
-        "Parameterized Playwright browser automation suite featuring safe-stop invariants and HITL validation."
-      ]
+        "Segmented 540 unlabelled work units across 15 production sessions with 1.10s mean boundary error.",
+        "Grouped them into 5 operational families; 209 target units accounted for 35.8% of runtime.",
+        "Safe-stop invariants and human-in-the-loop gates: 16/16 test scenarios passed with zero unauthorised transactions.",
+      ],
+      year: "2026",
     },
     {
       id: "path-finder",
-      title: "Path-Finder: Algorithmic Graph Traversal Engine",
-      tagline: "Interactive 60 FPS visual traversal engine for graph search algorithms",
-      description: "Interactive pathfinding simulator rendering Dijkstra, A*, BFS, and DFS traversals on dynamically weighted grid topologies with custom heuristic queues and recursive maze generation.",
-      category: "Software Dev",
-      tags: ["React", "JavaScript", "Graph Theory", "Algorithms", "Web Performance", "Vite"],
+      title: "Path-Finder",
+      tagline: "A visualiser for Dijkstra, A*, BFS and DFS on weighted grids.",
+      description: "An interactive pathfinding sandbox. Draw walls and weights, generate a maze, and watch each algorithm explore the grid. Path computation is decoupled from rendering so large grids stay smooth.",
+      category: "Web · Algorithms",
+      tags: ["React", "JavaScript", "Graph algorithms", "Vite"],
       githubUrl: "https://github.com/gvrathodd/Path-Finder",
-      liveUrl: "https://github.com/gvrathodd/Path-Finder",
+      liveUrl: "https://path-visualizer-two.vercel.app/",
       featured: true,
-      badge: "Top Priority • 60 FPS Engine",
-      metrics: { label: "Frame Rate", value: "60 FPS" },
+      metrics: { label: "Nodes per frame", value: "2,500+" },
       highlights: [
-        "Renders 2,500+ nodes under 16ms animation frames on dynamic weighted grids.",
-        "Decoupled path calculation from UI re-renders using custom heuristic queues.",
-        "Built recursive maze generation and state-export tools, cutting map setup time by 70%."
-      ]
+        "Renders 2,500+ nodes inside a 16ms frame budget on dynamically weighted grids.",
+        "Custom heuristic priority queues keep pathfinding off React's render path.",
+        "Recursive maze generation and state export cut map setup time by about 70%.",
+      ],
+      year: "2026",
     },
     {
       id: "qtext-editor",
-      title: "QTextEditor: High-Performance C++ Text Editor",
-      tagline: "Native desktop multi-tab text editor built with C++ and Qt",
-      description: "Engineered a high-performance desktop code and text editor utilizing C++ and the Qt framework. Features multi-document tab management, low-latency file I/O handling, custom syntax parsing, interactive search & replace, and responsive document viewport rendering.",
-      category: "Software Dev",
-      tags: ["C++", "C++17", "Qt Framework", "OOP", "Systems Programming", "GUI Design"],
+      title: "QTextEditor",
+      tagline: "A multi-tab desktop text editor written in C++17 and Qt.",
+      description: "A native editor with tabbed documents, syntax highlighting, regex search and replace, and keyboard-driven navigation. Built to learn how real editors manage buffers, file I/O and redraws.",
+      category: "Systems · C++",
+      tags: ["C++17", "Qt", "OOP", "Desktop"],
       githubUrl: "https://github.com/gvrathodd/QTextEditor-main",
       featured: true,
-      badge: "Top Priority • Systems & C++",
-      metrics: { label: "Architecture", value: "Native C++ / Qt" },
+      metrics: { label: "Stack", value: "C++ / Qt" },
       highlights: [
-        "Built modular multi-tab document manager with memory-efficient buffer allocations.",
-        "Implemented real-time syntax highlighting engine and instantaneous regex search.",
-        "Native cross-platform desktop UI with streamlined keyboard shortcuts and fast startup."
-      ]
+        "Modular multi-tab document manager with memory-conscious buffer handling.",
+        "Real-time syntax highlighting and regex search.",
+        "Cross-platform UI with keyboard shortcuts for most actions.",
+      ],
     },
     {
       id: "ai-knowledge-assistant",
-      title: "AI Personal Knowledge Assistant",
-      tagline: "Context-aware conversational intelligence powered by RAG and modern LLM agents",
-      description: "An intelligent personal knowledge companion that indexes personal notes, documentation, and research papers using vector embeddings. Features high-speed retrieval augmented generation (RAG), conversational memory, and tool-calling automation.",
-      category: "AI & ML",
-      tags: ["Python", "FastAPI", "RAG", "LLMs", "Vector DB", "LangChain", "OpenAI / HuggingFace"],
-      githubUrl: "https://github.com/gvrathodd",
+      title: "Personal knowledge assistant",
+      tagline: "RAG over my own notes, docs and papers, with citations back to the source.",
+      description: "Indexes notes and papers with vector embeddings and answers questions with hybrid keyword + vector retrieval, conversational memory and tool calling.",
+      category: "ML · LLMs",
+      tags: ["Python", "FastAPI", "RAG", "LangChain", "Vector DB"],
       featured: false,
-      badge: "Generative AI",
-      metrics: { label: "Query Latency", value: "< 250ms" },
-      highlights: [
-        "Semantic document chunking with hybrid keyword + vector retrieval for high relevance.",
-        "Engineered with FastAPI backend and modular MCP/tool-calling architecture.",
-        "Interactive citations linking directly to indexed source materials."
-      ]
+      highlights: [],
     },
     {
       id: "chatroom-app",
-      title: "Chatroom App",
-      tagline: "Modern real-time Android communication application",
-      description: "A fast, native Android chat client featuring secure user authentication, instant peer-to-peer message synchronization, and intuitive room creation with clean MVVM architecture.",
-      category: "Android & Mobile",
-      tags: ["Kotlin", "Android SDK", "Firebase Firestore", "Jetpack Compose", "Coroutines", "MVVM"],
+      title: "Chatroom",
+      tagline: "A real-time Android chat app with rooms and authentication.",
+      description: "Native Android client with Firebase auth and Firestore-backed realtime messaging, built with Jetpack Compose and MVVM.",
+      category: "Android",
+      tags: ["Kotlin", "Jetpack Compose", "Firebase", "Coroutines"],
       githubUrl: "https://github.com/gvrathodd/ChatRoomApp",
       featured: false,
-      badge: "Mobile App",
-      metrics: { label: "Realtime Sync", value: "Sub-second" },
-      highlights: [
-        "Real-time reactive messaging backed by Firebase Firestore snapshot listeners.",
-        "Modern Material Design 3 and responsive Jetpack Compose UI with dark mode support.",
-        "Offline caching and state resilience using Kotlin Coroutines and StateFlow."
-      ]
+      highlights: [],
     },
     {
       id: "hudson-rc-car",
-      title: "Hudson Vision RC Car",
-      tagline: "Autonomous vision-based lane tracking and obstacle navigation vehicle",
-      description: "An autonomous miniature vehicle system equipped with onboard camera feeds and real-time computer vision processing to detect lane markings, calculate steering curvature, and execute throttle control in real time.",
-      category: "Systems & Robotics",
-      tags: ["Python", "OpenCV", "Embedded Systems", "Motor Telemetry", "PID Controller", "Computer Vision"],
+      title: "Hudson vision RC car",
+      tagline: "Lane tracking and steering from an onboard camera, closed with a PID loop.",
+      description: "Edge detection and inverse perspective mapping in OpenCV feed a PID steering controller on a small RC chassis.",
+      category: "Robotics · CV",
+      tags: ["Python", "OpenCV", "PID", "Embedded"],
       githubUrl: "https://github.com/gvrathodd/vision_lan_nav",
       featured: false,
-      badge: "Robotics & CV",
-      metrics: { label: "Frame Processing", value: "30+ FPS" },
-      highlights: [
-        "Designed edge detection and inverse perspective mapping (bird's-eye view) algorithms in OpenCV.",
-        "Implemented closed-loop PID steering controller for smooth trajectory correction.",
-        "Integrated lightweight hardware telemetry communicating with microcontroller drive controllers."
-      ]
+      highlights: [],
     },
     {
       id: "finance-tracker",
-      title: "Finance Tracker (FrostHack 2025)",
-      tagline: "Smart expense analytics and budgeting tool built for FrostHack 2025",
-      description: "Developed during FrostHack 2025 to empower students and professionals to track cash flow, categorize recurring expenses automatically, and visualize financial runway with interactive graphs.",
-      category: "Software Dev",
-      tags: ["Python", "Flask", "SQLite", "Data Analysis", "Matplotlib / Chart.js", "Hackathon"],
+      title: "Finance tracker",
+      tagline: "Expense categorisation and budget alerts, built at FrostHack 2025.",
+      description: "Flask + SQLite app that auto-categorises transactions and projects spending against a budget.",
+      category: "Hackathon",
+      tags: ["Python", "Flask", "SQLite", "Chart.js"],
       githubUrl: "https://github.com/gvrathodd/FinanceTraker",
       featured: false,
-      badge: "Hackathon Project",
-      metrics: { label: "Built for", value: "FrostHack 2025" },
-      highlights: [
-        "Automated spending categorization based on merchant transaction descriptions.",
-        "Dynamic budget threshold alerts with predictive expense extrapolation.",
-        "Clean, responsive dashboard with fast local SQLite persistence."
-      ]
-    }
+      highlights: [],
+    },
   ],
 
-  // ----------------------------------------------------------------------------
-  // EXPERIENCE & ACTIVITIES
-  // ----------------------------------------------------------------------------
   experience: [
-    {
-      id: "iit-mandi",
-      role: "B.Tech Engineering Undergraduate",
-      organization: "Indian Institute of Technology (IIT), Mandi",
-      period: "August 2024 – Present",
-      location: "Himachal Pradesh, India",
-      category: "Education",
-      badge: "Engineering Scholar",
-      description: "Pursuing engineering with intensive coursework in computer science, machine learning, systems architecture, and mathematical foundations.",
-      highlights: [
-        "Relevant Coursework: Programming & Data Structures, Machine Learning, Deep Learning, Operating Systems, Database Management Systems (DBMS), Computer Networks, Design of Algorithms, Linear Algebra.",
-        "Active member of technical student societies, robotics initiatives, and collegiate coding competitions."
-      ]
-    },
     {
       id: "xpecto-26",
       role: "Sponsorship Head",
-      organization: "Xpecto '26 (Annual Tech Fest, IIT Mandi)",
-      period: "September 2025 – March 2026",
-      location: "IIT Mandi, India",
-      category: "Leadership",
-      badge: "INR 20+ Lakh Raised",
-      description: "Spearheaded the corporate outreach, sponsorship acquisitions, and partnership pipeline for IIT Mandi's flagship national technical festival.",
+      organization: "Xpecto '26, IIT Mandi's annual tech fest",
+      period: "Sep 2025 – Mar 2026",
+      location: "IIT Mandi",
+      description: "Ran corporate outreach and sponsorship for the fest.",
       highlights: [
-        "Directed a 25-member cross-functional team across pitching, negotiations, and contract deliverables.",
-        "Successfully secured INR 20+ Lakh in sponsorship from 20+ corporate and public sector leaders.",
-        "Streamlined pitch decks, CRM lead tracking, and institutional partnership deliverables."
-      ]
+        "Led a 25-person team across pitching, negotiation and contract delivery.",
+        "Raised INR 20L+ from 20+ corporate and public-sector sponsors.",
+      ],
     },
     {
       id: "design-practicum",
-      role: "Team Lead — IoT Neonatal Warmer",
+      role: "Team Lead, IoT neonatal warmer",
       organization: "Design Practicum, IIT Mandi",
-      period: "August 2025 – December 2025",
-      location: "IIT Mandi, India",
-      category: "Leadership",
-      badge: "Hardware & IoT",
-      description: "Directed an engineering team to architect and build a low-cost, high-reliability IoT neonatal infant warmer for rural clinical settings.",
+      period: "Aug 2025 – Dec 2025",
+      location: "IIT Mandi",
+      description: "Led the build of a low-cost infant warmer for rural clinics.",
       highlights: [
-        "Reduced prototype production cost to INR 8,000 against the standard commercial baseline of INR 1 Lakh.",
-        "Implemented real-time thermal sensing, automated temperature regulation, and safety cut-off loops.",
-        "Delivered a working physical prototype verified under clinical safety guidelines."
-      ]
-    },
-    {
-      id: "sae-society",
-      role: "Automotive Dynamics & Telemetry Member",
-      organization: "Society of Automotive Engineers (SAE)",
-      period: "2024 – Present",
-      location: "IIT Mandi, India",
-      category: "Activities",
-      badge: "SAE Collegiate",
-      description: "Collaborated on automotive systems, chassis telemetry, sensor data logging, and electric/mechanical powertrain integration.",
-      highlights: [
-        "Analyzed real-time sensor streams and motor controllers for collegiate racing competitions.",
-        "Worked across multidisciplinary subsystems bridging software telemetry with mechanical hardware."
-      ]
-    },
-    {
-      id: "ranneeti",
-      role: "Organizing Committee Member",
-      organization: "Ranneeti (Annual Sports Fest, IIT Mandi)",
-      period: "2024 – 2025",
-      location: "IIT Mandi, India",
-      category: "Activities",
-      badge: "Sports & Operations",
-      description: "Organized tournament operations, hospitality, and event scheduling for inter-college contingents from across India.",
-      highlights: [
-        "Managed logistical coordination and live scheduling for multi-sport tournament brackets.",
-        "Facilitated campus facilities and athlete accommodations for 500+ visiting competitors."
-      ]
+        "Brought prototype cost to INR 8,000, against roughly INR 1 lakh for commercial units.",
+        "Real-time thermal sensing with automatic regulation and safety cut-offs.",
+      ],
     },
     {
       id: "hackathons-cp",
-      role: "Competitive Programmer & Hackathon Finalist",
-      organization: "HACK60, FrostHack, Codeforces & LeetCode",
-      period: "2024 – Present",
-      location: "National / Online",
-      category: "Activities",
-      badge: "Top Honors",
-      description: "Active competitive programmer and hackathon builder solving algorithmic and real-world engineering problems.",
+      role: "Hackathons & competitive programming",
+      organization: "HACK60, Inter-IIT, Codeforces, LeetCode",
+      period: "2024 – now",
+      location: "",
+      description: "",
       highlights: [
-        "1st Runner-Up in Deep Learning Hackathon HACK60 for an end-to-end computer vision solution.",
-        "Won 3rd Position pan-IIT in the Sustainable City Planning Case Study at IIT Roorkee (Inter-IIT).",
-        "Solved 500+ algorithmic challenges on LeetCode and Codeforces (Rating: 1200+)."
-      ]
-    }
+        "1st runner-up at HACK60, a deep learning hackathon, with an end-to-end CV solution.",
+        "3rd place pan-IIT in the Sustainable City Planning case study at the Inter-IIT Civil Conclave, IIT Roorkee.",
+        "500+ problems solved; Codeforces rating 1200+.",
+      ],
+    },
+    {
+      id: "sae-society",
+      role: "Member, telemetry",
+      organization: "SAE Collegiate Club, IIT Mandi",
+      period: "2024 – now",
+      location: "IIT Mandi",
+      description: "Sensor data logging and telemetry for the college racing team.",
+      highlights: [],
+    },
+    {
+      id: "ranneeti",
+      role: "Organising committee",
+      organization: "Ranneeti, IIT Mandi's sports fest",
+      period: "2024 – 2025",
+      location: "IIT Mandi",
+      description: "Scheduling, logistics and accommodation for 500+ visiting athletes.",
+      highlights: [],
+    },
+    {
+      id: "iit-mandi",
+      role: "B.Tech, Civil Engineering",
+      organization: "Indian Institute of Technology Mandi",
+      period: "Aug 2024 – now",
+      location: "Himachal Pradesh",
+      description: "Took the CS electives anyway: data structures, design of algorithms, machine learning, deep learning, operating systems, DBMS, computer networks, probability & statistics, linear algebra.",
+      highlights: [],
+    },
   ],
 
-  // ----------------------------------------------------------------------------
-  // SKILLS & TECH STACK
-  // ----------------------------------------------------------------------------
-  skillCategories: [
+  skills: [
     {
-      title: "Languages & Core",
-      description: "Foundational programming languages used for high-efficiency systems and algorithms",
-      skills: [
-        { name: "C++ (C++17)", level: "Advanced" },
-        { name: "Python", level: "Advanced" },
-        { name: "Kotlin (Android)", level: "Proficient" },
-        { name: "JavaScript / TypeScript", level: "Proficient" },
-        { name: "C", level: "Proficient" },
-        { name: "SQL", level: "Proficient" },
-        { name: "Linux / Bash", level: "Proficient" }
-      ]
+      title: "Languages",
+      skills: ["C++17", "Python", "TypeScript / JavaScript", "C", "Scala", "SQL", "Kotlin", "Bash"],
     },
     {
-      title: "AI, Machine Learning & Vision",
-      description: "Deep learning frameworks, computer vision architectures, and agent workflows",
-      skills: [
-        { name: "PyTorch", level: "Advanced" },
-        { name: "TensorFlow / Keras", level: "Proficient" },
-        { name: "OpenCV", level: "Advanced" },
-        { name: "HuggingFace Transformers", level: "Proficient" },
-        { name: "LLMs & RAG Systems", level: "Advanced" },
-        { name: "Model Context Protocol (MCP)", level: "Proficient" },
-        { name: "Scikit-Learn", level: "Advanced" },
-        { name: "CUDA & Acceleration", level: "Familiar" }
-      ]
+      title: "ML & AI",
+      skills: ["PyTorch", "TensorFlow / Keras", "OpenCV", "Hugging Face", "LLMs, RAG & MCP", "NLP", "scikit-learn", "CUDA"],
     },
     {
-      title: "Web, Mobile & Backend",
-      description: "Modern frameworks for responsive full-stack apps and native mobile clients",
-      skills: [
-        { name: "React & Next.js", level: "Proficient" },
-        { name: "FastAPI", level: "Advanced" },
-        { name: "Flask & Django", level: "Proficient" },
-        { name: "Android Jetpack Compose", level: "Proficient" },
-        { name: "Tailwind CSS", level: "Advanced" },
-        { name: "RESTful APIs", level: "Advanced" },
-        { name: "Firebase (Auth, Firestore)", level: "Advanced" },
-        { name: "PostgreSQL & SQLite", level: "Proficient" }
-      ]
+      title: "Data & cloud",
+      skills: ["Databricks", "PostgreSQL", "Neo4j / Cosmos DB", "Pandas / NumPy", "Azure AI Foundry", "AWS / GCP", "Power BI / Tableau"],
     },
     {
-      title: "DevOps, Tools & Data",
-      description: "Deployment, automation testing, version control, and data engineering",
-      skills: [
-        { name: "Git & GitHub Actions", level: "Advanced" },
-        { name: "Docker", level: "Proficient" },
-        { name: "Playwright Automation", level: "Advanced" },
-        { name: "Azure (AI Foundry) / AWS", level: "Familiar" },
-        { name: "Pandas & NumPy", level: "Advanced" },
-        { name: "Databricks & Neo4j", level: "Familiar" },
-        { name: "GDB & Unit Testing", level: "Proficient" }
-      ]
-    }
-  ]
+      title: "Build & ship",
+      skills: ["React / Next.js", "Flask / Django / FastAPI", "Jetpack Compose", "Docker / Kubernetes", "GitHub Actions", "Playwright", "GDB"],
+    },
+  ],
 };

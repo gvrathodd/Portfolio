@@ -1,104 +1,171 @@
 @import "tailwindcss";
 
-@layer base {
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-paper: #f4f7fb;
+  --color-surface: #ffffff;
+  --color-ink: #0b1422;
+  --color-muted: #5a6a7e;
+  --color-line: #dde5ee;
+  --color-accent: #1479b8;
+  --color-sky: #dcEFFC;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The sky: used by the hero and contact panels */
+:root {
+  --sky-top: #6fbcef;
+  --sky-mid: #b4dcf8;
+  --sky-bottom: #eef7fe;
+  --sky-ink: #0b1422;
+  --sky-muted: #33506e;
+  --sky-glass: rgb(255 255 255 / 0.5);
+  --sky-glass-border: rgb(255 255 255 / 0.75);
+  --sky-btn-text: #ffffff;
+  --cloud: rgb(255 255 255 / 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
   :root {
-    --font-display: 'Plus Jakarta Sans', -apple-system, sans-serif;
-    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-  }
+    --color-paper: #070c14;
+    --color-surface: #0c141f;
+    --color-ink: #e6edf5;
+    --color-muted: #8796aa;
+    --color-line: #1a2433;
+    --color-accent: #6ec3f4;
+    --color-sky: #0e2336;
 
+    --sky-top: #040d1a;
+    --sky-mid: #0a2540;
+    --sky-bottom: #1a5383;
+    --sky-ink: #eef5fc;
+    --sky-muted: #a7c1da;
+    --sky-glass: rgb(255 255 255 / 0.07);
+    --sky-glass-border: rgb(255 255 255 / 0.14);
+    --sky-btn-text: #06101c;
+    --cloud: rgb(130 195 245 / 0.12);
+  }
+}
+
+@layer base {
   html {
-    font-family: var(--font-sans);
     scroll-behavior: smooth;
-    color-scheme: dark;
-    background-color: #070c18;
+    background-color: var(--color-paper);
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* Smooth custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
   }
-  ::-webkit-scrollbar-track {
-    background: #070c18;
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-surface);
   }
-  ::-webkit-scrollbar-thumb {
-    background: #1e293b;
-    border-radius: 9999px;
+
+  section[id] {
+    scroll-margin-top: 5rem;
   }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #38bdf8;
-  }
-}
 
-/* Watermelon UI & Godly Glassmorphic Styles */
-.glass-card {
-  background: rgba(13, 23, 44, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(125, 211, 252, 0.14);
-}
-
-.glass-pill {
-  background: rgba(11, 20, 38, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(125, 211, 252, 0.18);
-}
-
-.sky-gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 40%, #38bdf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.sky-glow {
-  box-shadow: 0 0 60px -10px rgba(56, 189, 248, 0.28);
-}
-
-.sky-glow-subtle {
-  box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.15);
-}
-
-/* Subtle modern grid */
-.bg-grid-soft {
-  background-size: 48px 48px;
-  background-image: 
-    linear-gradient(to right, rgba(125, 211, 252, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(125, 211, 252, 0.03) 1px, transparent 1px);
-}
-
-/* Continuous kinetic marquee */
-@keyframes marqueeScroll {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marqueeScroll 28s linear infinite;
+.sky-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--sky-ink);
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 52%, var(--sky-bottom) 100%);
 }
 
-.animate-marquee:hover {
-  animation-play-state: paused;
+/* Film grain so the gradient doesn't band */
+.sky-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
 }
 
-/* Soft floating breathing aurora */
-@keyframes auroraFloat {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.35;
+.cloud {
+  position: absolute;
+  z-index: -1;
+  border-radius: 9999px;
+  background: var(--cloud);
+  filter: blur(48px);
+  pointer-events: none;
+  animation: drift 38s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(-4%, 0, 0);
   }
-  50% {
-    transform: translate(40px, -25px) scale(1.1);
-    opacity: 0.55;
+  to {
+    transform: translate3d(6%, -6%, 0);
   }
 }
 
-.animate-aurora {
-  animation: auroraFloat 12s ease-in-out infinite;
+.sky-glass {
+  background: var(--sky-glass);
+  border: 1px solid var(--sky-glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Entrance + scroll reveal */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 1s var(--ease-out-expo) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 100ms);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.9s var(--ease-out-expo),
+    transform 0.9s var(--ease-out-expo);
+  transition-delay: calc(var(--d, 0) * 80ms);
+}
+
+.reveal.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rise,
+  .cloud {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
