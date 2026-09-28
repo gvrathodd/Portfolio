@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import { portfolioData } from '../data/portfolioData';
+import { MagneticButton } from './MagneticButton';
 import confetti from 'canvas-confetti';
 import { 
   Mail, 
@@ -36,13 +37,13 @@ export const Contact: React.FC = () => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
-    // Trigger confetti celebration
+    // Trigger confetti celebration with Sky Blue & Azure tones
     try {
       confetti({
-        particleCount: 80,
-        spread: 70,
+        particleCount: 90,
+        spread: 75,
         origin: { y: 0.7 },
-        colors: ['#10b981', '#06b6d4', '#6366f1', '#ffffff']
+        colors: ['#38bdf8', '#0ea5e9', '#0284c7', '#60a5fa', '#ffffff']
       });
     } catch {
       // safe fallback
@@ -56,32 +57,32 @@ export const Contact: React.FC = () => {
 
   return (
     <section id="contact" className="py-24 px-4 sm:px-6 max-w-5xl mx-auto">
-      <div className="relative p-8 sm:p-12 rounded-3xl glass-panel border-white/10 overflow-hidden shadow-2xl">
-        {/* Ambient background glow */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-emerald-500/10 via-cyan-500/5 to-transparent blur-3xl pointer-events-none" />
+      <div className="relative p-8 sm:p-12 rounded-3xl glass-panel border-sky-500/20 overflow-hidden shadow-2xl shadow-sky-950/20">
+        {/* Ambient background sky glow */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-sky-500/15 via-cyan-500/10 to-transparent blur-3xl pointer-events-none" />
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-10">
           {/* Left Column: Direct Info & Socials */}
           <div className="lg:col-span-2 flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono font-medium text-emerald-400 uppercase tracking-widest mb-2">
+              <div className="flex items-center gap-2 text-xs font-mono font-medium text-sky-400 uppercase tracking-widest mb-2">
                 <Sparkles className="w-4 h-4" />
                 Get In Touch
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
                 Let's Build Something Exceptional
               </h2>
-              <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mb-6">
+              <p className="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
                 Whether you have an exciting software or AI/ML opportunity, want to collaborate on open-source, or simply want to chat, my inbox is always open.
               </p>
 
               {/* One-click Copy Email Pill */}
               <div className="mb-6">
-                <label className="block text-xs font-mono text-zinc-500 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-mono text-slate-500 uppercase tracking-wider mb-2">
                   Direct Email
                 </label>
-                <div className="flex items-center gap-2 p-2 rounded-2xl bg-zinc-950/80 border border-zinc-800">
-                  <span className="text-xs sm:text-sm font-mono text-zinc-200 truncate pl-2 select-all">
+                <div className="flex items-center gap-2 p-2 rounded-2xl bg-slate-950/80 border border-sky-500/20">
+                  <span className="text-xs sm:text-sm font-mono text-slate-200 truncate pl-2 select-all">
                     {personal.email}
                   </span>
                   <animated.button
@@ -89,8 +90,8 @@ export const Contact: React.FC = () => {
                     onClick={handleCopyEmail}
                     className={`ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors shrink-0 ${
                       copied
-                        ? 'bg-emerald-500 text-zinc-950'
-                        : 'bg-zinc-800 hover:bg-zinc-700 text-zinc-200'
+                        ? 'bg-sky-400 text-slate-950'
+                        : 'bg-slate-800 hover:bg-slate-700 text-slate-200'
                     }`}
                   >
                     {copied ? (
@@ -111,53 +112,53 @@ export const Contact: React.FC = () => {
 
             {/* Social Links Row */}
             <div>
-              <label className="block text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">
+              <label className="block text-xs font-mono text-slate-500 uppercase tracking-wider mb-3">
                 Connect Online
               </label>
               <div className="flex flex-wrap gap-2.5">
-                <a
+                <MagneticButton
                   href={personal.socials.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-medium transition-all duration-200 hover:-translate-y-0.5"
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-sky-500/20 hover:border-sky-400/40 text-slate-200 text-xs font-medium transition-colors"
                 >
                   <GithubIcon className="w-4 h-4" />
                   <span>GitHub</span>
-                  <ArrowUpRight className="w-3 h-3 text-zinc-500" />
-                </a>
+                  <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                </MagneticButton>
 
-                <a
+                <MagneticButton
                   href={personal.socials.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-medium transition-all duration-200 hover:-translate-y-0.5"
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-sky-500/20 hover:border-sky-400/40 text-slate-200 text-xs font-medium transition-colors"
                 >
                   <LinkedinIcon className="w-4 h-4" />
                   <span>LinkedIn</span>
-                  <ArrowUpRight className="w-3 h-3 text-zinc-500" />
-                </a>
+                  <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                </MagneticButton>
 
-                <a
+                <MagneticButton
                   href={personal.socials.leetcode}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-medium transition-all duration-200 hover:-translate-y-0.5"
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-sky-500/20 hover:border-sky-400/40 text-slate-200 text-xs font-medium transition-colors"
                 >
-                  <Code className="w-4 h-4 text-amber-400" />
+                  <Code className="w-4 h-4 text-sky-400" />
                   <span>LeetCode</span>
-                  <ArrowUpRight className="w-3 h-3 text-zinc-500" />
-                </a>
+                  <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                </MagneticButton>
 
-                <a
+                <MagneticButton
                   href={personal.socials.codeforces}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-medium transition-all duration-200 hover:-translate-y-0.5"
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-sky-500/20 hover:border-sky-400/40 text-slate-200 text-xs font-medium transition-colors"
                 >
                   <Terminal className="w-4 h-4 text-cyan-400" />
                   <span>Codeforces</span>
-                  <ArrowUpRight className="w-3 h-3 text-zinc-500" />
-                </a>
+                  <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                </MagneticButton>
               </div>
             </div>
           </div>
@@ -167,7 +168,7 @@ export const Contact: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-mono text-zinc-400 mb-1.5">
+                  <label className="block text-xs font-mono text-slate-400 mb-1.5">
                     Your Name
                   </label>
                   <input
@@ -176,12 +177,12 @@ export const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Alex Smith"
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-950/80 border border-zinc-800 text-zinc-100 placeholder-zinc-600 text-sm focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-sky-500/20 text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/50 transition-all"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-zinc-400 mb-1.5">
+                  <label className="block text-xs font-mono text-slate-400 mb-1.5">
                     Your Email
                   </label>
                   <input
@@ -190,13 +191,13 @@ export const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="alex@company.com"
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-950/80 border border-zinc-800 text-zinc-100 placeholder-zinc-600 text-sm focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/50 transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-sky-500/20 text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/50 transition-all"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-zinc-400 mb-1.5">
+                <label className="block text-xs font-mono text-slate-400 mb-1.5">
                   Message
                 </label>
                 <textarea
@@ -205,20 +206,20 @@ export const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Tell me about your project, idea, or role..."
-                  className="w-full px-4 py-3 rounded-xl bg-zinc-950/80 border border-zinc-800 text-zinc-100 placeholder-zinc-600 text-sm focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/50 transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-sky-500/20 text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/50 transition-all resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/35 hover:-translate-y-0.5 active:translate-y-0"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold text-sm transition-all duration-200 shadow-xl shadow-sky-500/25 hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0"
               >
                 <Send className="w-4 h-4" />
                 <span>Send Message via Email</span>
               </button>
 
               {submitted && (
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs text-center font-mono animate-fadeIn">
+                <div className="p-3 rounded-xl bg-sky-500/10 border border-sky-500/25 text-sky-300 text-xs text-center font-mono">
                   Opening your email client... Looking forward to connecting!
                 </div>
               )}

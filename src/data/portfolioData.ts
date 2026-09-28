@@ -82,7 +82,7 @@ export const portfolioData: PortfolioData = {
     phone: "+91 9324892309",
     socials: {
       github: "https://github.com/gvrathodd",
-      linkedin: "https://linkedin.com/in/gaurav-girish-rathod", // Update with exact handle if desired
+      linkedin: "https://www.linkedin.com/in/gauravgirishrathod/",
       leetcode: "https://leetcode.com/gvrathodd",
       codeforces: "https://codeforces.com/profile/gvrathodd",
     },
@@ -107,12 +107,64 @@ export const portfolioData: PortfolioData = {
       tags: ["PyTorch", "DINOv2 ViT", "Optimal Transport (FGW)", "SRM", "Computer Vision", "Python"],
       githubUrl: "https://github.com/gvrathodd",
       featured: true,
-      badge: "Research & AI",
+      badge: "Top Priority • Research AI",
       metrics: { label: "WildDeepfake AUC", value: "0.884 (+5.3%)" },
       highlights: [
         "Surpassed XceptionNet baseline across all metrics: Recall lifted from 48.0% to 74.0% (+26%).",
         "Attained 0.946 validation AUC (88.7% accuracy) across 140k+ compressed test samples.",
         "Built graph matching mechanism yielding 224x224 interpretable anomaly heatmaps."
+      ]
+    },
+    {
+      id: "process-discovery-engine",
+      title: "Process Discovery & HITL Automation Engine",
+      tagline: "Multimodal workflow boundary detection and human-in-the-loop web automation",
+      description: "Temporal boundary-detection pipeline on 183k+ operation logs combined with isolated PaddleOCR extraction over 1.1k+ UI captures to identify and automate repetitive back-office workflows.",
+      category: "AI & ML",
+      tags: ["Python", "Playwright", "Scikit-Learn", "PaddleOCR", "Process Mining", "HistGradientBoosting"],
+      githubUrl: "https://github.com/gvrathodd/automation-proposal",
+      featured: true,
+      badge: "Top Priority • Automation AI",
+      metrics: { label: "Boundary F1 Score", value: "0.905" },
+      highlights: [
+        "Consolidated 540 unlabelled work units across 15 production sessions with 1.10s mean error.",
+        "Categorized 5 operational families and isolated 209 target workflow units consuming 35.8% of runtime.",
+        "Parameterized Playwright browser automation suite featuring safe-stop invariants and HITL validation."
+      ]
+    },
+    {
+      id: "path-finder",
+      title: "Path-Finder: Algorithmic Graph Traversal Engine",
+      tagline: "Interactive 60 FPS visual traversal engine for graph search algorithms",
+      description: "Interactive pathfinding simulator rendering Dijkstra, A*, BFS, and DFS traversals on dynamically weighted grid topologies with custom heuristic queues and recursive maze generation.",
+      category: "Software Dev",
+      tags: ["React", "JavaScript", "Graph Theory", "Algorithms", "Web Performance", "Vite"],
+      githubUrl: "https://github.com/gvrathodd/Path-Finder",
+      liveUrl: "https://github.com/gvrathodd/Path-Finder",
+      featured: true,
+      badge: "Top Priority • 60 FPS Engine",
+      metrics: { label: "Frame Rate", value: "60 FPS" },
+      highlights: [
+        "Renders 2,500+ nodes under 16ms animation frames on dynamic weighted grids.",
+        "Decoupled path calculation from UI re-renders using custom heuristic queues.",
+        "Built recursive maze generation and state-export tools, cutting map setup time by 70%."
+      ]
+    },
+    {
+      id: "qtext-editor",
+      title: "QTextEditor: High-Performance C++ Text Editor",
+      tagline: "Native desktop multi-tab text editor built with C++ and Qt",
+      description: "Engineered a high-performance desktop code and text editor utilizing C++ and the Qt framework. Features multi-document tab management, low-latency file I/O handling, custom syntax parsing, interactive search & replace, and responsive document viewport rendering.",
+      category: "Software Dev",
+      tags: ["C++", "C++17", "Qt Framework", "OOP", "Systems Programming", "GUI Design"],
+      githubUrl: "https://github.com/gvrathodd/QTextEditor-main",
+      featured: true,
+      badge: "Top Priority • Systems & C++",
+      metrics: { label: "Architecture", value: "Native C++ / Qt" },
+      highlights: [
+        "Built modular multi-tab document manager with memory-efficient buffer allocations.",
+        "Implemented real-time syntax highlighting engine and instantaneous regex search.",
+        "Native cross-platform desktop UI with streamlined keyboard shortcuts and fast startup."
       ]
     },
     {
@@ -123,9 +175,9 @@ export const portfolioData: PortfolioData = {
       category: "AI & ML",
       tags: ["Python", "FastAPI", "RAG", "LLMs", "Vector DB", "LangChain", "OpenAI / HuggingFace"],
       githubUrl: "https://github.com/gvrathodd",
-      featured: true,
+      featured: false,
       badge: "Generative AI",
-      metrics: { label: "Query Retrieval Latency", value: "< 250ms" },
+      metrics: { label: "Query Latency", value: "< 250ms" },
       highlights: [
         "Semantic document chunking with hybrid keyword + vector retrieval for high relevance.",
         "Engineered with FastAPI backend and modular MCP/tool-calling architecture.",
@@ -140,7 +192,7 @@ export const portfolioData: PortfolioData = {
       category: "Android & Mobile",
       tags: ["Kotlin", "Android SDK", "Firebase Firestore", "Jetpack Compose", "Coroutines", "MVVM"],
       githubUrl: "https://github.com/gvrathodd/ChatRoomApp",
-      featured: true,
+      featured: false,
       badge: "Mobile App",
       metrics: { label: "Realtime Sync", value: "Sub-second" },
       highlights: [
@@ -157,7 +209,7 @@ export const portfolioData: PortfolioData = {
       category: "Systems & Robotics",
       tags: ["Python", "OpenCV", "Embedded Systems", "Motor Telemetry", "PID Controller", "Computer Vision"],
       githubUrl: "https://github.com/gvrathodd/vision_lan_nav",
-      featured: true,
+      featured: false,
       badge: "Robotics & CV",
       metrics: { label: "Frame Processing", value: "30+ FPS" },
       highlights: [
@@ -181,41 +233,6 @@ export const portfolioData: PortfolioData = {
         "Automated spending categorization based on merchant transaction descriptions.",
         "Dynamic budget threshold alerts with predictive expense extrapolation.",
         "Clean, responsive dashboard with fast local SQLite persistence."
-      ]
-    },
-    {
-      id: "process-discovery-engine",
-      title: "Process Discovery & HITL Automation Engine",
-      tagline: "Multimodal workflow boundary detection and human-in-the-loop web automation",
-      description: "Temporal boundary-detection pipeline on 183k+ operation logs combined with isolated PaddleOCR extraction over 1.1k+ UI captures to identify and automate repetitive back-office workflows.",
-      category: "AI & ML",
-      tags: ["Python", "Playwright", "Scikit-Learn", "PaddleOCR", "Process Mining", "HistGradientBoosting"],
-      githubUrl: "https://github.com/gvrathodd/automation-proposal",
-      featured: false,
-      badge: "Enterprise AI",
-      metrics: { label: "Boundary F1 Score", value: "0.905" },
-      highlights: [
-        "Consolidated 540 unlabelled work units across 15 production sessions with 1.10s mean error.",
-        "Categorized 5 operational families and isolated 209 target workflow units consuming 35.8% of runtime.",
-        "Parameterized Playwright browser automation suite featuring safe-stop invariants and HITL validation."
-      ]
-    },
-    {
-      id: "path-finder",
-      title: "Path-Finder: Algorithmic Graph Traversal Engine",
-      tagline: "Interactive 60 FPS visual traversal engine for graph search algorithms",
-      description: "Interactive pathfinding simulator rendering Dijkstra, A*, BFS, and DFS traversals on dynamically weighted grid topologies with custom heuristic queues and recursive maze generation.",
-      category: "Software Dev",
-      tags: ["React", "JavaScript", "Graph Theory", "Algorithms", "Web Performance", "Vite"],
-      githubUrl: "https://github.com/gvrathodd/Path-Finder",
-      liveUrl: "https://github.com/gvrathodd/Path-Finder",
-      featured: false,
-      badge: "Web & Algorithms",
-      metrics: { label: "Frame Rate", value: "60 FPS" },
-      highlights: [
-        "Renders 2,500+ nodes under 16ms animation frames on dynamic weighted grids.",
-        "Decoupled path calculation from UI re-renders using custom heuristic queues.",
-        "Built recursive maze generation and state-export tools, cutting map setup time by 70%."
       ]
     }
   ],

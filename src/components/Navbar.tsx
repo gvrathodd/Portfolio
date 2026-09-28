@@ -43,9 +43,9 @@ export const Navbar: React.FC = () => {
 
   // Mobile menu spring animation
   const mobileMenuSpring = useSpring({
-    transform: mobileMenuOpen ? 'translateY(0%)' : 'translateY(-120%)',
+    transform: mobileMenuOpen ? 'translateY(0%) scale(1)' : 'translateY(-120%) scale(0.95)',
     opacity: mobileMenuOpen ? 1 : 0,
-    config: { tension: 320, friction: 28 },
+    config: { tension: 280, friction: 24 },
   });
 
   return (
@@ -54,27 +54,27 @@ export const Navbar: React.FC = () => {
         <nav
           className={`pointer-events-auto flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full transition-all duration-300 max-w-4xl w-full ${
             isScrolled
-              ? 'glass-pill shadow-2xl shadow-black/60 bg-zinc-950/80 border-white/10'
-              : 'glass-panel bg-zinc-950/60 border-white/5'
+              ? 'glass-pill shadow-2xl shadow-sky-950/40 bg-slate-950/85 border-sky-500/20'
+              : 'glass-panel bg-slate-950/65 border-sky-500/10'
           }`}
         >
           {/* Logo / Name */}
           <a
             href="#hero"
-            className="flex items-center gap-2 group text-zinc-100 font-bold tracking-tight text-sm sm:text-base focus:outline-none"
+            className="flex items-center gap-2.5 group text-slate-100 font-bold tracking-tight text-sm sm:text-base focus:outline-none"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-500 to-cyan-400 p-[1px] shadow-sm shadow-emerald-500/30">
-              <div className="w-full h-full rounded-full bg-zinc-950 flex items-center justify-center text-xs font-mono font-bold text-white group-hover:bg-transparent group-hover:text-zinc-950 transition-colors">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-400 to-cyan-300 p-[1.5px] shadow-sm shadow-sky-500/30">
+              <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-xs font-mono font-bold text-sky-200 group-hover:bg-gradient-to-tr group-hover:from-sky-400 group-hover:to-cyan-300 group-hover:text-slate-950 transition-all duration-200">
                 GR
               </div>
             </div>
-            <span className="hidden xs:inline font-semibold text-zinc-200 group-hover:text-white transition-colors">
+            <span className="hidden xs:inline font-semibold text-slate-200 group-hover:text-sky-300 transition-colors">
               {portfolioData.personal.preferredName}
             </span>
           </a>
 
           {/* Desktop Nav Items */}
-          <div className="hidden md:flex items-center gap-1 bg-zinc-900/60 p-1 rounded-full border border-zinc-800/80">
+          <div className="hidden md:flex items-center gap-1 bg-slate-900/70 p-1 rounded-full border border-sky-500/15">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -83,8 +83,8 @@ export const Navbar: React.FC = () => {
                   href={item.href}
                   className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                     isActive
-                      ? 'text-white bg-zinc-800 shadow-sm'
-                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/40'
+                      ? 'text-sky-200 bg-sky-950/80 border border-sky-500/30 shadow-sm shadow-sky-500/20'
+                      : 'text-slate-400 hover:text-sky-300 hover:bg-slate-800/40'
                   }`}
                 >
                   {item.label}
@@ -96,10 +96,10 @@ export const Navbar: React.FC = () => {
           {/* Right Action: Status Beacon & Resume */}
           <div className="flex items-center gap-2.5">
             {/* Pulsing Availability Beacon */}
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400">
+            <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/25 text-[11px] font-mono text-sky-300">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400"></span>
               </span>
               <span>Available</span>
             </div>
@@ -109,7 +109,7 @@ export const Navbar: React.FC = () => {
               href={portfolioData.personal.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-xs transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98] shadow-md shadow-zinc-100/10"
+              className="flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold text-xs transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] shadow-md shadow-sky-500/25"
             >
               <FileDown className="w-3.5 h-3.5" />
               <span>Resume</span>
@@ -118,7 +118,7 @@ export const Navbar: React.FC = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white focus:outline-none"
+              className="md:hidden p-1.5 rounded-full bg-slate-900 border border-sky-500/20 text-slate-300 hover:text-white focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -130,19 +130,19 @@ export const Navbar: React.FC = () => {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black/70 backdrop-blur-md md:hidden pt-24 px-6"
+          className="fixed inset-0 z-30 bg-slate-950/80 backdrop-blur-lg md:hidden pt-24 px-6"
           onClick={() => setMobileMenuOpen(false)}
         >
           <animated.div
             style={mobileMenuSpring}
-            className="w-full bg-zinc-950 border border-zinc-800 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 text-center"
+            className="w-full bg-slate-950 border border-sky-500/20 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 text-center"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Status Beacon on Mobile */}
-            <div className="flex items-center justify-center gap-2 py-1.5 px-3 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 mx-auto">
+            <div className="flex items-center justify-center gap-2 py-1.5 px-3 rounded-full bg-sky-500/10 border border-sky-500/20 text-xs font-mono text-sky-300 mx-auto">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400"></span>
               </span>
               <span>Available for software & AI/ML roles</span>
             </div>
@@ -155,8 +155,8 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`py-3 px-4 rounded-xl text-base font-medium transition-colors ${
                     activeSection === item.id
-                      ? 'bg-zinc-900 text-emerald-400'
-                      : 'text-zinc-300 hover:bg-zinc-900/60'
+                      ? 'bg-sky-950/60 border border-sky-500/30 text-sky-300'
+                      : 'text-slate-300 hover:bg-slate-900/60'
                   }`}
                 >
                   {item.label}
@@ -164,13 +164,13 @@ export const Navbar: React.FC = () => {
               ))}
             </div>
 
-            <div className="pt-3 border-t border-zinc-900 flex flex-col gap-2">
+            <div className="pt-3 border-t border-slate-900 flex flex-col gap-2">
               <a
                 href={portfolioData.personal.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 rounded-xl bg-emerald-500 text-zinc-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
+                className="w-full py-3 rounded-xl bg-sky-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-sky-500/25"
               >
                 <FileDown className="w-4 h-4" />
                 <span>View Full Resume</span>

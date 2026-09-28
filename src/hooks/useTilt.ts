@@ -1,13 +1,15 @@
 import { useState, useCallback, useRef } from 'react';
 import { useSpring } from '@react-spring/web';
 
-export const useTilt = (maxTiltDeg: number = 8, scaleFactor: number = 1.02) => {
+export const useTilt = (maxTiltDeg: number = 7, scaleFactor: number = 1.018) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [glarePos, setGlarePos] = useState({ x: 50, y: 50 });
   const elementRef = useRef<HTMLDivElement | null>(null);
 
+  // Damped, flowy spring configuration with natural physics
   const [springStyle, api] = useSpring(() => ({
     xys: [0, 0, 1], // [rotateX, rotateY, scale]
-    config: { mass: 1.2, tension: 350, friction: 26 },
+    config: { mass: 1.1, tension: 260, friction: 24 },
   }));
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -16,11 +18,17 @@ export const useTilt = (maxTiltDeg: number = 8, scaleFactor: number = 1.02) => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
+    // Percentage for glare sheen (0 to 100%)
+    setGlarePos({
+      x: Math.round((x / rect.width) * 100),
+      y: Math.round((y / rect.height) * 100),
+    });
+
     // Normalize coordinates from -1 to 1
     const px = (x / rect.width) * 2 - 1;
     const py = (y / rect.height) * 2 - 1;
 
-    // Calculate rotation in degrees (inverted Y for intuitive natural feel)
+    // Calculate rotation in degrees
     const rotateX = -py * maxTiltDeg;
     const rotateY = px * maxTiltDeg;
 
@@ -43,6 +51,7 @@ export const useTilt = (maxTiltDeg: number = 8, scaleFactor: number = 1.02) => {
   return {
     elementRef,
     isHovered,
+    glarePos,
     handleMouseMove,
     handleMouseEnter,
     handleMouseLeave,

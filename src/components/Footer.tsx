@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { portfolioData } from '../data/portfolioData';
-import { ArrowUp, Heart, Clock } from 'lucide-react';
+import { ArrowUp, Clock } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const [time, setTime] = useState<string>('');
@@ -29,33 +29,33 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-12 px-4 sm:px-6 border-t border-zinc-900 bg-zinc-950/80 text-zinc-500 text-xs font-mono">
+    <footer className="py-12 px-4 sm:px-6 border-t border-sky-500/15 bg-slate-950/80 text-slate-500 text-xs font-mono">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         {/* Left: Branding & Status */}
         <div className="flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
-          <span className="text-zinc-300 font-semibold">
+          <span className="text-slate-200 font-semibold">
             {portfolioData.personal.name}
           </span>
-          <span className="hidden sm:inline text-zinc-700">•</span>
-          <div className="flex items-center gap-1.5 text-zinc-400">
-            <Clock className="w-3.5 h-3.5 text-emerald-400" />
+          <span className="hidden sm:inline text-slate-700">•</span>
+          <div className="flex items-center gap-1.5 text-slate-400">
+            <Clock className="w-3.5 h-3.5 text-sky-400" />
             <span>{time ? `${time} IST (India)` : 'Loading time...'}</span>
           </div>
         </div>
 
         {/* Center: Built with */}
-        <div className="flex items-center gap-1.5 text-zinc-400 text-center">
-          <span>Designed with Watermelon & Godly aesthetics</span>
+        <div className="flex items-center gap-1.5 text-slate-400 text-center">
+          <span>Curated with Sky Blue fluid design & React Spring physics</span>
         </div>
 
         {/* Right: Back to Top */}
         <button
           onClick={scrollToTop}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 transition-colors focus:outline-none"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-sky-500/20 hover:border-sky-400/40 transition-colors focus:outline-none"
           aria-label="Back to top"
         >
           <span>Top</span>
-          <ArrowUp className="w-3.5 h-3.5 text-emerald-400" />
+          <ArrowUp className="w-3.5 h-3.5 text-sky-400" />
         </button>
       </div>
     </footer>
