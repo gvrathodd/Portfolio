@@ -145,7 +145,7 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-medium text-white shadow-[0_8px_24px_-10px_rgb(10_24_48/0.6)] transition-all hover:-translate-y-0.5 hover:bg-accent active:scale-[0.98]"
+                      className="inline-flex min-h-11 items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-medium text-white shadow-[0_8px_24px_-10px_rgb(10_24_48/0.6)] transition-all hover:-translate-y-0.5 hover:bg-accent active:scale-[0.98]"
                     >
                       <GithubMark />
                       View source
@@ -157,7 +157,7 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-surface px-4 py-2.5 text-sm font-medium text-accent transition-all hover:-translate-y-0.5 hover:border-accent active:scale-[0.98]"
+                      className="inline-flex min-h-11 items-center gap-2 rounded-full border border-accent/40 bg-surface px-4 py-2.5 text-sm font-medium text-accent transition-all hover:-translate-y-0.5 hover:border-accent active:scale-[0.98]"
                     >
                       <span className="relative flex size-2">
                         <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-60 motion-reduce:hidden" />

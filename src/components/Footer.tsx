@@ -6,7 +6,7 @@ export const Footer: React.FC = () => (
     <span>
       © {new Date().getFullYear()} {portfolioData.personal.name}
     </span>
-    <a href="#top" className="transition-colors hover:text-ink">
+    <a href="#top" className="inline-flex min-h-11 items-center transition-colors hover:text-ink">
       Back to morning ↑
     </a>
   </footer>

@@ -111,7 +111,7 @@ export const Navbar: React.FC = () => {
       className={`tone-${tone} nav-appear sticky top-0 z-40 px-3 pt-3 text-ink sm:px-6`}
     >
       <nav data-top={atTop ? '' : undefined} className="nav-glass mx-auto flex h-14 max-w-[1240px] items-center justify-between gap-4 rounded-full pr-2 pl-4 transition-colors duration-500 sm:pl-5">
-        <a href="#top" onClick={() => setOpen(false)} className="flex min-w-0 items-center gap-2.5 font-medium tracking-tight whitespace-nowrap">
+        <a href="#top" onClick={() => setOpen(false)} className="flex min-h-11 min-w-0 items-center gap-2.5 font-medium tracking-tight whitespace-nowrap">
           <span
             aria-hidden
             className="size-6 shrink-0 rounded-full ring-1 ring-white/40"
@@ -124,7 +124,7 @@ export const Navbar: React.FC = () => {
         <ul className="hidden items-center gap-7 text-sm md:flex">
           {links.map((link) => (
             <li key={link.href}>
-              <a href={link.href} className="text-muted transition-colors hover:text-ink">
+              <a href={link.href} className="inline-flex min-h-11 items-center text-muted transition-colors hover:text-ink">
                 {link.label}
               </a>
             </li>
@@ -134,7 +134,7 @@ export const Navbar: React.FC = () => {
               href={resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-ink px-4 py-2 text-sm font-medium text-paper transition-colors hover:bg-accent"
+              className="inline-flex min-h-11 items-center rounded-full bg-ink px-5 text-sm font-medium text-paper transition-colors hover:bg-accent"
             >
               Resume
             </a>

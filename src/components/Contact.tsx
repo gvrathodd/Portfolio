@@ -81,7 +81,7 @@ export const Contact: React.FC = () => {
                 <a href={mail.outlookUrl} target="_blank" rel="noopener noreferrer" className="rounded-full border border-line px-3.5 py-2 font-medium transition-colors hover:border-ink">
                   Outlook
                 </a>
-                <button type="button" onClick={mail.dismiss} aria-label="Dismiss" className="cursor-pointer rounded-full p-2 text-muted transition-colors hover:text-ink">
+                <button type="button" onClick={mail.dismiss} aria-label="Dismiss" className="flex size-11 cursor-pointer items-center justify-center rounded-full text-muted transition-colors hover:text-ink">
                   <X className="size-4" strokeWidth={1.75} />
                 </button>
               </div>
@@ -96,7 +96,7 @@ export const Contact: React.FC = () => {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-muted transition-colors hover:text-ink"
+                className="inline-flex min-h-11 items-center gap-1 text-muted transition-colors hover:text-ink"
               >
                 {s.label}
                 <ArrowUpRight className="size-3.5" strokeWidth={1.75} />
