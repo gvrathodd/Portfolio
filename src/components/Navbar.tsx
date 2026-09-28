@@ -47,25 +47,50 @@ export const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
-  // Close the phone menu on Escape, a tap outside it, or any scroll.
+  // Close the phone menu on Escape, or on a tap or scroll outside it. Taps, drags and wheel
+  // scrolls inside the menu are ignored (and don't scroll the page underneath).
   useEffect(() => {
-    if (!open) return;
+    const header = headerRef.current;
+    if (!open || !header) return;
+
     const close = () => setOpen(false);
+    let startY = window.scrollY;
+    let lastInside = 0;
+    const markInside = () => {
+      lastInside = performance.now();
+      startY = window.scrollY;
+    };
+
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && close();
     const onPointerDown = (e: PointerEvent) => {
-      if (!headerRef.current?.contains(e.target as Node)) close();
+      if (header.contains(e.target as Node)) markInside();
+      else close();
     };
-    const startY = window.scrollY;
     const onScroll = () => {
-      if (Math.abs(window.scrollY - startY) > 8) close();
+      // Ignore scroll that comes from (or right after) interacting with the menu itself,
+      // e.g. mobile browser chrome shifting after a tap.
+      if (performance.now() - lastInside < 700) {
+        startY = window.scrollY;
+        return;
+      }
+      if (Math.abs(window.scrollY - startY) > 12) close();
     };
+    const swallowInside = (e: Event) => {
+      e.preventDefault();
+      markInside();
+    };
+
     window.addEventListener('keydown', onKey);
     document.addEventListener('pointerdown', onPointerDown);
     window.addEventListener('scroll', onScroll, { passive: true });
+    header.addEventListener('wheel', swallowInside, { passive: false });
+    header.addEventListener('touchmove', swallowInside, { passive: false });
     return () => {
       window.removeEventListener('keydown', onKey);
       document.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('scroll', onScroll);
+      header.removeEventListener('wheel', swallowInside);
+      header.removeEventListener('touchmove', swallowInside);
     };
   }, [open]);
 
@@ -74,6 +99,7 @@ export const Navbar: React.FC = () => {
   return (
     <header
       ref={headerRef}
+      data-lenis-prevent={open ? '' : undefined}
       className={`tone-${tone} sticky top-0 z-40 border-b border-line bg-paper/75 text-ink backdrop-blur-md transition-colors duration-500`}
     >
       <nav className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-4 px-4 sm:px-6">
@@ -147,6 +173,7 @@ export const Navbar: React.FC = () => {
                 href={resume}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
                 className="flex items-center justify-center rounded-full bg-ink py-3.5 text-base font-medium text-paper"
               >
                 Resume
