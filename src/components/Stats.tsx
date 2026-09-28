@@ -47,11 +47,11 @@ const CountUp: React.FC<{ stat: Stat }> = ({ stat }) => {
 
 export const Stats: React.FC<{ className?: string; style?: React.CSSProperties }> = ({ className = '', style }) => (
   <dl
-    className={`grid gap-px overflow-hidden rounded-[1.75rem] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4 ${className}`}
+    className={`grid gap-3 sm:grid-cols-2 lg:grid-cols-4 ${className}`}
     style={style}
   >
     {portfolioData.stats.map((stat) => (
-      <div key={stat.label} className="flex flex-col bg-surface p-6 md:p-7">
+      <div key={stat.label} className="sky-glass flex flex-col rounded-3xl p-6 md:p-7">
         <dd className="order-1 text-4xl font-medium tracking-tighter text-accent md:text-5xl">
           <CountUp stat={stat} />
         </dd>

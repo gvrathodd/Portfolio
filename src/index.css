@@ -4,47 +4,52 @@
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --color-paper: #f4f7fb;
-  --color-surface: #ffffff;
-  --color-ink: #0b1422;
-  --color-muted: #5a6a7e;
-  --color-line: #dde5ee;
-  --color-accent: #1479b8;
-  --color-sky: #dcEFFC;
+  /* Light-tone defaults; .tone-dark overrides these per band */
+  --color-paper: #d4eafb;
+  --color-surface: rgb(255 255 255 / 0.62);
+  --color-ink: #0a1830;
+  --color-muted: #34506f;
+  --color-line: rgb(10 24 48 / 0.12);
+  --color-accent: #0e64a8;
+  --color-sky: rgb(255 255 255 / 0.5);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* The sky: used by the hero and contact panels */
 :root {
-  --sky-top: #6fbcef;
-  --sky-mid: #b4dcf8;
-  --sky-bottom: #eef7fe;
-  --sky-ink: #0b1422;
-  --sky-muted: #33506e;
-  --sky-glass: rgb(255 255 255 / 0.5);
-  --sky-glass-border: rgb(255 255 255 / 0.75);
-  --sky-btn-text: #ffffff;
-  --cloud: rgb(255 255 255 / 0.7);
+  --glass: rgb(255 255 255 / 0.5);
+  --glass-border: rgb(255 255 255 / 0.8);
+}
+
+.tone-dark {
+  --color-paper: #0d1f4a;
+  --color-surface: rgb(255 255 255 / 0.07);
+  --color-ink: #eef5fd;
+  --color-muted: #a9c0dc;
+  --color-line: rgb(255 255 255 / 0.13);
+  --color-accent: #86cdfa;
+  --color-sky: rgb(134 205 250 / 0.1);
+  --glass: rgb(255 255 255 / 0.08);
+  --glass-border: rgb(255 255 255 / 0.18);
 }
 
 @layer base {
   html {
     color-scheme: light;
     scroll-behavior: smooth;
-    background-color: var(--color-paper);
+    /* Morning above the page, night below it, for overscroll */
+    background: linear-gradient(#5aa9e6 50%, #060f28 50%);
     -webkit-font-smoothing: antialiased;
   }
 
   body {
-    background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
   }
 
   ::selection {
     background-color: var(--color-accent);
-    color: var(--color-surface);
+    color: #fff;
   }
 
   section[id] {
@@ -58,30 +63,18 @@
   }
 }
 
-.sky-panel {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  color: var(--sky-ink);
-  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 52%, var(--sky-bottom) 100%);
-}
-
-/* Film grain so the gradient doesn't band */
-.sky-panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.16;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+.sky-glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .cloud {
   position: absolute;
   z-index: -1;
   border-radius: 9999px;
-  background: var(--cloud);
+  background: rgb(255 255 255 / 0.55);
   filter: blur(48px);
   pointer-events: none;
   animation: drift 38s ease-in-out infinite alternate;
@@ -96,11 +89,46 @@
   }
 }
 
-.sky-glass {
-  background: var(--sky-glass);
-  border: 1px solid var(--sky-glass-border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+/* Night sky: two star layers, the second twinkles */
+.stars,
+.stars::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 30%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%);
+}
+
+.stars {
+  background-image:
+    radial-gradient(1px 1px at 23px 41px, #fff, transparent),
+    radial-gradient(1px 1px at 97px 131px, #dbeeff, transparent),
+    radial-gradient(1.5px 1.5px at 151px 63px, #fff, transparent),
+    radial-gradient(1px 1px at 211px 179px, #cfe6ff, transparent),
+    radial-gradient(1px 1px at 267px 23px, #fff, transparent),
+    radial-gradient(1px 1px at 59px 211px, #fff, transparent);
+  background-size: 290px 240px;
+  opacity: 0.7;
+}
+
+.stars::after {
+  content: "";
+  background-image:
+    radial-gradient(1.5px 1.5px at 71px 83px, #fff, transparent),
+    radial-gradient(1px 1px at 183px 17px, #e6f3ff, transparent),
+    radial-gradient(2px 2px at 131px 197px, #fff, transparent);
+  background-size: 360px 300px;
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Entrance + scroll reveal */
@@ -139,7 +167,8 @@
     scroll-behavior: auto;
   }
   .rise,
-  .cloud {
+  .cloud,
+  .stars::after {
     animation: none;
   }
   .reveal {

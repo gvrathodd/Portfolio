@@ -4,7 +4,7 @@ import { SectionHeading } from './SectionHeading';
 import { Reveal } from './Reveal';
 
 export const Experience: React.FC = () => (
-  <section id="experience" className="py-16 md:py-24">
+  <section id="experience" className="pt-24 pb-20 md:pt-32 md:pb-28">
     <SectionHeading index="03" eyebrow="Experience" title="Leadership, teams and competitions" />
 
     <ol className="divide-y divide-line border-y border-line">

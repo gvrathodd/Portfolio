@@ -170,7 +170,7 @@ export const Projects: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>(featured[0]?.id ?? null);
 
   return (
-    <section id="work" className="py-16 md:py-24">
+    <section id="work" className="py-20 md:py-28">
       <SectionHeading index="02" eyebrow="Work" title="Selected projects" aside="Click a project for details" />
 
       <Reveal>
