@@ -65,7 +65,7 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
   const panelId = `project-${project.id}`;
 
   return (
-    <li onPointerMove={trackPointer} className={`spotlight transition-colors duration-300 ${open ? 'bg-sky/35' : 'hover:bg-sky/25'}`}>
+    <li className={`transition-colors duration-300 ${open ? 'bg-sky/35' : 'hover:bg-sky/25'}`}>
       <button
         type="button"
         onClick={onToggle}
@@ -193,7 +193,16 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
 export const Projects: React.FC = () => {
   const featured = portfolioData.projects.filter((p) => p.featured);
   const others = portfolioData.projects.filter((p) => !p.featured);
-  const [openId, setOpenId] = useState<string | null>(featured[0]?.id ?? null);
+  // Each project opens and closes on its own; auto-closing another one above the reader
+  // would collapse content above them and throw the page out from under them.
+  const [openIds, setOpenIds] = useState<Set<string>>(() => new Set(featured[0] ? [featured[0].id] : []));
+  const toggle = (id: string) =>
+    setOpenIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   return (
     <section id="work" className="py-20 md:py-28">
@@ -206,8 +215,8 @@ export const Projects: React.FC = () => {
               key={project.id}
               project={project}
               index={i}
-              open={openId === project.id}
-              onToggle={() => setOpenId(openId === project.id ? null : project.id)}
+              open={openIds.has(project.id)}
+              onToggle={() => toggle(project.id)}
             />
           ))}
         </ul>

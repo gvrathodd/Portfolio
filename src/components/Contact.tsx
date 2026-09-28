@@ -3,6 +3,7 @@ import { ArrowUpRight, Check, Copy } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { Reveal } from './Reveal';
 import { MaskWords } from './motion';
+import { MeteorShower } from './SkyLife';
 
 export const Contact: React.FC = () => {
   const { personal } = portfolioData;
@@ -81,8 +82,7 @@ export const Contact: React.FC = () => {
 export const NightSky: React.FC = () => (
   <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
     <div className="stars" />
-    <span className="shooting-star top-[14%] left-[72%]" />
-    <span className="shooting-star top-[34%] left-[48%] [animation-delay:6.5s] [animation-duration:13s]" />
+    <MeteorShower />
     <div
       className="absolute top-[18%] right-[6%] size-24 rounded-full md:size-32"
       style={{

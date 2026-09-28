@@ -221,32 +221,102 @@
   transform: none;
 }
 
-/* Shooting stars: visible for a moment, then wait out the rest of the cycle */
-.shooting-star {
+/* Night: continuous meteor shower. Each meteor falls, fades, waits briefly, then JS moves it. */
+.meteor {
   position: absolute;
-  width: 130px;
+  width: var(--len, 140px);
   height: 1.5px;
   border-radius: 9999px;
-  background: linear-gradient(90deg, #fff, rgb(255 255 255 / 0));
+  background: linear-gradient(90deg, #fff, rgb(190 225 255 / 0.5) 30%, rgb(255 255 255 / 0));
   opacity: 0;
-  animation: shoot 11s linear infinite;
+  will-change: transform, opacity;
+  animation: meteor 4s cubic-bezier(0.4, 0, 0.9, 1) infinite;
 }
 
-@keyframes shoot {
+.meteor::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -1px;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 0 6px 2px rgb(190 225 255 / 0.9);
+  transform: translateY(-50%);
+}
+
+@keyframes meteor {
   0% {
     opacity: 0;
-    transform: translate(0, 0) rotate(-22deg);
+    transform: translate3d(0, 0, 0) rotate(-24deg);
   }
-  1.5% {
+  6% {
     opacity: 1;
   }
-  8% {
+  48% {
     opacity: 0;
-    transform: translate(-380px, 155px) rotate(-22deg);
+    transform: translate3d(-520px, 232px, 0) rotate(-24deg);
   }
   100% {
     opacity: 0;
-    transform: translate(-380px, 155px) rotate(-22deg);
+    transform: translate3d(-520px, 232px, 0) rotate(-24deg);
+  }
+}
+
+/* Morning: sun rays and a flock of birds */
+.sun-rays {
+  background: repeating-conic-gradient(from 0deg, rgb(255 250 235 / 0.12) 0deg 3deg, transparent 3deg 12deg);
+  -webkit-mask-image: radial-gradient(circle, #000 8%, transparent 50%);
+  mask-image: radial-gradient(circle, #000 8%, transparent 50%);
+  will-change: transform;
+  animation: spin 140s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bird-flight {
+  will-change: transform;
+  animation: fly 34s linear infinite;
+  animation-delay: 1.5s;
+  transform: translate3d(-12vw, 40px, 0);
+}
+
+@keyframes fly {
+  0% {
+    transform: translate3d(-12vw, 40px, 0);
+  }
+  72% {
+    transform: translate3d(112vw, 0, 0);
+  }
+  100% {
+    transform: translate3d(112vw, 0, 0);
+  }
+}
+
+.bird-bob {
+  animation: bob 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes bob {
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+.bird-wings {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: flap 0.55s ease-in-out infinite alternate;
+}
+
+@keyframes flap {
+  to {
+    transform: scaleY(-0.35);
   }
 }
 
@@ -289,8 +359,14 @@
   .cloud,
   .stars::after,
   .hero-word,
-  .shooting-star {
+  .sun-rays,
+  .bird-wings,
+  .bird-bob {
     animation: none;
+  }
+  .meteor,
+  .bird-flight {
+    display: none;
   }
   .mask-word > span,
   .timeline-dot {

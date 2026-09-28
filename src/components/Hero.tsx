@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { Stats } from './Stats';
+import { Birds, SunRays } from './SkyLife';
 
 const rise = (i: number) => ({ '--i': i }) as React.CSSProperties;
 
@@ -121,14 +122,22 @@ export const MorningSky: React.FC = () => {
   return (
     <div ref={ref} aria-hidden className="pointer-events-none absolute inset-0 -z-10">
       <div className="absolute inset-0 will-change-transform" style={layer(0.45)}>
-        <div
-          className="absolute -top-56 right-[-10%] size-[680px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgb(255 248 228 / 0.85) 0%, rgb(255 240 205 / 0.3) 32%, transparent 66%)' }}
-        />
+        <div className="absolute -top-56 right-[-10%] size-[680px]">
+          <div className="absolute -inset-[15%]">
+            <SunRays />
+          </div>
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{ background: 'radial-gradient(circle, rgb(255 248 228 / 0.85) 0%, rgb(255 240 205 / 0.3) 32%, transparent 66%)' }}
+          />
+        </div>
       </div>
       <div className="absolute inset-0 will-change-transform" style={layer(0.25)}>
         <div className="cloud top-[16%] left-[-10%] h-40 w-[50%]" />
         <div className="cloud top-[6%] right-[-12%] h-32 w-[40%] [animation-duration:52s]" />
+      </div>
+      <div className="absolute inset-0 will-change-transform" style={layer(0.18)}>
+        <Birds />
       </div>
       <div className="absolute inset-0 will-change-transform" style={layer(0.1)}>
         <div className="cloud top-[52%] left-[30%] h-48 w-[60%] [animation-duration:64s]" />
