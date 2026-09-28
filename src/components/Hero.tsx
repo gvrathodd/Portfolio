@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { Stats } from './Stats';
@@ -44,13 +44,15 @@ export const Hero: React.FC = () => {
       </div>
 
       <div className="mt-auto grid gap-10 pt-20 md:grid-cols-12 md:items-end md:gap-8">
-        <h1
-          className="rise text-[clamp(3.25rem,10vw,8.5rem)] leading-[0.86] font-medium tracking-[-0.05em] md:col-span-7"
-          style={rise(1)}
-        >
+        <h1 className="text-[clamp(3.25rem,10vw,8.5rem)] leading-[0.86] font-medium tracking-[-0.05em] md:col-span-7">
           {personal.name.split(' ').map((word, i, words) => (
-            <span key={word} className={`block ${i > 0 && i < words.length - 1 ? 'text-accent' : ''}`}>
-              {word}
+            <span key={word} className="block overflow-hidden pb-[0.06em]">
+              <span
+                className={`hero-word ${i > 0 && i < words.length - 1 ? 'text-accent' : ''}`}
+                style={{ '--w': i } as React.CSSProperties}
+              >
+                {word}
+              </span>
             </span>
           ))}
         </h1>
@@ -92,14 +94,45 @@ export const Hero: React.FC = () => {
 };
 
 /** Sunrise glow and drifting clouds behind the hero. */
-export const MorningSky: React.FC = () => (
-  <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-    <div
-      className="absolute -top-56 right-[-10%] size-[680px] rounded-full"
-      style={{ background: 'radial-gradient(circle, rgb(255 248 228 / 0.85) 0%, rgb(255 240 205 / 0.3) 32%, transparent 66%)' }}
-    />
-    <div className="cloud top-[16%] left-[-10%] h-40 w-[50%]" />
-    <div className="cloud top-[6%] right-[-12%] h-32 w-[40%] [animation-duration:52s]" />
-    <div className="cloud top-[52%] left-[30%] h-48 w-[60%] [animation-duration:64s]" />
-  </div>
-);
+export const MorningSky: React.FC = () => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Parallax: the sun sinks faster than the clouds as you scroll away from the hero.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      el.style.setProperty('--sy', String(Math.min(window.scrollY, 1200)));
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', schedule, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', schedule);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  const layer = (speed: number) => ({ transform: `translate3d(0, calc(var(--sy, 0) * ${speed}px), 0)` });
+
+  return (
+    <div ref={ref} aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+      <div className="absolute inset-0 will-change-transform" style={layer(0.45)}>
+        <div
+          className="absolute -top-56 right-[-10%] size-[680px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgb(255 248 228 / 0.85) 0%, rgb(255 240 205 / 0.3) 32%, transparent 66%)' }}
+        />
+      </div>
+      <div className="absolute inset-0 will-change-transform" style={layer(0.25)}>
+        <div className="cloud top-[16%] left-[-10%] h-40 w-[50%]" />
+        <div className="cloud top-[6%] right-[-12%] h-32 w-[40%] [animation-duration:52s]" />
+      </div>
+      <div className="absolute inset-0 will-change-transform" style={layer(0.1)}>
+        <div className="cloud top-[52%] left-[30%] h-48 w-[60%] [animation-duration:64s]" />
+      </div>
+    </div>
+  );
+};

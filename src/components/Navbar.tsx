@@ -4,8 +4,8 @@ import { portfolioData } from '../data/portfolioData';
 const links = [
   { label: 'About', href: '#about', always: false },
   { label: 'Work', href: '#work', always: true },
-  { label: 'Experience', href: '#experience', always: false },
   { label: 'Toolkit', href: '#skills', always: false },
+  { label: 'Experience', href: '#experience', always: false },
   { label: 'Contact', href: '#contact', always: true },
 ];
 
@@ -46,7 +46,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`tone-${tone} sticky top-0 z-40 border-b border-line bg-paper/55 text-ink backdrop-blur-xl transition-colors duration-500`}
+      className={`tone-${tone} sticky top-0 z-40 border-b border-line bg-paper/75 text-ink backdrop-blur-md transition-colors duration-500`}
     >
       <nav className="mx-auto flex h-16 max-w-[1240px] items-center justify-between px-4 sm:px-6">
         <a href="#top" className="flex items-center gap-2.5 font-medium tracking-tight whitespace-nowrap">

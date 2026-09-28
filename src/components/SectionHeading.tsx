@@ -1,5 +1,6 @@
 import React from 'react';
 import { Reveal } from './Reveal';
+import { MaskWords } from './motion';
 
 interface SectionHeadingProps {
   index: string;
@@ -16,7 +17,9 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({ index, eyebrow, 
         <span className="h-px w-6 bg-accent/50" />
         {eyebrow}
       </p>
-      <h2 className="text-3xl font-medium tracking-tighter text-balance md:text-5xl">{title}</h2>
+      <h2 className="text-3xl font-medium tracking-tighter text-balance md:text-5xl">
+        <MaskWords text={title} />
+      </h2>
     </div>
     {aside && <p className="hidden pb-1.5 text-sm text-muted sm:block">{aside}</p>}
   </Reveal>

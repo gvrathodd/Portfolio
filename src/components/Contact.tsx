@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowUpRight, Check, Copy } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { Reveal } from './Reveal';
+import { MaskWords } from './motion';
 
 export const Contact: React.FC = () => {
   const { personal } = portfolioData;
@@ -33,7 +34,7 @@ export const Contact: React.FC = () => {
           Contact
         </p>
         <h2 className="max-w-[18ch] text-4xl font-medium tracking-tighter text-balance md:text-7xl">
-          Working on something interesting? I'd like to hear about it.
+          <MaskWords text="Working on something interesting? I'd like to hear about it." />
         </h2>
       </Reveal>
 
@@ -80,6 +81,8 @@ export const Contact: React.FC = () => {
 export const NightSky: React.FC = () => (
   <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
     <div className="stars" />
+    <span className="shooting-star top-[14%] left-[72%]" />
+    <span className="shooting-star top-[34%] left-[48%] [animation-delay:6.5s] [animation-duration:13s]" />
     <div
       className="absolute top-[18%] right-[6%] size-24 rounded-full md:size-32"
       style={{

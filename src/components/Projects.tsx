@@ -3,6 +3,13 @@ import { ArrowUpRight, Plus } from 'lucide-react';
 import { portfolioData, Project } from '../data/portfolioData';
 import { SectionHeading } from './SectionHeading';
 import { Reveal } from './Reveal';
+import { trackPointer } from './motion';
+
+const GithubMark: React.FC<{ className?: string }> = ({ className = 'size-4' }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+    <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
+  </svg>
+);
 
 const fmt = (n: number, unit?: string) => (unit ? `${n.toFixed(1)}${unit}` : n.toFixed(n < 1 && String(n).length > 4 ? 3 : 2));
 
@@ -58,7 +65,7 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
   const panelId = `project-${project.id}`;
 
   return (
-    <li className={`transition-colors duration-300 ${open ? 'bg-sky/35' : 'hover:bg-sky/25'}`}>
+    <li onPointerMove={trackPointer} className={`spotlight transition-colors duration-300 ${open ? 'bg-sky/35' : 'hover:bg-sky/25'}`}>
       <button
         type="button"
         onClick={onToggle}
@@ -131,6 +138,37 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
               )}
             </div>
             <div className="space-y-4">
+              {(project.githubUrl || project.liveUrl) && (
+                <div className="flex flex-wrap gap-2">
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-medium text-white shadow-[0_8px_24px_-10px_rgb(10_24_48/0.6)] transition-all hover:-translate-y-0.5 hover:bg-accent active:scale-[0.98]"
+                    >
+                      <GithubMark />
+                      View source
+                      <ArrowUpRight className="size-4" strokeWidth={1.75} />
+                    </a>
+                  )}
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-surface px-4 py-2.5 text-sm font-medium text-accent transition-all hover:-translate-y-0.5 hover:border-accent active:scale-[0.98]"
+                    >
+                      <span className="relative flex size-2">
+                        <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-60 motion-reduce:hidden" />
+                        <span className="relative size-2 rounded-full bg-emerald-500" />
+                      </span>
+                      Live demo
+                      <ArrowUpRight className="size-4" strokeWidth={1.75} />
+                    </a>
+                  )}
+                </div>
+              )}
               {project.metrics && (
                 <div className="rounded-2xl border border-line bg-surface p-5">
                   <p className="font-mono text-4xl tracking-tight text-accent">{project.metrics.value}</p>
@@ -144,18 +182,6 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
                   </li>
                 ))}
               </ul>
-              <div className="flex gap-5 pt-1 text-sm font-medium">
-                {project.githubUrl && (
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-accent">
-                    Source <ArrowUpRight className="size-4" strokeWidth={1.75} />
-                  </a>
-                )}
-                {project.liveUrl && (
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-accent">
-                    Live <ArrowUpRight className="size-4" strokeWidth={1.75} />
-                  </a>
-                )}
-              </div>
             </div>
           </div>
         </div>
@@ -200,7 +226,8 @@ export const Projects: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-disabled={!p.githubUrl}
-                  className={`group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-all duration-300 ${
+                  onPointerMove={trackPointer}
+                  className={`spotlight group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-all duration-300 ${
                     p.githubUrl ? 'hover:-translate-y-0.5 hover:border-accent/40' : 'pointer-events-none'
                   }`}
                 >
@@ -210,12 +237,13 @@ export const Projects: React.FC = () => {
                       <h4 className="mt-1 text-lg font-medium tracking-tight">{p.title}</h4>
                     </div>
                     {p.githubUrl ? (
-                      <ArrowUpRight
-                        className="size-5 shrink-0 text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
-                        strokeWidth={1.75}
-                      />
+                      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-xs font-medium text-white transition-colors group-hover:bg-accent">
+                        <GithubMark className="size-3.5" />
+                        Source
+                        <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.75} />
+                      </span>
                     ) : (
-                      <span className="shrink-0 text-xs text-muted">Private</span>
+                      <span className="shrink-0 rounded-full border border-line px-3 py-1.5 text-xs text-muted">Private</span>
                     )}
                   </div>
                   <p className="mt-2 flex-1 text-muted">{p.tagline}</p>

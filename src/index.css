@@ -19,6 +19,8 @@
 :root {
   --glass: rgb(255 255 255 / 0.5);
   --glass-border: rgb(255 255 255 / 0.8);
+  --spot: rgb(255 255 255 / 0.55);
+  --spot-border: rgb(255 255 255 / 0.95);
 }
 
 .tone-dark {
@@ -31,6 +33,8 @@
   --color-sky: rgb(134 205 250 / 0.1);
   --glass: rgb(255 255 255 / 0.08);
   --glass-border: rgb(255 255 255 / 0.18);
+  --spot: rgb(134 205 250 / 0.14);
+  --spot-border: rgb(134 205 250 / 0.7);
 }
 
 @layer base {
@@ -66,17 +70,16 @@
 .sky-glass {
   background: var(--glass);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35);
 }
 
 .cloud {
   position: absolute;
   z-index: -1;
   border-radius: 9999px;
-  background: rgb(255 255 255 / 0.55);
-  filter: blur(48px);
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.6), rgb(255 255 255 / 0.25) 55%, transparent);
   pointer-events: none;
+  will-change: transform;
   animation: drift 38s ease-in-out infinite alternate;
 }
 
@@ -93,11 +96,9 @@
 .stars,
 .stars::after {
   position: absolute;
-  inset: 0;
+  inset: 22% 0 0;
   z-index: -1;
   pointer-events: none;
-  mask-image: linear-gradient(to bottom, transparent, #000 30%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%);
 }
 
 .stars {
@@ -119,6 +120,8 @@
     radial-gradient(1px 1px at 183px 17px, #e6f3ff, transparent),
     radial-gradient(2px 2px at 131px 197px, #fff, transparent);
   background-size: 360px 300px;
+  inset: 0;
+  will-change: opacity;
   animation: twinkle 5s ease-in-out infinite alternate;
 }
 
@@ -128,6 +131,122 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Cursor spotlight: a soft glow plus a lit border under the pointer */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before,
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.spotlight::before {
+  z-index: -1;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--spot), transparent 45%);
+}
+
+.spotlight::after {
+  padding: 1px;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--spot-border), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.spotlight:hover::before,
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Word-by-word mask reveal for headings */
+.mask-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.mask-word > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1.1s var(--ease-out-expo);
+  transition-delay: calc(var(--w, 0) * 70ms + 80ms);
+}
+
+.is-shown .mask-word > span {
+  transform: none;
+}
+
+@keyframes mask-up {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.hero-word {
+  display: block;
+  animation: mask-up 1.2s var(--ease-out-expo) both;
+  animation-delay: calc(var(--w, 0) * 110ms + 150ms);
+}
+
+/* Experience timeline */
+.timeline-dot {
+  transition:
+    background-color 0.6s ease,
+    box-shadow 0.6s ease,
+    transform 0.6s var(--ease-out-expo);
+  transform: scale(0.6);
+}
+
+.is-shown .timeline-dot {
+  background-color: var(--color-accent);
+  box-shadow: 0 0 0 5px rgb(134 205 250 / 0.15), 0 0 18px rgb(134 205 250 / 0.7);
+  transform: none;
+}
+
+/* Shooting stars: visible for a moment, then wait out the rest of the cycle */
+.shooting-star {
+  position: absolute;
+  width: 130px;
+  height: 1.5px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #fff, rgb(255 255 255 / 0));
+  opacity: 0;
+  animation: shoot 11s linear infinite;
+}
+
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-22deg);
+  }
+  1.5% {
+    opacity: 1;
+  }
+  8% {
+    opacity: 0;
+    transform: translate(-380px, 155px) rotate(-22deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-380px, 155px) rotate(-22deg);
   }
 }
 
@@ -168,8 +287,15 @@
   }
   .rise,
   .cloud,
-  .stars::after {
+  .stars::after,
+  .hero-word,
+  .shooting-star {
     animation: none;
+  }
+  .mask-word > span,
+  .timeline-dot {
+    transform: none;
+    transition: none;
   }
   .reveal {
     opacity: 1;
