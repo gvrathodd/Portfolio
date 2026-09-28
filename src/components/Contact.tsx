@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowUpRight, Check, Copy } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, X } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 import { Reveal } from './Reveal';
 import { MaskWords } from './motion';
 import { MeteorShower } from './SkyLife';
+import { useMailFallback } from './useMailFallback';
 
 export const Contact: React.FC = () => {
   const { personal } = portfolioData;
   const [copied, setCopied] = useState(false);
+  const mail = useMailFallback(personal.email);
 
   useEffect(() => {
     if (!copied) return;
@@ -43,6 +45,7 @@ export const Contact: React.FC = () => {
         <div className="mt-12 flex flex-wrap items-center gap-3">
           <a
             href={`mailto:${personal.email}`}
+            onClick={mail.onClick}
             className="inline-flex max-w-full items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-medium break-all text-[#0a1a40] shadow-[0_0_40px_-8px_rgb(134_205_250/0.5)] transition-transform hover:-translate-y-0.5 active:scale-[0.98] sm:text-base"
           >
             {personal.email}
@@ -56,6 +59,34 @@ export const Contact: React.FC = () => {
             {copied ? <Check className="size-4" strokeWidth={1.75} /> : <Copy className="size-4" strokeWidth={1.75} />}
             <span aria-live="polite">{copied ? 'Copied' : 'Copy email'}</span>
           </button>
+        </div>
+
+        {/* Shown only when the mailto link didn't open anything */}
+        <div
+          role="status"
+          inert={!mail.fallback}
+          className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            mail.fallback ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+          }`}
+        >
+          <div className="overflow-hidden">
+            <div className="sky-glass mt-4 flex max-w-xl flex-wrap items-center gap-x-4 gap-y-3 rounded-2xl px-5 py-4 text-sm">
+              <p className="flex-1 basis-60 text-muted">
+                <span className="font-medium text-ink">No email app opened.</span> The address is copied, or write from your browser:
+              </p>
+              <div className="flex gap-2">
+                <a href={mail.gmailUrl} target="_blank" rel="noopener noreferrer" className="rounded-full bg-ink px-3.5 py-2 font-medium text-[#0a1a40] transition-transform hover:-translate-y-0.5">
+                  Gmail
+                </a>
+                <a href={mail.outlookUrl} target="_blank" rel="noopener noreferrer" className="rounded-full border border-line px-3.5 py-2 font-medium transition-colors hover:border-ink">
+                  Outlook
+                </a>
+                <button type="button" onClick={mail.dismiss} aria-label="Dismiss" className="cursor-pointer rounded-full p-2 text-muted transition-colors hover:text-ink">
+                  <X className="size-4" strokeWidth={1.75} />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <ul className="mt-16 flex flex-wrap gap-x-7 gap-y-2 text-sm font-medium">

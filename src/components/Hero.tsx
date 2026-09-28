@@ -71,7 +71,7 @@ export const Hero: React.FC = () => {
               <ArrowDown className="size-4" strokeWidth={1.75} />
             </a>
             <a
-              href={`mailto:${personal.email}`}
+              href="#contact"
               className="sky-glass inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
             >
               Get in touch

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
@@ -45,18 +45,35 @@ const useToneBehind = (y: number) => {
 export const Navbar: React.FC = () => {
   const tone = useToneBehind(32);
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
+  // Close the phone menu on Escape, a tap outside it, or any scroll.
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    const close = () => setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && close();
+    const onPointerDown = (e: PointerEvent) => {
+      if (!headerRef.current?.contains(e.target as Node)) close();
+    };
+    const startY = window.scrollY;
+    const onScroll = () => {
+      if (Math.abs(window.scrollY - startY) > 8) close();
+    };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('scroll', onScroll);
+    };
   }, [open]);
 
   const resume = portfolioData.personal.resumeUrl;
 
   return (
     <header
+      ref={headerRef}
       className={`tone-${tone} sticky top-0 z-40 border-b border-line bg-paper/75 text-ink backdrop-blur-md transition-colors duration-500`}
     >
       <nav className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-4 px-4 sm:px-6">

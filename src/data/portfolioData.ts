@@ -88,7 +88,7 @@ export const portfolioData: PortfolioData = {
       { label: "GitHub", url: "https://github.com/gvrathodd" },
       { label: "LinkedIn", url: "https://www.linkedin.com/in/gauravgirishrathod/" },
       { label: "LeetCode", url: "https://leetcode.com/gvrathodd" },
-      { label: "Codeforces", url: "https://codeforces.com/profile/gvrathodd" },
+      { label: "Codeforces", url: "https://codeforces.com/profile/gauravrathod140706" },
     ],
   },
 
