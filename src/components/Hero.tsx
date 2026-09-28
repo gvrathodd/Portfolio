@@ -12,6 +12,8 @@ import {
   Cpu, 
   Terminal
 } from 'lucide-react';
+import { WordFlipper } from './WordFlipper';
+import { HeroParallaxOrbits } from './HeroParallaxOrbits';
 import { GithubIcon, LinkedinIcon } from './Icons';
 
 export const Hero: React.FC = () => {
@@ -40,6 +42,9 @@ export const Hero: React.FC = () => {
         className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] sm:w-[850px] h-[350px] sm:h-[480px] bg-gradient-to-tr from-sky-500/15 via-cyan-500/15 to-blue-600/10 blur-[130px] pointer-events-none rounded-full animate-aurora" 
       />
 
+      {/* Flowing 3D Parallax Tech Orbit Badges */}
+      <HeroParallaxOrbits />
+
       <animated.div style={entranceSpring} className="relative z-10 max-w-4xl w-full text-center flex flex-col items-center">
         {/* Availability Beacon Pill (Mobbin / Curated style) */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-sky-500/25 text-xs text-slate-300 mb-6 shadow-sm shadow-sky-500/10 backdrop-blur-md">
@@ -56,19 +61,15 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Large Name */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-4 leading-[1.08]">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-2 leading-[1.08]">
           {personal.name}
         </h1>
 
-        {/* Short Tagline with Sky Blue Gradient */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-          <span className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-sky-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
-            {personal.role}
-          </span>
-        </div>
+        {/* Dynamic Spring Word Flipper */}
+        <WordFlipper />
 
         {/* About Me Paragraph */}
-        <p className="max-w-2xl text-slate-300/90 text-base sm:text-lg leading-relaxed mb-10 text-balance font-normal">
+        <p className="max-w-2xl text-slate-300/90 text-base sm:text-lg leading-relaxed mb-10 text-balance font-normal mt-4">
           {personal.aboutMe}
         </p>
 

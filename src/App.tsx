@@ -7,6 +7,7 @@ import { Experience } from './components/Experience';
 import { Skills } from './components/Skills';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { InteractiveConsole } from './components/InteractiveConsole';
 
 export const App: React.FC = () => {
   const [isPointerDevice, setIsPointerDevice] = useState(false);
@@ -65,6 +66,8 @@ export const App: React.FC = () => {
           <Contact />
         </main>
         <Footer />
+        {/* Floating Developer Terminal with Spring Drawer */}
+        <InteractiveConsole />
       </div>
     </div>
   );
