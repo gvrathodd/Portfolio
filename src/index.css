@@ -2,7 +2,7 @@
 
 @layer base {
   :root {
-    --font-display: 'Syne', -apple-system, sans-serif;
+    --font-display: 'Plus Jakarta Sans', -apple-system, sans-serif;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
@@ -11,15 +11,15 @@
     font-family: var(--font-sans);
     scroll-behavior: smooth;
     color-scheme: dark;
-    background-color: #030712;
+    background-color: #070c18;
   }
 
-  /* Custom scrollbar for Seasats & Klausen look */
+  /* Smooth custom scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #030712;
+    background: #070c18;
   }
   ::-webkit-scrollbar-thumb {
     background: #1e293b;
@@ -30,46 +30,44 @@
   }
 }
 
-.font-display {
-  font-family: 'Syne', sans-serif;
+/* Watermelon UI & Godly Glassmorphic Styles */
+.glass-card {
+  background: rgba(13, 23, 44, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(125, 211, 252, 0.14);
 }
 
-.font-mono-tech {
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* Seasats & Klausen style architectural panel */
-.tech-panel {
-  background: rgba(8, 14, 28, 0.75);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(56, 189, 248, 0.14);
-}
-
-.tech-panel-subtle {
-  background: rgba(5, 10, 20, 0.6);
+.glass-pill {
+  background: rgba(11, 20, 38, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(125, 211, 252, 0.18);
 }
 
-.glow-sky {
-  box-shadow: 0 0 70px -10px rgba(56, 189, 248, 0.25);
+.sky-gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 40%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.glow-cyan {
-  box-shadow: 0 0 70px -10px rgba(6, 182, 212, 0.22);
+.sky-glow {
+  box-shadow: 0 0 60px -10px rgba(56, 189, 248, 0.28);
 }
 
-/* Precision technical grid */
-.bg-grid-pattern {
-  background-size: 40px 40px;
+.sky-glow-subtle {
+  box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.15);
+}
+
+/* Subtle modern grid */
+.bg-grid-soft {
+  background-size: 48px 48px;
   background-image: 
-    linear-gradient(to right, rgba(56, 189, 248, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(125, 211, 252, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(125, 211, 252, 0.03) 1px, transparent 1px);
 }
 
-/* Continuous kinetic marquee (The Tie-Break style) */
+/* Continuous kinetic marquee */
 @keyframes marqueeScroll {
   0% {
     transform: translate3d(0, 0, 0);
@@ -82,29 +80,25 @@
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marqueeScroll 32s linear infinite;
+  animation: marqueeScroll 28s linear infinite;
 }
 
 .animate-marquee:hover {
   animation-play-state: paused;
 }
 
-/* Flowing subtle aurora */
-@keyframes flowAurora {
-  0% {
+/* Soft floating breathing aurora */
+@keyframes auroraFloat {
+  0%, 100% {
     transform: translate(0, 0) scale(1);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translate(30px, -20px) scale(1.08);
     opacity: 0.35;
   }
-  100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.2;
+  50% {
+    transform: translate(40px, -25px) scale(1.1);
+    opacity: 0.55;
   }
 }
 
 .animate-aurora {
-  animation: flowAurora 16s ease-in-out infinite;
+  animation: auroraFloat 12s ease-in-out infinite;
 }

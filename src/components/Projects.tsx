@@ -1,17 +1,8 @@
 import React, { useState } from 'react';
 import { portfolioData, Project } from '../data/portfolioData';
-import { SpringFlipCard } from './SpringFlipCard';
-import { DeepfakeSimulator } from './DeepfakeSimulator';
-import { MiniPathfinder } from './MiniPathfinder';
+import { ProjectCard } from './ProjectCard';
 import { ProjectModal } from './ProjectModal';
-import { 
-  Flame, 
-  Sparkles, 
-  Layers, 
-  RotateCw, 
-  Compass, 
-  Cpu 
-} from 'lucide-react';
+import { Sparkles, Layers } from 'lucide-react';
 
 type CategoryOption = 'All' | Project['category'];
 
@@ -26,64 +17,44 @@ export const Projects: React.FC = () => {
     : portfolioData.projects.filter((p: Project) => p.category === activeCategory);
 
   return (
-    <section id="projects" className="py-24 px-4 sm:px-6 max-w-6xl mx-auto">
-      {/* Section Header with Seasats / Klausen Architectural Telemetry */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-sky-500/20">
+    <section id="projects" className="py-28 px-4 sm:px-6 max-w-6xl mx-auto">
+      {/* Clean, Elegant Section Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono font-medium text-sky-400 uppercase tracking-widest mb-2">
-            <span className="text-sky-300 font-bold">// 01</span>
-            <span>ARCHITECTURE & SYSTEMS</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-400/20 text-xs font-semibold text-sky-300 mb-3">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Featured Portfolio</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white uppercase">
-            Engineered Systems & Research
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+            Crafted Systems & Research
           </h2>
-          <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs text-slate-400 mt-3">
-            <span className="text-sky-400 font-semibold">[INDEX // 08 ARTIFACTS]</span>
-            <span className="text-slate-600">•</span>
-            <span>OPTIMIZED WITH REACT SPRING PHYSICS</span>
-            <span className="text-slate-600">•</span>
-            <span className="text-emerald-400 flex items-center gap-1.5 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              VERIFIED AT 60 FPS
-            </span>
-          </div>
+          <p className="text-slate-300 text-sm sm:text-base mt-2.5 max-w-xl leading-relaxed">
+            High-impact deep learning pipelines, algorithmic engines, and native software engineered with precision.
+          </p>
         </div>
 
-        {/* Category Filter Tabs with Architectural Brackets */}
-        <div className="flex flex-wrap gap-1.5 bg-slate-950/90 p-1.5 rounded-xl border border-sky-500/20 backdrop-blur-md">
+        {/* Smooth Category Filter Pills (Watermelon UI style) */}
+        <div className="flex flex-wrap gap-1.5 p-1.5 rounded-full glass-card border border-sky-400/20 self-start md:self-auto">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-200 ${
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                 activeCategory === cat
-                  ? 'bg-sky-500 text-slate-950 font-bold shadow-md shadow-sky-500/25'
-                  : 'text-slate-400 hover:text-sky-300 hover:bg-slate-900'
+                  ? 'bg-sky-400 text-slate-950 shadow-md shadow-sky-400/30'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
               }`}
             >
-              [{cat.toUpperCase()}]
+              {cat}
             </button>
           ))}
         </div>
       </div>
 
-      {/* SPECIAL COMPONENT #1: Interactive Deepfake Pipeline Simulator */}
-      <DeepfakeSimulator />
-
-      {/* SPECIAL COMPONENT #2: 3D Flip Project Cards (React Spring 3D Physics) */}
-      <div className="flex items-center justify-between mb-5 pb-3 border-b border-sky-500/15">
-        <h3 className="text-xs sm:text-sm font-mono text-sky-300 uppercase tracking-widest flex items-center gap-2 font-bold">
-          <Layers className="w-4 h-4 text-sky-400" />
-          <span>// 01.1 ARTIFACT DOSSIERS — RANKED SYSTEMS</span>
-        </h3>
-        <span className="text-[11px] text-slate-400 font-mono">
-          [COUNT: {filteredProjects.length} DOSSIERS]
-        </span>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Projects Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         {filteredProjects.map((project, index) => (
-          <SpringFlipCard
+          <ProjectCard
             key={project.id}
             project={project}
             index={index}
@@ -92,10 +63,7 @@ export const Projects: React.FC = () => {
         ))}
       </div>
 
-      {/* SPECIAL COMPONENT #3: Mini Pathfinder Traversal Visualizer */}
-      <MiniPathfinder />
-
-      {/* Project Deep Dive Modal */}
+      {/* Smooth Project Deep Dive Modal */}
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
