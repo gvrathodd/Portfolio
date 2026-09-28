@@ -26,7 +26,7 @@ const Bird: React.FC<{ size: number; flap: number }> = ({ size, flap }) => (
 );
 
 export const Birds: React.FC = () => (
-  <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[9%] h-28 overflow-hidden text-[#0a1830]/55">
+  <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[44%] h-28 overflow-hidden text-[#2a1638]/70">
     <div className="bird-flight absolute top-0 left-0">
       <div className="bird-bob relative">
         {flock.map((b, i) => (

@@ -5,7 +5,7 @@ import { Reveal } from './Reveal';
 import { trackPointer } from './motion';
 
 export const Skills: React.FC = () => (
-  <section id="skills" className="py-20 md:py-28">
+  <section id="skills" className="py-12 md:py-16">
     <SectionHeading index="03" eyebrow="Toolkit" title="What I work with" />
 
     <Reveal>

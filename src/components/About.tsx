@@ -8,7 +8,7 @@ export const About: React.FC = () => {
   const [lead, ...rest] = about.paragraphs;
 
   return (
-    <section id="about" className="py-20 md:py-28">
+    <section id="about" className="py-12 md:py-16">
       <SectionHeading index="01" eyebrow="About" title={about.title} />
 
       <div className="grid gap-10 md:grid-cols-12 md:gap-14">

@@ -18,13 +18,13 @@ const useToneBehind = (y: number) => {
     let frame = 0;
     const update = () => {
       frame = 0;
-      for (const band of document.querySelectorAll<HTMLElement>('[data-tone]')) {
-        const rect = band.getBoundingClientRect();
-        if (rect.top <= y && rect.bottom > y) {
-          setTone(band.dataset.tone === 'dark' ? 'dark' : 'light');
-          return;
-        }
-      }
+      const bands = [...document.querySelectorAll<HTMLElement>('[data-tone]')];
+      const behind =
+        bands.find((band) => {
+          const rect = band.getBoundingClientRect();
+          return rect.top <= y && rect.bottom > y;
+        }) ?? bands[0];
+      if (behind) setTone(behind.dataset.tone === 'dark' ? 'dark' : 'light');
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -45,6 +45,14 @@ const useToneBehind = (y: number) => {
 export const Navbar: React.FC = () => {
   const tone = useToneBehind(32);
   const [open, setOpen] = useState(false);
+  const [atTop, setAtTop] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   const headerRef = useRef<HTMLElement>(null);
 
   // Close the phone menu on Escape, or on a tap or scroll outside it. Taps, drags and wheel
@@ -100,9 +108,9 @@ export const Navbar: React.FC = () => {
     <header
       ref={headerRef}
       data-lenis-prevent={open ? '' : undefined}
-      className={`tone-${tone} sticky top-0 z-40 border-b border-line bg-paper/75 text-ink backdrop-blur-md transition-colors duration-500`}
+      className={`tone-${tone} nav-appear sticky top-0 z-40 px-3 pt-3 text-ink sm:px-6`}
     >
-      <nav className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-4 px-4 sm:px-6">
+      <nav data-top={atTop ? '' : undefined} className="nav-glass mx-auto flex h-14 max-w-[1240px] items-center justify-between gap-4 rounded-full pr-2 pl-4 transition-colors duration-500 sm:pl-5">
         <a href="#top" onClick={() => setOpen(false)} className="flex min-w-0 items-center gap-2.5 font-medium tracking-tight whitespace-nowrap">
           <span
             aria-hidden
@@ -149,10 +157,10 @@ export const Navbar: React.FC = () => {
       <div
         id="mobile-menu"
         inert={!open}
-        className={`absolute inset-x-0 top-full grid border-line bg-paper transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${open ? 'border-b shadow-[0_24px_40px_-24px_rgb(10_24_48/0.45)]' : ''} ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+        className={`absolute inset-x-3 top-full mt-2 grid overflow-hidden rounded-3xl border border-white/50 bg-paper shadow-[0_24px_50px_-20px_rgb(10_24_48/0.5)] transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:inset-x-6 md:hidden ${open ? 'grid-rows-[1fr] opacity-100' : 'pointer-events-none grid-rows-[0fr] opacity-0'}`}
       >
         <div className="overflow-hidden">
-          <ul className="px-4 pt-2 pb-6">
+          <ul className="px-5 pt-2 pb-5">
             {links.map((link, i) => (
               <li key={link.href} className="border-b border-line">
                 <a

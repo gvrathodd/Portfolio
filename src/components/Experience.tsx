@@ -37,7 +37,7 @@ export const Experience: React.FC = () => {
   const listRef = useScrollProgress<HTMLOListElement>();
 
   return (
-    <section id="experience" className="py-20 md:py-28">
+    <section id="experience" className="py-12 md:py-16">
       <SectionHeading index="04" eyebrow="Experience" title="Leadership, teams and competitions" />
 
       <ol ref={listRef} className="relative pl-8 md:pl-12">

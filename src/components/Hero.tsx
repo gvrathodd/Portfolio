@@ -30,7 +30,7 @@ export const Hero: React.FC = () => {
   const { personal } = portfolioData;
 
   return (
-    <section id="top" className="flex min-h-[calc(100dvh-4rem)] flex-col pt-8 pb-12 md:pt-12 md:pb-16">
+    <section id="top" className="dawn-text flex min-h-[calc(100dvh-4rem)] flex-col pt-8 pb-12 md:pt-12 md:pb-16">
       <div className="rise flex items-center justify-between gap-4" style={rise(0)}>
         <span className="sky-glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm">
           <span className="relative flex size-2">
@@ -65,7 +65,7 @@ export const Hero: React.FC = () => {
           <div className="rise mt-8 flex flex-wrap items-center gap-3" style={rise(3)}>
             <a
               href="#work"
-              className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-white shadow-[0_10px_30px_-12px_rgb(10_24_48/0.6)] transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#ffe0b2] to-[#ffa06b] px-5 py-3 text-sm font-semibold text-[#1b1740] shadow-[0_10px_30px_-10px_rgb(255_140_80/0.7)] transition-transform hover:-translate-y-0.5 active:scale-[0.98]"
             >
               See my work
               <ArrowDown className="size-4" strokeWidth={1.75} />
@@ -94,54 +94,89 @@ export const Hero: React.FC = () => {
   );
 };
 
-/** Sunrise glow and drifting clouds behind the hero. */
+/** Sunrise glow, clouds, birds and glass orbs behind the hero. Reacts to scroll and to the cursor. */
 export const MorningSky: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Parallax: the sun sinks faster than the clouds as you scroll away from the hero.
+  // Scroll parallax (--sy) plus a smoothed cursor offset (--px, --py in -1..1), all as CSS
+  // variables so React never re-renders. The cursor loop only runs while it's catching up.
   useEffect(() => {
     const el = ref.current;
     if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     let frame = 0;
-    const update = () => {
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    const tick = () => {
       frame = 0;
       el.style.setProperty('--sy', String(Math.min(window.scrollY, 1200)));
+      cx += (tx - cx) * 0.08;
+      cy += (ty - cy) * 0.08;
+      el.style.setProperty('--px', cx.toFixed(4));
+      el.style.setProperty('--py', cy.toFixed(4));
+      if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) schedule();
     };
     const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
+      if (!frame) frame = requestAnimationFrame(tick);
     };
+    const onPointer = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse' || window.scrollY > window.innerHeight) return;
+      tx = (e.clientX / window.innerWidth) * 2 - 1;
+      ty = (e.clientY / window.innerHeight) * 2 - 1;
+      schedule();
+    };
+
     window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('pointermove', onPointer, { passive: true });
     return () => {
       window.removeEventListener('scroll', schedule);
+      window.removeEventListener('pointermove', onPointer);
       cancelAnimationFrame(frame);
     };
   }, []);
 
-  const layer = (speed: number) => ({ transform: `translate3d(0, calc(var(--sy, 0) * ${speed}px), 0)` });
+  /** `scroll`: px moved per px scrolled. `depth`: px moved at the edge of the screen. */
+  const layer = (scroll: number, depth: number): React.CSSProperties => ({
+    transform: `translate3d(calc(var(--px, 0) * ${-depth}px), calc(var(--sy, 0) * ${scroll}px + var(--py, 0) * ${-depth * 0.6}px), 0)`,
+  });
 
   return (
     <div ref={ref} aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-      <div className="absolute inset-0 will-change-transform" style={layer(0.45)}>
-        <div className="absolute -top-56 right-[-10%] size-[680px]">
+      <div className="absolute inset-0 will-change-transform" style={layer(0.45, 14)}>
+        <div className="sunrise absolute right-[2%] bottom-[-300px] size-[720px]">
           <div className="absolute -inset-[15%]">
             <SunRays />
           </div>
           <div
             className="absolute inset-0 rounded-full"
-            style={{ background: 'radial-gradient(circle, rgb(255 248 228 / 0.85) 0%, rgb(255 240 205 / 0.3) 32%, transparent 66%)' }}
+            style={{ background: 'radial-gradient(circle, rgb(255 244 214 / 1) 0%, rgb(255 214 150 / 0.75) 12%, rgb(255 168 104 / 0.38) 30%, rgb(255 130 90 / 0.12) 48%, transparent 66%)' }}
           />
         </div>
       </div>
-      <div className="absolute inset-0 will-change-transform" style={layer(0.25)}>
+      <div className="appear absolute inset-0 will-change-transform" style={layer(0.25, 30)}>
         <div className="cloud top-[16%] left-[-10%] h-40 w-[50%]" />
         <div className="cloud top-[6%] right-[-12%] h-32 w-[40%] [animation-duration:52s]" />
       </div>
-      <div className="absolute inset-0 will-change-transform" style={layer(0.18)}>
+      <div className="absolute inset-0 will-change-transform" style={layer(0.18, 18)}>
         <Birds />
       </div>
-      <div className="absolute inset-0 will-change-transform" style={layer(0.1)}>
+      <div className="appear absolute inset-0 will-change-transform" style={layer(0.1, 44)}>
         <div className="cloud top-[52%] left-[30%] h-48 w-[60%] [animation-duration:64s]" />
       </div>
+
+      {/* Glass orbs at different depths: the nearer, the more they follow the cursor */}
+      <div className="appear absolute inset-0 hidden md:block will-change-transform" style={layer(0.3, 26)}>
+        <div className="float-slow glass-orb absolute top-[22%] left-[46%] aspect-square w-[clamp(34px,4vw,64px)] rounded-full" />
+      </div>
+      <div className="appear absolute inset-0 hidden md:block will-change-transform" style={layer(0.16, 60)}>
+        <div className="float glass-orb absolute top-[58%] right-[4%] aspect-square w-[clamp(64px,8vw,140px)] rounded-full" />
+        <div className="float-slow glass-bubble absolute top-[64%] left-[-2%] aspect-square w-[clamp(110px,13vw,220px)] rounded-full" />
+      </div>
+
+      {/* Dawn: fades away on load so the page opens with a sunrise */}
+      <div
+        className="dawn absolute inset-0"
+        style={{ background: 'linear-gradient(180deg, #070c24 0%, #111a44 45%, #2a2f66 75%, #5a4a7a 100%)' }}
+      />
     </div>
   );
 };
