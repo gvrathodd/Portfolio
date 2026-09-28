@@ -28,30 +28,9 @@
   --cloud: rgb(255 255 255 / 0.7);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-paper: #070c14;
-    --color-surface: #0c141f;
-    --color-ink: #e6edf5;
-    --color-muted: #8796aa;
-    --color-line: #1a2433;
-    --color-accent: #6ec3f4;
-    --color-sky: #0e2336;
-
-    --sky-top: #040d1a;
-    --sky-mid: #0a2540;
-    --sky-bottom: #1a5383;
-    --sky-ink: #eef5fc;
-    --sky-muted: #a7c1da;
-    --sky-glass: rgb(255 255 255 / 0.07);
-    --sky-glass-border: rgb(255 255 255 / 0.14);
-    --sky-btn-text: #06101c;
-    --cloud: rgb(130 195 245 / 0.12);
-  }
-}
-
 @layer base {
   html {
+    color-scheme: light;
     scroll-behavior: smooth;
     background-color: var(--color-paper);
     -webkit-font-smoothing: antialiased;
