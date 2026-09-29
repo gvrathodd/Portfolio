@@ -8,6 +8,9 @@ const flock = [
   { x: -64, y: -10, size: 18, flap: 0.33 },
   { x: -92, y: 26, size: 15, flap: 0.09 },
   { x: -118, y: 6, size: 13, flap: 0.26 },
+  { x: -146, y: 30, size: 16, flap: 0.41 },
+  { x: -172, y: -4, size: 12, flap: 0.14 },
+  { x: -198, y: 18, size: 11, flap: 0.36 },
 ];
 
 const Bird: React.FC<{ size: number; flap: number }> = ({ size, flap }) => (

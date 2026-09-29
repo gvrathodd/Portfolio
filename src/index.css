@@ -412,7 +412,7 @@
 
 .bird-flight {
   will-change: transform;
-  animation: fly 34s linear infinite;
+  animation: fly 24s linear infinite;
   animation-delay: 1.5s;
   transform: translate3d(-12vw, 40px, 0);
 }
@@ -421,7 +421,7 @@
   0% {
     transform: translate3d(-12vw, 40px, 0);
   }
-  72% {
+  80% {
     transform: translate3d(112vw, 0, 0);
   }
   100% {
