@@ -52,7 +52,7 @@ export const Stats: React.FC<{ className?: string; style?: React.CSSProperties }
     style={style}
   >
     {portfolioData.stats.map((stat) => (
-      <div key={stat.label} onPointerMove={trackPointer} className="sky-glass spotlight flex flex-col rounded-3xl p-6 md:p-7">
+      <div key={stat.label} onPointerMove={trackPointer} className="sky-glass stat-tile spotlight flex flex-col rounded-3xl p-6 md:p-7">
         <dd className="order-1 text-4xl font-medium tracking-tighter text-accent md:text-5xl">
           <CountUp stat={stat} />
         </dd>

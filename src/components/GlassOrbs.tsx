@@ -29,12 +29,12 @@ const layouts: Record<'about' | 'work' | 'skills' | 'experience', Orb[]> = {
 };
 
 /** Glossy blue spheres and soap-bubble rings behind a glass panel. They don't move, so the glass blur stays cheap. */
-export const GlassOrbs: React.FC<{ layout: keyof typeof layouts }> = ({ layout }) => (
+export const GlassOrbs: React.FC<{ layout: keyof typeof layouts; warm?: boolean }> = ({ layout, warm }) => (
   <div aria-hidden className="pointer-events-none absolute inset-0">
     {layouts[layout].map((orb, i) => (
       <div
         key={i}
-        className={`absolute aspect-square rounded-full ${orb.kind === 'sphere' ? 'glass-orb' : 'glass-bubble'}`}
+        className={`absolute aspect-square rounded-full ${orb.kind === 'sphere' ? `glass-orb${warm ? ' glass-orb-warm' : ''}` : 'glass-bubble'}`}
         style={{ width: orb.size, left: orb.left, right: orb.right, top: orb.top }}
       />
     ))}

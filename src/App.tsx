@@ -36,7 +36,7 @@ export const App: React.FC = () => (
       <Band tone="dark" variant="dawn" background={sky.dawn} decor={<MorningSky />}>
         <Hero />
       </Band>
-      <Band tone="light" background={sky.morning} glass decor={<GlassOrbs layout="about" />}>
+      <Band tone="light" background={sky.morning} glass decor={<GlassOrbs layout="about" warm />}>
         <About />
       </Band>
       <Band tone="light" background={sky.midday} glass decor={<GlassOrbs layout="work" />}>
