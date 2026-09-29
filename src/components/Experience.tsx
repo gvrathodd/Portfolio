@@ -93,15 +93,19 @@ export const Experience: React.FC = () => {
       </ul>
 
       <h3 className="mt-16 mb-6 text-sm font-medium tracking-wide text-accent uppercase md:mt-20">Education</h3>
-      <Reveal className="grid gap-x-8 gap-y-2 md:grid-cols-12">
-        <p className="font-mono text-sm text-ink md:col-span-3">{portfolioData.education.period}</p>
-        <div className="md:col-span-9">
-          <p className="text-lg font-medium tracking-tight">
-            {portfolioData.education.degree} <span className="text-muted">· {portfolioData.education.school}</span>
-          </p>
-          <p className="mt-2 max-w-[62ch] leading-relaxed text-muted">{portfolioData.education.note}</p>
-        </div>
-      </Reveal>
+      <div className="space-y-10">
+        {portfolioData.education.map((ed, i) => (
+          <Reveal key={ed.degree} delay={i} className="grid gap-x-8 gap-y-2 md:grid-cols-12">
+            <p className="font-mono text-sm text-ink md:col-span-3">{ed.period}</p>
+            <div className="md:col-span-9">
+              <p className="text-lg font-medium tracking-tight">
+                {ed.degree} <span className="text-muted">· {ed.school}</span>
+              </p>
+              <p className="mt-2 max-w-[62ch] leading-relaxed text-muted">{ed.note}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
     </section>
   );
 };

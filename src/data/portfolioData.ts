@@ -83,7 +83,7 @@ export interface PortfolioData {
   projects: Project[];
   experience: ExperienceItem[];
   competitions: Competition[];
-  education: { degree: string; school: string; period: string; note: string };
+  education: { degree: string; school: string; period: string; note: string }[];
   skills: SkillGroup[];
   /** Tools used, but not yet in a project shown here. Kept to one honest line. */
   alsoFamiliar: string[];
@@ -306,12 +306,26 @@ export const portfolioData: PortfolioData = {
     { result: "500+", event: "Problems solved", detail: "LeetCode and Codeforces, rated 1200+" },
   ],
 
-  education: {
-    degree: "B.Tech, Civil Engineering",
-    school: "IIT Mandi",
-    period: "2024 – now",
-    note: "Took the CS electives anyway: data structures, algorithms, machine learning, deep learning, operating systems, DBMS and computer networks.",
-  },
+  education: [
+    {
+      degree: "B.Tech, Civil Engineering",
+      school: "IIT Mandi",
+      period: "2024 – now",
+      note: "Took the CS electives anyway: data structures, algorithms, machine learning, deep learning, operating systems, DBMS and computer networks.",
+    },
+    {
+      degree: "Class 12, HSC Board",
+      school: "Queen Mary School, Mumbai",
+      period: "2022 – 2024",
+      note: "Ranked 3rd of 850 students, with 85.5%.",
+    },
+    {
+      degree: "Class 10, ICSE Board",
+      school: "Kanakia International School, Mumbai",
+      period: "2022",
+      note: "Ranked 23rd of 600 students, with 97.5%.",
+    },
+  ],
 
   skills: [
     {
