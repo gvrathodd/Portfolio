@@ -40,12 +40,13 @@ export const Experience: React.FC = () => {
     <section id="experience" className="py-12 md:py-16">
       <SectionHeading index="04" eyebrow="Experience" title="Leadership, teams and competitions" />
 
+      <h3 className="mb-8 text-sm font-medium tracking-wide text-accent uppercase">Leadership & teams</h3>
       <ol ref={listRef} className="relative pl-8 md:pl-12">
         {/* Track, and the lit part that grows as you scroll */}
         <span aria-hidden className="absolute top-2 bottom-2 left-[5px] w-px bg-line" />
         <span
           aria-hidden
-          className="absolute top-2 bottom-2 left-[5px] w-px origin-top bg-gradient-to-b from-accent to-accent/40 shadow-[0_0_12px_rgb(134_205_250/0.6)]"
+          className="absolute top-2 bottom-2 left-[5px] w-px origin-top bg-gradient-to-b from-accent to-accent/40 shadow-[0_0_12px_rgb(255_196_138/0.6)]"
           style={{ transform: 'scaleY(var(--progress, 0))' }}
         />
 
@@ -53,7 +54,7 @@ export const Experience: React.FC = () => {
           <Reveal as="li" key={item.id} className="relative grid gap-x-8 gap-y-3 pb-12 last:pb-0 md:grid-cols-12 md:pb-16">
             <span
               aria-hidden
-              className="timeline-dot absolute top-1.5 -left-8 size-[11px] rounded-full border border-accent bg-[#16316b] md:-left-12"
+              className="timeline-dot absolute top-1.5 -left-8 size-[11px] rounded-full border border-accent bg-[#2a2458] md:-left-12"
             />
             <p className="text-sm text-muted md:col-span-3">
               <span className="font-mono text-ink">{item.period}</span>
@@ -79,6 +80,28 @@ export const Experience: React.FC = () => {
           </Reveal>
         ))}
       </ol>
+
+      <h3 className="mt-16 mb-6 text-sm font-medium tracking-wide text-accent uppercase md:mt-20">Competitions</h3>
+      <ul className="grid gap-3 md:grid-cols-3">
+        {portfolioData.competitions.map((c, i) => (
+          <Reveal as="li" key={c.event} delay={i} className="sky-glass rounded-3xl p-6">
+            <p className="text-3xl font-medium tracking-tight text-accent">{c.result}</p>
+            <p className="mt-3 font-medium">{c.event}</p>
+            <p className="mt-1 text-sm leading-snug text-muted">{c.detail}</p>
+          </Reveal>
+        ))}
+      </ul>
+
+      <h3 className="mt-16 mb-6 text-sm font-medium tracking-wide text-accent uppercase md:mt-20">Education</h3>
+      <Reveal className="grid gap-x-8 gap-y-2 md:grid-cols-12">
+        <p className="font-mono text-sm text-ink md:col-span-3">{portfolioData.education.period}</p>
+        <div className="md:col-span-9">
+          <p className="text-lg font-medium tracking-tight">
+            {portfolioData.education.degree} <span className="text-muted">· {portfolioData.education.school}</span>
+          </p>
+          <p className="mt-2 max-w-[62ch] leading-relaxed text-muted">{portfolioData.education.note}</p>
+        </div>
+      </Reveal>
     </section>
   );
 };

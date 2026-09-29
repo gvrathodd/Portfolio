@@ -42,9 +42,21 @@ export interface Stat {
   context: string;
 }
 
+export interface Competition {
+  result: string;
+  event: string;
+  detail: string;
+}
+
+export interface Skill {
+  name: string;
+  /** Where it was actually used: the evidence behind the claim. */
+  usedIn: string[];
+}
+
 export interface SkillGroup {
   title: string;
-  skills: string[];
+  skills: Skill[];
 }
 
 export interface PortfolioData {
@@ -70,7 +82,11 @@ export interface PortfolioData {
   stats: Stat[];
   projects: Project[];
   experience: ExperienceItem[];
+  competitions: Competition[];
+  education: { degree: string; school: string; period: string; note: string };
   skills: SkillGroup[];
+  /** Tools used, but not yet in a project shown here. Kept to one honest line. */
+  alsoFamiliar: string[];
 }
 
 export const portfolioData: PortfolioData = {
@@ -83,11 +99,11 @@ export const portfolioData: PortfolioData = {
     intro: "Civil Engineering at IIT Mandi by degree. Machine learning and systems software by choice.",
     introAside: "Lately: a deepfake detector that holds up on data it wasn't trained on, and a pipeline that finds the busywork hiding in 183k office logs.",
     resumeUrl: "/Gaurav_Rathod_Resume.pdf",
-    email: "gauravrathod140706@gmail.com",
+    email: "contact.gauravgrathod@gmail.com",
     socials: [
       { label: "GitHub", url: "https://github.com/gvrathodd" },
       { label: "LinkedIn", url: "https://www.linkedin.com/in/gauravgirishrathod/" },
-      { label: "LeetCode", url: "https://leetcode.com/gvrathodd" },
+      { label: "LeetCode", url: "https://leetcode.com/u/gvrathodd/" },
       { label: "Codeforces", url: "https://codeforces.com/profile/gauravrathod140706" },
     ],
   },
@@ -119,7 +135,7 @@ export const portfolioData: PortfolioData = {
       description: "Most deepfake detectors memorise one generator's fingerprints and fall apart on anything new. This one pairs a frozen 307M-parameter DINOv2 ViT-L/14 with a 30-kernel SRM noise stream, fused into a 1153-d head. A Fused Gromov-Wasserstein module (20-iteration Sinkhorn) then matches each face's patch graph against a bank of 32 real-face prototypes, so the model learns what real looks like instead.",
       category: "Research · ML",
       tags: ["PyTorch", "DINOv2", "Optimal transport", "SRM", "OpenCV"],
-      githubUrl: "https://github.com/gvrathodd",
+      githubUrl: "https://github.com/Krupal-1219/Deepfake-detection-SSL",
       featured: true,
       metrics: { label: "AUC on WildDeepfake", value: "0.884" },
       year: "2026",
@@ -265,19 +281,6 @@ export const portfolioData: PortfolioData = {
       ],
     },
     {
-      id: "hackathons-cp",
-      role: "Hackathons & competitive programming",
-      organization: "HACK60, Inter-IIT, Codeforces, LeetCode",
-      period: "2024 – now",
-      location: "",
-      description: "",
-      highlights: [
-        "1st runner-up at HACK60, a deep learning hackathon, with an end-to-end CV solution.",
-        "3rd place pan-IIT in the Sustainable City Planning case study at the Inter-IIT Civil Conclave, IIT Roorkee.",
-        "500+ problems solved; Codeforces rating 1200+.",
-      ],
-    },
-    {
       id: "sae-society",
       role: "Member, telemetry",
       organization: "SAE Collegiate Club, IIT Mandi",
@@ -295,33 +298,53 @@ export const portfolioData: PortfolioData = {
       description: "Scheduling, logistics and accommodation for 500+ visiting athletes.",
       highlights: [],
     },
-    {
-      id: "iit-mandi",
-      role: "B.Tech, Civil Engineering",
-      organization: "Indian Institute of Technology Mandi",
-      period: "Aug 2024 – now",
-      location: "Himachal Pradesh",
-      description: "Took the CS electives anyway: data structures, design of algorithms, machine learning, deep learning, operating systems, DBMS, computer networks, probability & statistics, linear algebra.",
-      highlights: [],
-    },
   ],
+
+  competitions: [
+    { result: "1st runner-up", event: "HACK60", detail: "Deep learning hackathon, with an end-to-end computer vision solution" },
+    { result: "3rd pan-IIT", event: "Inter-IIT Civil Conclave", detail: "Sustainable City Planning case study, IIT Roorkee" },
+    { result: "500+", event: "Problems solved", detail: "LeetCode and Codeforces, rated 1200+" },
+  ],
+
+  education: {
+    degree: "B.Tech, Civil Engineering",
+    school: "IIT Mandi",
+    period: "2024 – now",
+    note: "Took the CS electives anyway: data structures, algorithms, machine learning, deep learning, operating systems, DBMS and computer networks.",
+  },
 
   skills: [
     {
       title: "Languages",
-      skills: ["C++17", "Python", "TypeScript / JavaScript", "C", "Scala", "SQL", "Kotlin", "Bash"],
+      skills: [
+        { name: "Python", usedIn: ["Deepfake detector", "Process mining", "RC car"] },
+        { name: "C++17", usedIn: ["QTextEditor"] },
+        { name: "TypeScript / JavaScript", usedIn: ["Path-Finder", "this site"] },
+        { name: "Kotlin", usedIn: ["Chatroom"] },
+        { name: "SQL", usedIn: ["Finance tracker"] },
+      ],
     },
     {
-      title: "ML & AI",
-      skills: ["PyTorch", "TensorFlow / Keras", "OpenCV", "Hugging Face", "LLMs, RAG & MCP", "NLP", "scikit-learn", "CUDA"],
-    },
-    {
-      title: "Data & cloud",
-      skills: ["Databricks", "PostgreSQL", "Neo4j / Cosmos DB", "Pandas / NumPy", "Azure AI Foundry", "AWS / GCP", "Power BI / Tableau"],
+      title: "ML & vision",
+      skills: [
+        { name: "PyTorch", usedIn: ["Deepfake detector"] },
+        { name: "OpenCV", usedIn: ["RC car", "Deepfake detector"] },
+        { name: "scikit-learn", usedIn: ["Process mining"] },
+        { name: "PaddleOCR", usedIn: ["Process mining"] },
+        { name: "LLMs & RAG", usedIn: ["Knowledge assistant"] },
+      ],
     },
     {
       title: "Build & ship",
-      skills: ["React / Next.js", "Flask / Django / FastAPI", "Jetpack Compose", "Docker / Kubernetes", "GitHub Actions", "Playwright", "GDB"],
+      skills: [
+        { name: "React", usedIn: ["Path-Finder", "this site"] },
+        { name: "Qt", usedIn: ["QTextEditor"] },
+        { name: "FastAPI / Flask", usedIn: ["Knowledge assistant", "Finance tracker"] },
+        { name: "Jetpack Compose + Firebase", usedIn: ["Chatroom"] },
+        { name: "Playwright", usedIn: ["Process mining"] },
+      ],
     },
   ],
+
+  alsoFamiliar: ["TensorFlow / Keras", "Hugging Face", "Docker", "GitHub Actions", "AWS / Azure", "Databricks"],
 };

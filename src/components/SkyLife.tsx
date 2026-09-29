@@ -44,7 +44,7 @@ export const SunRays: React.FC = () => <div aria-hidden className="sun-rays abso
 
 /* ---------- Night: a continuous meteor shower ---------- */
 
-const METEORS = 10;
+const METEORS = 7;
 
 const randomise = (el: HTMLElement) => {
   // Start somewhere across the upper-right two thirds of the sky, then fall down-left.

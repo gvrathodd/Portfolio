@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Gaurav Girish Rathod">
+  <!-- Dawn over a horizon, with the last stars of the night: the site's day-to-night story in one mark -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#221f4f"/>
+      <stop offset="0.35" stop-color="#4b3478"/>
+      <stop offset="0.58" stop-color="#9a4679"/>
+      <stop offset="0.78" stop-color="#e0695f"/>
+      <stop offset="1" stop-color="#ffc27a"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.4" r="0.8">
+      <stop offset="0" stop-color="#fffaf0"/>
+      <stop offset="0.55" stop-color="#ffe2b0"/>
+      <stop offset="1" stop-color="#ffc27a"/>
+    </radialGradient>
+    <radialGradient id="glow">
+      <stop offset="0.55" stop-color="#ffe2b0" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#ffe2b0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="horizon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff3e4" stop-opacity="0"/>
+      <stop offset="0.18" stop-color="#fff3e4"/>
+      <stop offset="0.82" stop-color="#fff3e4"/>
+      <stop offset="1" stop-color="#fff3e4" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="above-horizon">
+      <rect width="64" height="44"/>
+    </clipPath>
+  </defs>
+
+  <rect width="64" height="64" rx="15" fill="url(#sky)"/>
+
+  <!-- Sun, its glow, and the horizon -->
+  <circle cx="32" cy="44" r="21" fill="url(#glow)" clip-path="url(#above-horizon)"/>
+  <circle cx="32" cy="44" r="12.5" fill="url(#sun)" clip-path="url(#above-horizon)"/>
+  <rect x="6" y="43.2" width="52" height="1.6" rx="0.8" fill="url(#horizon)"/>
+
+  <!-- Reflection below the horizon -->
+  <rect x="24" y="47.6" width="16" height="1.4" rx="0.7" fill="#fff3e4" opacity="0.55"/>
+  <rect x="27.5" y="51.4" width="9" height="1.3" rx="0.65" fill="#fff3e4" opacity="0.35"/>
+
+  <!-- The last stars -->
+  <path d="M45 12C45.55 15.6 46.4 16.45 50 17C46.4 17.55 45.55 18.4 45 22C44.45 18.4 43.6 17.55 40 17C43.6 16.45 44.45 15.6 45 12Z" fill="#fff3e4"/>
+  <circle cx="52.5" cy="10.5" r="1" fill="#fff3e4" opacity="0.8"/>
+</svg>

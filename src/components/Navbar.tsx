@@ -112,11 +112,7 @@ export const Navbar: React.FC = () => {
     >
       <nav data-top={atTop ? '' : undefined} className="nav-glass mx-auto flex h-14 max-w-[1240px] items-center justify-between gap-4 rounded-full pr-2 pl-4 transition-colors duration-500 sm:pl-5">
         <a href="#top" onClick={() => setOpen(false)} className="flex min-h-11 min-w-0 items-center gap-2.5 font-medium tracking-tight whitespace-nowrap">
-          <span
-            aria-hidden
-            className="size-6 shrink-0 rounded-full ring-1 ring-white/40"
-            style={{ background: 'linear-gradient(180deg, #5aa9e6 0%, #cbe6fa 55%, #1f4388 56%, #060f28 100%)' }}
-          />
+          <img src="/brand/logo.svg" alt="" width={28} height={28} className="size-7 shrink-0 rounded-[0.45rem] shadow-sm" />
           {portfolioData.personal.name}
         </a>
 
@@ -148,7 +144,7 @@ export const Navbar: React.FC = () => {
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? 'Close menu' : 'Open menu'}
-          className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-ink text-paper transition-transform active:scale-95 md:hidden"
+          className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-ink text-paper transition-transform active:scale-95 md:hidden"
         >
           {open ? <X className="size-5" strokeWidth={1.75} /> : <Menu className="size-5" strokeWidth={1.75} />}
         </button>

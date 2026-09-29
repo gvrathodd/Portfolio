@@ -46,7 +46,7 @@ export const Contact: React.FC = () => {
           <a
             href={`mailto:${personal.email}`}
             onClick={mail.onClick}
-            className="inline-flex max-w-full items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-medium break-all text-[#0a1a40] shadow-[0_0_40px_-8px_rgb(134_205_250/0.5)] transition-transform hover:-translate-y-0.5 active:scale-[0.98] sm:text-base"
+            className="inline-flex max-w-full items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-medium break-all text-[#231d4d] shadow-[0_0_40px_-8px_rgb(255_196_138/0.45)] transition-transform hover:-translate-y-0.5 active:scale-[0.98] sm:text-base"
           >
             {personal.email}
             <ArrowUpRight className="size-4 shrink-0" strokeWidth={1.75} />
@@ -75,7 +75,7 @@ export const Contact: React.FC = () => {
                 <span className="font-medium text-ink">No email app opened.</span> The address is copied, or write from your browser:
               </p>
               <div className="flex gap-2">
-                <a href={mail.gmailUrl} target="_blank" rel="noopener noreferrer" className="rounded-full bg-ink px-3.5 py-2 font-medium text-[#0a1a40] transition-transform hover:-translate-y-0.5">
+                <a href={mail.gmailUrl} target="_blank" rel="noopener noreferrer" className="rounded-full bg-ink px-3.5 py-2 font-medium text-[#231d4d] transition-transform hover:-translate-y-0.5">
                   Gmail
                 </a>
                 <a href={mail.outlookUrl} target="_blank" rel="noopener noreferrer" className="rounded-full border border-line px-3.5 py-2 font-medium transition-colors hover:border-ink">
