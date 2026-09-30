@@ -136,6 +136,7 @@ export const portfolioData: PortfolioData = {
       category: "Research · ML",
       tags: ["PyTorch", "DINOv2", "Optimal transport", "SRM", "OpenCV"],
       githubUrl: "https://github.com/Krupal-1219/Deepfake-detection-SSL",
+      liveUrl: "https://seam-tau.vercel.app/",
       featured: true,
       metrics: { label: "AUC on WildDeepfake", value: "0.884" },
       year: "2026",
