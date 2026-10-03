@@ -115,7 +115,7 @@ export const NightSky: React.FC = () => (
     <div className="stars" />
     <MeteorShower />
     <div
-      className="absolute top-[18%] right-[6%] size-24 rounded-full md:size-32"
+      className="orb-fallback absolute top-[18%] right-[6%] size-24 rounded-full md:size-32"
       style={{
         background: 'radial-gradient(circle at 35% 35%, #f4f9ff 0%, #d9e9fb 55%, #b9d3f0 100%)',
         boxShadow: '0 0 80px 20px rgb(190 220 255 / 0.18)',

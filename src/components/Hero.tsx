@@ -31,7 +31,7 @@ const ScrollHint: React.FC = () => (
   <a
     href="#about"
     aria-label="Scroll to About"
-    className="rise group absolute bottom-5 left-1/2 flex min-h-11 min-w-11 -translate-x-1/2 flex-col items-center gap-2 px-3 pt-1 text-muted transition-colors hover:text-ink"
+    className="hero-hint rise group absolute bottom-5 left-1/2 flex min-h-11 min-w-11 -translate-x-1/2 flex-col items-center gap-2 px-3 pt-1 text-muted transition-colors hover:text-ink"
     style={rise(7)}
   >
     <span className="text-xs font-medium tracking-[0.25em] uppercase">Scroll</span>
@@ -46,24 +46,26 @@ export const Hero: React.FC = () => {
 
   return (
     <section id="top" className="dawn-text pb-12 md:pb-16">
-      <div className="relative flex min-h-[calc(100dvh-4.25rem)] flex-col pt-8 pb-24 md:pt-12">
-        <div className="rise flex items-center justify-between gap-4" style={rise(0)}>
-          <span className="sky-glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm">
-            <span className="relative flex size-2">
-              <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-50 motion-reduce:hidden" />
-              <span className="relative size-2 rounded-full bg-emerald-500" />
+      <div className="hero-stage relative flex min-h-[calc(100dvh-4.25rem)] flex-col pt-8 pb-24 md:pt-12">
+        <div className="hero-top">
+          <div className="rise flex items-center justify-between gap-4" style={rise(0)}>
+            <span className="sky-glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm">
+              <span className="relative flex size-2">
+                <span className="absolute inset-0 animate-ping rounded-full bg-emerald-500 opacity-50 motion-reduce:hidden" />
+                <span className="relative size-2 rounded-full bg-emerald-500" />
+              </span>
+              {personal.availability}
             </span>
-            {personal.availability}
-          </span>
-          <span className="hidden sm:block">
-            <LocalTime />
-          </span>
+            <span className="hidden sm:block">
+              <LocalTime />
+            </span>
+          </div>
         </div>
 
         <div className="mt-auto grid gap-10 pt-20 md:grid-cols-12 md:items-end md:gap-8">
-          <h1 className="text-[clamp(3.25rem,10vw,8.5rem)] leading-[0.86] font-medium tracking-[-0.05em] md:col-span-7">
+          <h1 className="hero-name text-[clamp(3.25rem,10vw,8.5rem)] leading-[0.86] font-medium tracking-[-0.05em] md:col-span-7">
             {personal.name.split(' ').map((word, i, words) => (
-              <span key={word} className="block overflow-hidden pb-[0.06em]">
+              <span key={word} className="hero-line block overflow-hidden pb-[0.06em]">
                 <span
                   className={`hero-word ${i > 0 && i < words.length - 1 ? 'text-accent' : ''}`}
                   style={{ '--w': i } as React.CSSProperties}
@@ -74,7 +76,7 @@ export const Hero: React.FC = () => {
             ))}
           </h1>
 
-          <div className="md:col-span-5 md:pb-2">
+          <div className="hero-copy md:col-span-5 md:pb-2">
             <p className="rise text-lg leading-snug tracking-tight text-pretty md:text-xl" style={rise(2)}>
               {personal.intro} <span className="text-muted">{personal.introAside}</span>
             </p>
@@ -184,10 +186,10 @@ export const MorningSky: React.FC = () => {
 
       {/* Glass orbs at different depths: the nearer, the more they follow the cursor */}
       <div className="appear absolute inset-0 hidden md:block will-change-transform" style={layer(0.3, 26)}>
-        <div className="float-slow glass-orb absolute top-[22%] left-[46%] aspect-square w-[clamp(34px,4vw,64px)] rounded-full" />
+        <div className="orb-fallback float-slow glass-orb absolute top-[22%] left-[46%] aspect-square w-[clamp(34px,4vw,64px)] rounded-full" />
       </div>
       <div className="appear absolute inset-0 hidden md:block will-change-transform" style={layer(0.16, 60)}>
-        <div className="float glass-orb absolute top-[58%] right-[4%] aspect-square w-[clamp(64px,8vw,140px)] rounded-full" />
+        <div className="orb-fallback float glass-orb absolute top-[58%] right-[4%] aspect-square w-[clamp(64px,8vw,140px)] rounded-full" />
         <div className="float-slow glass-bubble absolute top-[64%] left-[-2%] aspect-square w-[clamp(110px,13vw,220px)] rounded-full" />
       </div>
 

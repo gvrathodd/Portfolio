@@ -28,7 +28,7 @@ export const Band: React.FC<BandProps> = ({ tone, variant, background, decor, gl
   }, []);
 
   return (
-    <div ref={ref} data-tone={tone} className={`tone-${tone} ${variant ? `sky-${variant}` : ''} relative isolate overflow-hidden text-ink`} style={{ background }}>
+    <div ref={ref} data-band data-tone={tone} className={`tone-${tone} ${variant ? `sky-${variant}` : ''} relative isolate overflow-hidden text-ink`} style={{ background }}>
       {decor}
       <div className="relative mx-auto max-w-[1240px] px-3 sm:px-6">
         {glass ? (

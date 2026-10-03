@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { Band } from './components/Band';
 import { GlassOrbs } from './components/GlassOrbs';
 import { Navbar } from './components/Navbar';
@@ -10,6 +10,40 @@ import { Skills } from './components/Skills';
 import { Contact, NightSky } from './components/Contact';
 import { Footer } from './components/Footer';
 import { SmoothScroll } from './components/SmoothScroll';
+import { useScrollDepth } from './components/ScrollDepth';
+
+// three.js is the heaviest thing on the page, so it loads after everything else has painted
+const Sky3D = lazy(() => import('./components/three/Sky3D'));
+
+const canUseWebGL = () => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+  try {
+    return !!document.createElement('canvas').getContext('webgl2');
+  } catch {
+    return false;
+  }
+};
+
+/** Mounts the 3D layer once the browser is idle; without WebGL the CSS orbs stay instead. */
+const Deferred3D: React.FC = () => {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    if (!canUseWebGL()) return;
+    const start = () => setReady(true);
+    // Safari has no requestIdleCallback
+    if (typeof window.requestIdleCallback !== 'function') {
+      const id = setTimeout(start, 600);
+      return () => clearTimeout(id);
+    }
+    const id = window.requestIdleCallback(start, { timeout: 1500 });
+    return () => window.cancelIdleCallback(id);
+  }, []);
+  return ready ? (
+    <Suspense fallback={null}>
+      <Sky3D />
+    </Suspense>
+  ) : null;
+};
 
 // One day, top to bottom: dawn, morning, midday, afternoon, dusk, night.
 // Colour moves through neighbouring hues (never straight from blue to orange, which greys out),
@@ -28,32 +62,41 @@ const sky = {
   night: 'linear-gradient(180deg, #241f4f 0%, #1c1840 45%, #120f2c 100%)',
 };
 
-export const App: React.FC = () => (
-  <div className="min-h-[100dvh]">
-    <SmoothScroll />
-    <Navbar />
-    <main>
-      <Band tone="dark" variant="dawn" background={sky.dawn} decor={<MorningSky />}>
-        <Hero />
-      </Band>
-      <Band tone="light" background={sky.morning} glass decor={<GlassOrbs layout="about" warm />}>
-        <About />
-      </Band>
-      <Band tone="light" background={sky.midday} glass decor={<GlassOrbs layout="work" />}>
-        <Projects />
-      </Band>
-      <Band tone="light" background={sky.afternoon} glass decor={<GlassOrbs layout="skills" />}>
-        <Skills />
-      </Band>
-      <Band tone="dark" background={sky.dusk} glass decor={<GlassOrbs layout="experience" />}>
-        <Experience />
-      </Band>
-      <Band tone="dark" background={sky.night} decor={<NightSky />}>
-        <Contact />
-        <Footer />
-      </Band>
-    </main>
-  </div>
-);
+export const App: React.FC = () => {
+  const main = useRef<HTMLElement>(null);
+  useScrollDepth(main);
+
+  return (
+    <div className="min-h-[100dvh]">
+      <SmoothScroll />
+      <Navbar />
+      <main ref={main}>
+        {/* GSAP wraps the pinned hero in a spacer; this wrapper keeps that out of React's way */}
+        <div>
+          <Band tone="dark" variant="dawn" background={sky.dawn} decor={<MorningSky />}>
+            <Hero />
+          </Band>
+        </div>
+        <Band tone="light" background={sky.morning} glass decor={<GlassOrbs layout="about" warm />}>
+          <About />
+        </Band>
+        <Band tone="light" background={sky.midday} glass decor={<GlassOrbs layout="work" />}>
+          <Projects />
+        </Band>
+        <Band tone="light" background={sky.afternoon} glass decor={<GlassOrbs layout="skills" />}>
+          <Skills />
+        </Band>
+        <Band tone="dark" background={sky.dusk} glass decor={<GlassOrbs layout="experience" />}>
+          <Experience />
+        </Band>
+        <Band tone="dark" background={sky.night} decor={<NightSky />}>
+          <Contact />
+          <Footer />
+        </Band>
+      </main>
+      <Deferred3D />
+    </div>
+  );
+};
 
 export default App;

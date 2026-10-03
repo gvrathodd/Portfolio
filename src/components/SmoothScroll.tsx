@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import 'lenis/dist/lenis.css';
 
 /**
@@ -12,10 +14,11 @@ export const SmoothScroll: React.FC = () => {
 
     const lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 0.9 });
 
-    let frame = requestAnimationFrame(function loop(time) {
-      lenis.raf(time);
-      frame = requestAnimationFrame(loop);
-    });
+    // Drive Lenis from GSAP's clock so scroll-scrubbed animations update on the same frame
+    lenis.on('scroll', ScrollTrigger.update);
+    const tick = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
 
     // Lenis's own `anchors` option doesn't cancel the browser's native jump, so the two race and
     // land in the wrong place. Handle in-page links here instead: cancel the jump, then glide.
@@ -35,7 +38,7 @@ export const SmoothScroll: React.FC = () => {
 
     return () => {
       document.removeEventListener('click', onClick);
-      cancelAnimationFrame(frame);
+      gsap.ticker.remove(tick);
       lenis.destroy();
     };
   }, []);

@@ -258,6 +258,16 @@
     0 24px 50px -20px rgb(200 120 80 / 0.4);
 }
 
+/* The CSS spheres and moon stand in for the 3D pearl until (unless) WebGL loads */
+.has-webgl .orb-fallback {
+  display: none;
+}
+
+/* The 3D layer fades in rather than popping */
+.sky3d {
+  animation: appear 1.6s ease both;
+}
+
 /* Soap bubble: a clear sphere with an iridescent rim and a highlight */
 .glass-bubble {
   background:
