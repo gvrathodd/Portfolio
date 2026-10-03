@@ -28,7 +28,7 @@ export const useScrollDepth = (scope: React.RefObject<HTMLElement | null>) => {
           scrollTrigger: {
             trigger: hero,
             start: 'top top',
-            end: '+=115%',
+            end: '+=125%',
             pin: true,
             scrub: true,
             onRefresh: (self) => {
@@ -56,8 +56,8 @@ export const useScrollDepth = (scope: React.RefObject<HTMLElement | null>) => {
             },
             0.02,
           )
-          // hold the empty sky for the burst and the spill, which happen in the 3D layer
-          .to({}, { duration: 0.45 });
+          // hold the sky just long enough for the burst, which happens in the 3D layer
+          .to({}, { duration: 0.33 });
 
         gsap.utils.toArray<HTMLElement>('.glass-panel').forEach((panel) => {
           gsap.fromTo(

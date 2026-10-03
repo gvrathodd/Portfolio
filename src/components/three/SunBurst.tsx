@@ -467,11 +467,11 @@ export const SunBurst: React.FC = () => {
     ptr.sy += ((narrow ? 0 : ptr.y) - ptr.sy) * kp;
 
     // ---- Choreography -------------------------------------------------------------------
-    const heroEnd = scrollState.heroEnd || vh * 1.15;
+    const heroEnd = scrollState.heroEnd || vh * 1.25;
     const p = clamp01(scroll / heroEnd);
 
     // Dawn: the sun glides to centre stage and grows, its ring swinging open to face you
-    const toStage = ease(seg(p, 0, 0.44));
+    const toStage = ease(seg(p, 0, 0.41));
     // It starts in the open sky between the location row and the intro paragraph;
     // on phones, in the gap to the right of the first name
     const sunX = mix(narrow ? 0.64 : 0.45, 0, toStage) * halfW + ptr.sx * 0.25;
@@ -480,11 +480,11 @@ export const SunBurst: React.FC = () => {
 
     // q runs past 1 after the pin releases, so the aftermath keeps settling as the page moves on
     const q = scroll / heroEnd;
-    const heat = ease(seg(p, 0.32, 0.55));
-    const burstT = seg(p, 0.56, 0.84);
-    const dissolve = ease(seg(p, 0.55, 0.69));
-    const burst = seg(p, 0.57, 0.84);
-    const domeT = seg(p, 0.57, 0.92);
+    const heat = ease(seg(p, 0.3, 0.52));
+    const burstT = seg(p, 0.52, 0.82);
+    const dissolve = ease(seg(p, 0.5, 0.64));
+    const burst = seg(p, 0.53, 0.82);
+    const domeT = seg(p, 0.53, 0.98);
     let spill = ease(seg(p, 0.68, 1));
     let field = ease(seg(p, 0.88, 1));
     let reform = 0;
@@ -536,14 +536,14 @@ export const SunBurst: React.FC = () => {
     ring.current.position.set(cx, cy, 0);
     ring.current.scale.setScalar(cs * (1 + easeOutExpo(burstT) * 7));
     ring.current.rotation.set(mix(1.2, 0.18, toStage) + ptr.sy * 0.1, scroll * 0.0006, 0.3 + ptr.sx * 0.1);
-    ringMat.current.opacity = night > 0 ? 0 : 1 - ease(seg(p, 0.58, 0.78));
+    ringMat.current.opacity = night > 0 ? 0 : 1 - ease(seg(p, 0.54, 0.79));
     ring.current.visible = ringMat.current.opacity > 0.01;
 
     // ---- Halo: warm glow, a flash at the moment of bursting ------------------------------
     // A hard, brief flash on detonation, then a long warm afterglow
-    const flash = Math.pow(Math.sin(Math.PI * seg(p, 0.55, 0.7)), 2);
-    const afterglow = (1 - ease(seg(p, 0.62, 1))) * (p > 0.55 ? 1 : 0);
-    const haloOpacity = night > 0 ? 0.75 * night : p < 0.55 ? 0.75 : Math.min(1, 0.55 * afterglow + flash);
+    const flash = Math.pow(Math.sin(Math.PI * seg(p, 0.5, 0.68)), 2);
+    const afterglow = (1 - ease(seg(p, 0.61, 1))) * (p > 0.5 ? 1 : 0);
+    const haloOpacity = night > 0 ? 0.75 * night : p < 0.5 ? 0.75 : Math.min(1, 0.55 * afterglow + flash);
     const haloSize = night > 0 ? moonS : sunS;
     haloSprite.current.position.set(cx, cy, -1.5);
     haloSprite.current.scale.setScalar(haloSize * (4.6 + flash * 9 + afterglow * 2));
@@ -553,7 +553,7 @@ export const SunBurst: React.FC = () => {
     // ---- Shockwaves: thin rings of light racing outward, the second a beat behind -------------
     waves.current.forEach((w, n) => {
       if (!w) return;
-      const wt = seg(p, 0.565 + n * 0.04, 0.82 + n * 0.08);
+      const wt = seg(p, 0.524 + n * 0.048, 0.816 + n * 0.109);
       w.visible = night === 0 && wt > 0 && wt < 1;
       if (!w.visible) return;
       w.position.set(sunX, sunY, 0.1);
@@ -572,7 +572,7 @@ export const SunBurst: React.FC = () => {
     }
 
     // ---- Rays and the anamorphic streak: the flash itself --------------------------------------
-    const raysT = seg(p, 0.55, 0.88);
+    const raysT = seg(p, 0.5, 0.9);
     rays.current.visible = night === 0 && raysT > 0 && raysT < 1;
     rays.current.position.set(sunX, sunY, 0.3);
     rays.current.scale.setScalar(sunS * (2.5 + easeOutExpo(raysT) * 4));
@@ -584,7 +584,7 @@ export const SunBurst: React.FC = () => {
     streakMat.current.opacity = flash * 0.9;
 
     // ---- Camera shake on detonation --------------------------------------------------------
-    const shake = Math.sin(Math.PI * seg(p, 0.55, 0.72)) * (narrow ? 0.05 : 0.09);
+    const shake = Math.sin(Math.PI * seg(p, 0.5, 0.71)) * (narrow ? 0.05 : 0.09);
     const tt = state.clock.elapsedTime;
     state.camera.position.x = shake * (Math.sin(tt * 53) + Math.sin(tt * 31)) * 0.5;
     state.camera.position.y = shake * (Math.sin(tt * 47) + Math.cos(tt * 29)) * 0.5;
@@ -605,7 +605,7 @@ export const SunBurst: React.FC = () => {
     lu.uScale.value = night > 0 ? moonS : Math.max(shellScale, 1e-4);
     lu.uBurst.value = night > 0 ? 1 : burst;
     lu.uSpill.value = night > 0 ? 1 : spill;
-    lu.uHot.value = night > 0 ? 0 : 1 - ease(seg(p, 0.57, 1)) * 0.6;
+    lu.uHot.value = night > 0 ? 0 : 1 - ease(seg(p, 0.53, 1)) * 0.6;
     lu.uField.value = field;
     lu.uReform.value = reform;
     lu.uTime.value += dt;
@@ -617,7 +617,7 @@ export const SunBurst: React.FC = () => {
     tmp.d.copy(palette[i].b).lerp(palette[i + 1].b, t);
     lu.uColorA.value.lerp(tmp.c, kc);
     lu.uColorB.value.lerp(tmp.d, kc);
-    lu.uOpacity.value = night > 0 ? 1 : 1 - ease(seg(p, 0.78, 1));
+    lu.uOpacity.value = night > 0 ? 1 : 1 - ease(seg(p, 0.82, 1));
 
     // ---- Bokeh ---------------------------------------------------------------------------
     const bu = bokehMat.uniforms;
