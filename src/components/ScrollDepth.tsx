@@ -28,7 +28,7 @@ export const useScrollDepth = (scope: React.RefObject<HTMLElement | null>) => {
           scrollTrigger: {
             trigger: hero,
             start: 'top top',
-            end: '+=220%',
+            end: '+=170%',
             pin: true,
             scrub: true,
             onRefresh: (self) => {
