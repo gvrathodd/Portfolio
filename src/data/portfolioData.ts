@@ -16,6 +16,9 @@ export interface Project {
   metrics?: { label: string; value: string };
   year?: string;
   gallery?: { src: string; alt: string; caption: string }[];
+  /** Heading above the gallery, and an optional note under it. */
+  galleryTitle?: string;
+  galleryNote?: string;
   /** Before/after bars shown in the expanded project. `max` is the scale (100 for %, 1 for scores). */
   comparison?: {
     baselineLabel: string;
@@ -150,6 +153,8 @@ export const portfolioData: PortfolioData = {
         { src: "/projects/deepfake/heatmap-3.webp", alt: "Real face with diffuse, low-intensity heatmap", caption: "Real, p = 0.000. Only scattered, low-energy responses." },
         { src: "/projects/deepfake/heatmap-4.webp", alt: "Real face with heatmap spread across the background", caption: "Real, p = 0.009. Activation spreads into the background, not the face." },
       ],
+      galleryTitle: "What the model sees",
+      galleryNote: "Left to right: input, heatmap overlay, raw anomaly map.",
       comparison: {
         baselineLabel: "XceptionNet (published)",
         rows: [
@@ -176,6 +181,27 @@ export const portfolioData: PortfolioData = {
         "Safe-stop invariants and human-in-the-loop gates: 16/16 test scenarios passed with zero unauthorised transactions.",
       ],
       year: "2026",
+    },
+    {
+      id: "rl-quant",
+      title: "Regime-aware RL trading & model risk",
+      tagline: "A PPO trading agent, and the risk framework a bank would use to sign it off.",
+      description: "Each tick is labelled with one of five forward-return regimes across 40 horizons, XGBoost turns features into regime probabilities, and a PPO agent trades short, flat or long on top of them, paying for transaction costs and churn. A separate risk layer then validates the strategy the way a model-risk team would: five VaR models, Expected Shortfall, Kupiec and Christoffersen backtests, Basel traffic-light zones, and historical stress scenarios.",
+      category: "ML · Quant",
+      tags: ["Python", "PPO", "XGBoost", "Gymnasium", "Risk modelling"],
+      githubUrl: "https://github.com/gvrathodd/rl_quant",
+      featured: true,
+      metrics: { label: "VaR models backtested", value: "5" },
+      year: "2026",
+      highlights: [
+        "Chronological 4-fold CV and expanding-window z-scores, so the agent never trains on in-sample predictions or sees the future.",
+        "Over 2,250 out-of-sample days at 99%, only Historical VaR passed both coverage and independence; Cornish-Fisher got the count right but its exceptions clustered.",
+        "Stress-tests the worst exposure held against 1987, Lehman, the Flash Crash and COVID, plus 1–3× volatility regimes.",
+      ],
+      gallery: [
+        { src: "/projects/rl-quant/var_backtest.webp", alt: "Five 99% VaR forecasts plotted against daily P&L, with black dots marking exception days", caption: "99% VaR backtest on a synthetic fat-tailed market. Dots mark days a loss broke the Historical VaR forecast." },
+      ],
+      galleryTitle: "Backtesting the risk models",
     },
     {
       id: "path-finder",
@@ -240,6 +266,17 @@ export const portfolioData: PortfolioData = {
       category: "Robotics · CV",
       tags: ["Python", "OpenCV", "PID", "Embedded"],
       githubUrl: "https://github.com/gvrathodd/vision_lan_nav",
+      featured: false,
+      highlights: [],
+    },
+    {
+      id: "masonry-image-to-cad",
+      title: "Masonry image-to-CAD",
+      tagline: "Cleaning up photos of stone walls so their outlines can be traced into CAD.",
+      description: "The image-processing front end of a pipeline from wall photos to CAD drawings. A bilateral filter is tuned by brute-force search against a score that rewards smoothing but penalises lost edges, then a line-segment detector finds near-vertical edges and rectifies the photo so the wall stands straight.",
+      category: "CV · Civil",
+      tags: ["Python", "OpenCV", "scikit-image", "Image processing"],
+      githubUrl: "https://github.com/gvrathodd/Mong_sir_project_july",
       featured: false,
       highlights: [],
     },

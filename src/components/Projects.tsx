@@ -124,7 +124,7 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
               {project.comparison && <Comparison comparison={project.comparison} open={open} />}
               {project.gallery && (
                 <div className="mt-8">
-                  <p className="mb-3 text-sm font-medium">What the model sees</p>
+                  <p className="mb-3 text-sm font-medium">{project.galleryTitle}</p>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {project.gallery.map((img) => (
                       <figure key={img.src} className="overflow-hidden rounded-2xl border border-line bg-surface">
@@ -133,7 +133,7 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
                       </figure>
                     ))}
                   </div>
-                  <p className="mt-3 text-xs text-muted">Left to right: input, heatmap overlay, raw anomaly map.</p>
+                  {project.galleryNote && <p className="mt-3 text-xs text-muted">{project.galleryNote}</p>}
                 </div>
               )}
             </div>
