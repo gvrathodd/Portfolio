@@ -1,65 +1,95 @@
-# Gaurav Rathod — Personal Portfolio Website ⚡
+# Gaurav Girish Rathod — Personal Portfolio
 
-An award-winning personal portfolio website built with **React**, **TypeScript**, **Tailwind CSS**, **React Spring** physics animations, and designed with the signature dark editorial aesthetics of **Godly.website** and component patterns from **Watermelon UI**.
+The personal portfolio website of Gaurav Girish Rathod, highlighting projects and research across computer vision, machine learning systems, quantitative risk modeling, and C++ software.
 
----
-
-## 🚀 Quick Start (Running Locally)
-
-Since you're new to web development, running this website on your computer is super easy:
-
-1. Open your terminal in this project folder (`c:\Users\Gaurav Rathod\Documents\Self_site`).
-2. Run the development server:
-   ```bash
-   npm run dev
-   ```
-3. Open your browser and visit: **`http://localhost:5173`** (or the URL shown in your terminal).
-
-That's it! Any edits you make will automatically refresh in your browser in real-time.
+Live site: [portfolio-gaurav-girish-rathod.vercel.app](https://portfolio-gaurav-girish-rathod.vercel.app)
 
 ---
 
-## ✏️ How to Customize Your Portfolio
+## Architecture and Overview
 
-You **do NOT** need to know React or CSS to customize this website. All your information is stored in **one single file**:
+The website is engineered as a responsive single-page application centered around a dynamic sky progression that transitions from dawn to night as the visitor navigates down the page.
 
-👉 **`src/data/portfolioData.ts`**
+### Key Technical Aspects
 
-In that file, you can easily change:
-- **Your Name, Role, Location, & Bio**
-- **Social Links** (GitHub, LinkedIn, LeetCode, Codeforces)
-- **Projects**: Add, remove, or modify your projects, tags, metrics, and GitHub links
-- **Experience & Activities**: Update your IIT Mandi details, clubs (SAE, Ranneeti), and hackathon honors
-- **Skills**: Add or adjust technologies in your tech stack
-- **Resume**: Replace `public/Gaurav_Rathod_Resume.pdf` with any new version of your PDF
+* **Graphics Pipeline**: Procedural WebGL 3D layer powered by Three.js and React Three Fiber. The scene renders a custom pearl sun with fractional Brownian motion (FBM) noise erosion, particle shockwaves, and moonlight reconstruction. Deferred execution via `requestIdleCallback` ensures fast First Contentful Paint.
+* **Motion & Scroll Choreography**: Inertial scrolling managed by Lenis, synchronized with GSAP (`ScrollTrigger`, `SplitText`) for 3D headline character scattering and perspective card entrances.
+* **Performance Optimizations**: Offscreen animation pausing using `IntersectionObserver` (`data-paused` attribute), CSS variable updates for high-frequency cursor/scroll tracking to eliminate React re-renders, and lightweight CSS orb fallbacks when WebGL is unavailable or motion is reduced.
+* **Accessibility**: Comprehensive `prefers-reduced-motion` support across CSS keyframes, GSAP timelines, Lenis scroll easing, and WebGL canvas loops.
 
 ---
 
-## 🌐 How to Deploy Live to the Internet (Free)
+## Technology Stack
 
-### Option 1: Deploy with Vercel (Recommended — Takes 1 Minute)
-1. Push this folder to a GitHub repository on your GitHub account (`https://github.com/gvrathodd`).
-2. Go to [Vercel.com](https://vercel.com) and click **"Add New Project"**.
-3. Select your GitHub repository.
-4. Click **Deploy**! Vercel automatically builds and provides a free `https://gaurav-rathod.vercel.app` domain with free SSL.
-
-### Option 2: Deploy with GitHub Pages
-1. Build the production files:
-   ```bash
-   npm run build
-   ```
-2. The compiled site will be generated in the `dist/` directory ready to be published!
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Framework & Build** | React 19, TypeScript, Vite 6 | Application framework and build tooling |
+| **Styling** | Tailwind CSS v4 | Utility-first styling with custom design tokens and tone switching |
+| **3D Graphics & Shaders** | Three.js, @react-three/fiber, @react-three/drei | Procedural WebGL canvas with custom GLSL shaders |
+| **Animation & Scrubbing** | GSAP 3 (ScrollTrigger, SplitText), @gsap/react | Scroll-driven layout transitions and text scatter effects |
+| **Smooth Scroll** | Lenis | Inertial scrolling bound to the GSAP animation ticker |
+| **Icons** | Lucide React | Clean, scalable interface iconography |
 
 ---
 
-## 🛠️ Tech Stack & Features
+## Development
 
-- **Frontend Framework**: React 19 + TypeScript + Vite
-- **Styling**: Tailwind CSS v4 with custom glassmorphism and ambient glow utilities
-- **Physics Animations**: `@react-spring/web`
-  - 3D perspective tilt on project cards that react to mouse position
-  - Smooth spring modal and drawer transitions
-  - Magnetic button effects
-- **Icons**: `lucide-react`
-- **Micro-interactions**: `canvas-confetti` celebration on email dispatch, one-click copy email button with spring feedback
-- **Responsive**: 100% mobile-friendly with touch drawer navigation and fluid typography
+### Prerequisites
+
+* Node.js 18 or higher
+* npm 9 or higher
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/gvrathodd/Portfolio.git
+cd Portfolio
+
+# Install dependencies
+npm install
+```
+
+### Running Locally
+
+```bash
+npm run dev
+```
+
+The development server runs at `http://localhost:5173`.
+
+### Production Build
+
+```bash
+npm run build
+```
+
+Production artifacts are generated in the `dist/` directory.
+
+---
+
+## Project Structure
+
+```
+├── public/                 # Static assets, branding icons, and resume PDF
+├── src/
+│   ├── components/         # UI components and layout sections
+│   │   ├── three/          # WebGL Canvas, GLSL shaders, and Three.js scenes
+│   │   ├── Band.tsx        # Dynamic sky band wrappers with tone switching
+│   │   ├── Hero.tsx        # Landing stage with real-time clock and animations
+│   │   ├── Projects.tsx    # Interactive project showcase with APK/source links
+│   │   └── ...
+│   ├── data/
+│   │   └── portfolioData.ts # Central data source for portfolio content
+│   ├── App.tsx             # Main application layout and coordinator
+│   ├── index.css           # Tailwind configuration and design system styles
+│   └── main.tsx            # Application entry point
+├── package.json
+└── vite.config.ts
+```
+
+---
+
+## License
+
+This repository is maintained for personal portfolio presentation. All rights reserved.
