@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Plus } from 'lucide-react';
+import { ArrowUpRight, Download, Plus } from 'lucide-react';
 import { portfolioData, Project } from '../data/portfolioData';
 import { SectionHeading } from './SectionHeading';
 import { Reveal } from './Reveal';
@@ -138,7 +138,7 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
               )}
             </div>
             <div className="space-y-4">
-              {(project.githubUrl || project.liveUrl) && (
+              {(project.githubUrl || project.liveUrl || project.downloadUrl) && (
                 <div className="flex flex-wrap gap-2">
                   {project.githubUrl && (
                     <a
@@ -149,6 +149,18 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
                     >
                       <GithubMark />
                       View source
+                      <ArrowUpRight className="size-4" strokeWidth={1.75} />
+                    </a>
+                  )}
+                  {project.downloadUrl && (
+                    <a
+                      href={project.downloadUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-11 items-center gap-2 rounded-full border border-accent/40 bg-surface px-4 py-2.5 text-sm font-medium text-accent transition-all hover:-translate-y-0.5 hover:border-accent active:scale-[0.98]"
+                    >
+                      <Download className="size-4" strokeWidth={1.75} />
+                      {project.downloadLabel ?? 'Download'}
                       <ArrowUpRight className="size-4" strokeWidth={1.75} />
                     </a>
                   )}
@@ -230,34 +242,60 @@ export const Projects: React.FC = () => {
           <ul className="grid gap-3 md:grid-cols-2 md:gap-4">
             {others.map((p, i) => (
               <Reveal as="li" key={p.id} delay={i}>
-                <a
-                  href={p.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-disabled={!p.githubUrl}
+                <div
                   onPointerMove={trackPointer}
-                  className={`spotlight group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-all duration-300 ${
-                    p.githubUrl ? 'hover:-translate-y-0.5 hover:border-accent/40' : 'pointer-events-none'
-                  }`}
+                  className="spotlight group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/40"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-xs text-muted">{p.category}</p>
-                      <h4 className="mt-1 text-lg font-medium tracking-tight">{p.title}</h4>
+                      <h4 className="mt-1 text-lg font-medium tracking-tight">
+                        {p.githubUrl ? (
+                          <a
+                            href={p.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="transition-colors hover:text-accent"
+                          >
+                            {p.title}
+                          </a>
+                        ) : (
+                          p.title
+                        )}
+                      </h4>
                     </div>
-                    {p.githubUrl ? (
-                      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-xs font-medium text-white transition-colors group-hover:bg-accent">
-                        <GithubMark className="size-3.5" />
-                        Source
-                        <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.75} />
-                      </span>
-                    ) : (
-                      <span className="shrink-0 rounded-full border border-line px-3 py-1.5 text-xs text-muted">Private</span>
-                    )}
+                    <div className="flex flex-wrap items-center justify-end gap-1.5">
+                      {p.downloadUrl && (
+                        <a
+                          href={p.downloadUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-accent/40 bg-surface px-3 py-1.5 text-xs font-medium text-accent transition-colors hover:border-accent hover:bg-accent hover:text-white"
+                        >
+                          <Download className="size-3.5" strokeWidth={1.75} />
+                          {p.downloadLabel ?? 'APK'}
+                          <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.75} />
+                        </a>
+                      )}
+                      {p.githubUrl ? (
+                        <a
+                          href={p.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-accent"
+                        >
+                          <GithubMark className="size-3.5" />
+                          Source
+                          <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.75} />
+                        </a>
+                      ) : (
+                        <span className="shrink-0 rounded-full border border-line px-3 py-1.5 text-xs text-muted">Private</span>
+                      )}
+                    </div>
                   </div>
                   <p className="mt-2 flex-1 text-muted">{p.tagline}</p>
                   <p className="mt-4 text-xs text-muted">{p.tags.join('  ·  ')}</p>
-                </a>
+                </div>
               </Reveal>
             ))}
           </ul>

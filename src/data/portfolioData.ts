@@ -11,6 +11,8 @@ export interface Project {
   tags: string[];
   githubUrl?: string;
   liveUrl?: string;
+  downloadUrl?: string;
+  downloadLabel?: string;
   featured: boolean;
   highlights: string[];
   metrics?: { label: string; value: string };
@@ -293,14 +295,22 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: "chatroom-app",
-      title: "Chatroom",
-      tagline: "A real-time Android chat app with rooms and authentication.",
-      description: "Native Android client with Firebase auth and Firestore-backed realtime messaging, built with Jetpack Compose and MVVM.",
-      category: "Android",
-      tags: ["Kotlin", "Jetpack Compose", "Firebase", "Coroutines"],
+      title: "ChatRoomApp",
+      tagline: "A real-time Android chat client with room channels, email verification, and live Firestore sync.",
+      description: "Native Android client built with Jetpack Compose and Material Design 3. Features asynchronous email validation before channel entry, topic-based chat rooms, reactive message streams via callbackFlow listeners, in-memory search, and offline disk caching.",
+      category: "Android · Mobile",
+      tags: ["Kotlin", "Jetpack Compose", "Firebase", "Firestore", "Coroutines", "MVVM"],
       githubUrl: "https://github.com/gvrathodd/ChatRoomApp",
+      downloadUrl: "https://github.com/gvrathodd/ChatRoomApp/raw/main/releases/ChatRoomApp.apk",
+      downloadLabel: "Download APK",
       featured: false,
-      highlights: [],
+      metrics: { label: "Binary", value: "v1.0.0 APK" },
+      year: "2025",
+      highlights: [
+        "Reactive real-time messaging pipeline built on Cloud Firestore callbackFlow listeners.",
+        "Mandatory email verification gate and session persistence with Firebase Authentication.",
+        "Material Design 3 with Unidirectional Data Flow (UDF), StateFlow, and offline cache resilience.",
+      ],
     },
     {
       id: "hudson-rc-car",
@@ -416,7 +426,7 @@ export const portfolioData: PortfolioData = {
         { name: "Python", usedIn: ["Deepfake detector", "Process mining", "RC car"] },
         { name: "C++17", usedIn: ["QTextEditor"] },
         { name: "TypeScript / JavaScript", usedIn: ["Path-Finder", "this site"] },
-        { name: "Kotlin", usedIn: ["Chatroom"] },
+        { name: "Kotlin", usedIn: ["ChatRoomApp"] },
         { name: "SQL", usedIn: ["Finance tracker"] },
       ],
     },
@@ -436,7 +446,7 @@ export const portfolioData: PortfolioData = {
         { name: "React", usedIn: ["Path-Finder", "this site"] },
         { name: "Qt", usedIn: ["QTextEditor"] },
         { name: "FastAPI / Flask", usedIn: ["Knowledge assistant", "Finance tracker"] },
-        { name: "Jetpack Compose + Firebase", usedIn: ["Chatroom"] },
+        { name: "Jetpack Compose + Firebase", usedIn: ["ChatRoomApp"] },
         { name: "Playwright", usedIn: ["Process mining"] },
       ],
     },
