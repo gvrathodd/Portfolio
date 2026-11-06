@@ -17,7 +17,10 @@ export interface Project {
   highlights: string[];
   metrics?: { label: string; value: string };
   year?: string;
-  gallery?: { src: string; alt: string; caption: string }[];
+  /** `wide` spans the full gallery width; width/height are the image's real size (for layout stability). */
+  gallery?: { src: string; alt: string; caption: string; width?: number; height?: number; wide?: boolean }[];
+  /** Extra links beside source / live, e.g. a technical write-up. */
+  links?: { label: string; url: string }[];
   /** Heading above the gallery, and an optional note under it. */
   galleryTitle?: string;
   galleryNote?: string;
@@ -183,6 +186,35 @@ export const portfolioData: PortfolioData = {
         "Safe-stop invariants and human-in-the-loop gates: 16/16 test scenarios passed with zero unauthorised transactions.",
       ],
       year: "2026",
+    },
+    {
+      id: "joint-redesign",
+      title: "Joint Redesign",
+      tagline: "Checks reinforced-concrete beam-column joints against India's earthquake code and redesigns them so beams fail before columns.",
+      description: "Buildings are usually designed for gravity first. In earthquake zones, IS 13920:2016 requires that design to be revised so the structure fails in a safe order: beams yield in bending before they fail in shear, and before columns or joints give way. Done by hand it is long and iterative. This web tool runs every check, then redesigns the joint automatically: beams first, then the column sized to beat them by 1.4×, then the joint fixed by enlarging the column, deepening the beam or raising the concrete grade, in a user-chosen order and within user-set limits. It is a design aid that handles one joint at a time, with forces from STAAD.Pro or similar.",
+      category: "Structural · Software",
+      tags: ["IS 13920", "IS 1893", "Capacity design", "STAAD.Pro", "JavaScript", "Web Worker"],
+      githubUrl: "https://github.com/gvrathodd/Seismic-redesign-automation",
+      liveUrl: "https://gvrathodd.github.io/Seismic-redesign-automation/",
+      links: [
+        { label: "Technical write-up", url: "https://github.com/gvrathodd/Seismic-redesign-automation/blob/main/EXPLAINER.md" },
+        { label: "Flowchart", url: "https://gvrathodd.github.io/Seismic-redesign-automation/flowchart.html" },
+      ],
+      featured: true,
+      year: "2026",
+      metrics: { label: "Code checks per joint", value: "57" },
+      highlights: [
+        "Real test on a G+1 hospital in Zone V: the gravity-only design failed 9 of 57 checks; the redesign passes all of them.",
+        "Strong-column ratio 0.60 → 1.46 (needs ≥ 1.40) and joint shear 108% → 94% of capacity, with the column going from 350×350 to 550×600.",
+        "Validated against the published IITK-GSDMA EQ22 worked examples and a STAAD.Pro model (base shear 1,482 kN, checked by hand).",
+        "About 4% cheaper than the same redesign done with the usual textbook simplifications. The hospital redesign stays provisional until the model is re-run.",
+      ],
+      galleryTitle: "The tool",
+      gallery: [
+        { src: "/projects/joint-redesign/results.webp", alt: "Results: 9 of 57 checks fail initially, the revised design passes all of them, with demand/capacity bars", caption: "Health Centre joint: verdict, key numbers and demand/capacity bars, initial vs revised.", width: 1440, height: 900, wide: true },
+        { src: "/projects/joint-redesign/home.webp", alt: "Start screen with an example joint and the input panel", caption: "Start screen: pick an example or enter your own joint.", width: 1440, height: 900 },
+        { src: "/projects/joint-redesign/comparison.webp", alt: "Table comparing initial, refined and textbook designs", caption: "Initial, refined and textbook designs, with the same forces and checks.", width: 1440, height: 900 },
+      ],
     },
     {
       id: "rl-quant",
@@ -425,7 +457,7 @@ export const portfolioData: PortfolioData = {
       skills: [
         { name: "Python", usedIn: ["Deepfake detector", "Process mining", "RC car"] },
         { name: "C++17", usedIn: ["QTextEditor"] },
-        { name: "TypeScript / JavaScript", usedIn: ["Path-Finder", "this site"] },
+        { name: "TypeScript / JavaScript", usedIn: ["Path-Finder", "Joint Redesign", "this site"] },
         { name: "Kotlin", usedIn: ["ChatRoomApp"] },
         { name: "SQL", usedIn: ["Finance tracker"] },
       ],

@@ -127,8 +127,8 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
                   <p className="mb-3 text-sm font-medium">{project.galleryTitle}</p>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {project.gallery.map((img) => (
-                      <figure key={img.src} className="overflow-hidden rounded-2xl border border-line bg-surface">
-                        <img src={img.src} alt={img.alt} loading="lazy" width={842} height={317} className="w-full" />
+                      <figure key={img.src} className={`overflow-hidden rounded-2xl border border-line bg-surface ${img.wide ? 'sm:col-span-2' : ''}`}>
+                        <img src={img.src} alt={img.alt} loading="lazy" width={img.width ?? 842} height={img.height ?? 317} className="w-full" />
                         <figcaption className="px-4 py-3 text-xs leading-relaxed text-muted">{img.caption}</figcaption>
                       </figure>
                     ))}
@@ -138,7 +138,7 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
               )}
             </div>
             <div className="space-y-4">
-              {(project.githubUrl || project.liveUrl || project.downloadUrl) && (
+              {(project.githubUrl || project.liveUrl || project.downloadUrl || project.links) && (
                 <div className="flex flex-wrap gap-2">
                   {project.githubUrl && (
                     <a
@@ -179,6 +179,18 @@ const ProjectRow: React.FC<{ project: Project; index: number; open: boolean; onT
                       <ArrowUpRight className="size-4" strokeWidth={1.75} />
                     </a>
                   )}
+                  {project.links?.map((link) => (
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 text-sm font-medium transition-all hover:-translate-y-0.5 hover:border-ink active:scale-[0.98]"
+                    >
+                      {link.label}
+                      <ArrowUpRight className="size-4" strokeWidth={1.75} />
+                    </a>
+                  ))}
                 </div>
               )}
               {project.metrics && (
