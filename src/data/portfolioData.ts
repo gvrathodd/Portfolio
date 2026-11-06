@@ -189,7 +189,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: "joint-redesign",
-      title: "Joint Redesign",
+      title: "Quakeproof: seismic joint redesign",
       tagline: "Checks reinforced-concrete beam-column joints against India's earthquake code and redesigns them so beams fail before columns.",
       description: "Buildings are usually designed for gravity first. In earthquake zones, IS 13920:2016 requires that design to be revised so the structure fails in a safe order: beams yield in bending before they fail in shear, and before columns or joints give way. Done by hand it is long and iterative. This web tool runs every check, then redesigns the joint automatically: beams first, then the column sized to beat them by 1.4×, then the joint fixed by enlarging the column, deepening the beam or raising the concrete grade, in a user-chosen order and within user-set limits. It is a design aid that handles one joint at a time, with forces from STAAD.Pro or similar.",
       category: "Structural · Software",
@@ -457,7 +457,7 @@ export const portfolioData: PortfolioData = {
       skills: [
         { name: "Python", usedIn: ["Deepfake detector", "Process mining", "RC car"] },
         { name: "C++17", usedIn: ["QTextEditor"] },
-        { name: "TypeScript / JavaScript", usedIn: ["Path-Finder", "Joint Redesign", "this site"] },
+        { name: "TypeScript / JavaScript", usedIn: ["Path-Finder", "Quakeproof", "this site"] },
         { name: "Kotlin", usedIn: ["ChatRoomApp"] },
         { name: "SQL", usedIn: ["Finance tracker"] },
       ],
